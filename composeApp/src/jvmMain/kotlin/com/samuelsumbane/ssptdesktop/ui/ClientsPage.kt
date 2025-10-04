@@ -1,5 +1,6 @@
 package com.samuelsumbane.ssptdesktop.ui
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.Text
@@ -16,12 +17,19 @@ import androidx.compose.ui.unit.dp
 import com.samuelsumbane.ssptdesktop.ClientItem
 import com.samuelsumbane.ssptdesktop.core.utils.generateId
 import com.samuelsumbane.ssptdesktop.presentation.viewmodel.ClientViewModel
+import com.samuelsumbane.ssptdesktop.ui.components.AlertWidget
 import com.samuelsumbane.ssptdesktop.ui.states.UIStates.showFormDialog
 import com.samuelsumbane.ssptdesktop.ui.components.CommonPageStructure
 import com.samuelsumbane.ssptdesktop.ui.components.DialogFormModal
 import com.samuelsumbane.ssptdesktop.ui.components.InfoCard
 import com.samuelsumbane.ssptdesktop.ui.components.NormalButton
 import com.samuelsumbane.ssptdesktop.ui.components.InputField
+import com.samuelsumbane.ssptdesktop.ui.states.AppState.formErrors
+import com.samuelsumbane.ssptdesktop.ui.states.UIStates.alertAcceptFun
+import com.samuelsumbane.ssptdesktop.ui.states.UIStates.alertText
+import com.samuelsumbane.ssptdesktop.ui.states.UIStates.alertTitle
+import com.samuelsumbane.ssptdesktop.ui.states.UIStates.alertType
+import com.samuelsumbane.ssptdesktop.ui.states.UIStates.showAlertDialog
 //import com.samuelsumbane.ssptdesktop.ui.states.AppState.formErrors
 import com.samuelsumbane.ssptdesktop.ui.utils.FormInputName
 
@@ -35,15 +43,11 @@ fun ClientsPage(clientViewModel: ClientViewModel) {
             }
         }
     ) {
-//        Text("Testing")
-
 
         var clientId by remember { mutableStateOf(0) }
         var clientName by remember { mutableStateOf("") }
         var clientTelephone by remember { mutableStateOf("") }
         val allClients by clientViewModel.allClients.collectAsState()
-
-        var formErrors = mutableStateMapOf<String, String>()
 
         FlowRow(
             modifier = Modifier
@@ -72,16 +76,22 @@ fun ClientsPage(clientViewModel: ClientViewModel) {
             }
         }
 
-        if (showFormDialog) {
+        fun cleanFormAndCloseModal() {
+            clientName = ""
+            clientTelephone = ""
+            showFormDialog = false
+        }
+
+
+        AnimatedVisibility (showFormDialog) {
             DialogFormModal("Adicionar cliente",
-                onDismiss = { showFormDialog = false },
+                onDismiss = { cleanFormAndCloseModal() },
                 onSubmit = {
-                    println(clientName.isBlank())
                     if (clientName.isBlank()) {
-                        formErrors["ClientName"] = "Nome do cliente é obrigatório"
+                        formErrors[FormInputName.ClientName.inString] = "Nome do cliente é obrigatório"
                         return@DialogFormModal
                     }
-                    formErrors["ClientName"] = ""
+                    formErrors[FormInputName.ClientName.inString] = ""
 
                     if (clientTelephone.isBlank()) {
                         formErrors[FormInputName.ClientPhone.inString] = "Telefone do cliente é obrigatório"
@@ -95,9 +105,18 @@ fun ClientsPage(clientViewModel: ClientViewModel) {
                         telephone = clientTelephone
                     )
 
-                    if (clientId != 0) clientViewModel.editTheClient(clientData) else clientViewModel.addTheClient(clientData)
+                    alertText = if (clientId != 0) {
+                        clientViewModel.editTheClient(clientData)
+                        "Cliente editado com sucesso."
+                    } else {
+                        clientViewModel.addTheClient(clientData)
+                        "Cliente adicionado com sucesso."
+                    }
+                    alertTitle = "Sucesso"
 
-                    showFormDialog = false
+                    cleanFormAndCloseModal()
+                    showAlertDialog = true
+                    alertAcceptFun = { showAlertDialog = false }
                 }
             ) {
                 InputField(
@@ -116,5 +135,10 @@ fun ClientsPage(clientViewModel: ClientViewModel) {
                 )
             }
         }
+
+        AnimatedVisibility(showAlertDialog) {
+            AlertWidget()
+        }
+
     }
 }

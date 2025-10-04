@@ -14,6 +14,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.key.Key
+import androidx.compose.ui.input.key.key
+import androidx.compose.ui.input.key.onKeyEvent
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
@@ -27,13 +30,18 @@ fun DialogFormModal(
     onSubmit: () -> Unit,
     modalContent: @Composable () -> Unit
 ) {
-
     Dialog(onDismissRequest = { onDismiss() }) {
         Column(
             modifier = Modifier
                 .width(modalSize.widthSize)
                 .heightIn(min = 400.dp)
                 .background(Color.White, RoundedCornerShape(12.dp))
+                .onKeyEvent { keyEvent ->
+                    if (keyEvent.key == Key.Enter) {
+                        onSubmit()
+                        true
+                    } else false
+                }
                 .padding(7.dp),
             verticalArrangement = Arrangement.SpaceBetween
         ) {
