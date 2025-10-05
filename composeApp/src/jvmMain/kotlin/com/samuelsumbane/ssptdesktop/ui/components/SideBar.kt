@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.NavigationRail
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -33,16 +34,18 @@ import kotlin.collections.listOf
 fun SideBar(
     clientViewModel: ClientViewModel
 ) {
+    val colorScheme = MaterialTheme.colorScheme
+
     NavigationRail(
         modifier = Modifier
             .fillMaxHeight()
-            .width(80.dp)
-//                .background(Color.Magenta),
+            .width(80.dp),
+        backgroundColor = colorScheme.background
     ) {
         Box(
             modifier = Modifier
-                .fillMaxSize(),
-//                    .background(Color.Green),
+                .fillMaxSize()
+                .background(colorScheme.background),
             contentAlignment = Alignment.Center
         ) {
             Column(

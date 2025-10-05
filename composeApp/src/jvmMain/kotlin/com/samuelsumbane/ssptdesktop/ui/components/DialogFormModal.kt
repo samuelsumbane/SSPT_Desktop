@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -35,14 +36,14 @@ fun DialogFormModal(
             modifier = Modifier
                 .width(modalSize.widthSize)
                 .heightIn(min = 400.dp)
-                .background(Color.White, RoundedCornerShape(12.dp))
+                .background(MaterialTheme.colorScheme.background, RoundedCornerShape(12.dp))
                 .onKeyEvent { keyEvent ->
                     if (keyEvent.key == Key.Enter) {
                         onSubmit()
                         true
                     } else false
                 }
-                .padding(7.dp),
+                .padding(10.dp),
             verticalArrangement = Arrangement.SpaceBetween
         ) {
             Row() {
@@ -62,13 +63,8 @@ fun DialogFormModal(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceAround
             ) {
-                NormalOutlineButton(text = "Fechar") {
-                    onDismiss()
-                }
-
-                NormalButton(text = "Submeter") {
-                    onSubmit()
-                }
+                NormalOutlineButton(text = "Fechar", onClick = onDismiss)
+                NormalButton(text = "Submeter", onClick = onSubmit)
             }
         }
     }

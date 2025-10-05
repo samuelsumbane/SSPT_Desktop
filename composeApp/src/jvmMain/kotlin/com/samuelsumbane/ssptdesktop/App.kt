@@ -37,7 +37,7 @@ fun App() {
     val clientViewModel by remember { mutableStateOf(getKoin().get<ClientViewModel>()) }
     val allClients by clientViewModel.allClients.collectAsState()
 
-    MaterialTheme {
+    SSPTTheme(darkTheme = true) {
 
         Navigator(ClientsScreen(clientViewModel))
 

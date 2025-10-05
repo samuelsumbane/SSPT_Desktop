@@ -29,7 +29,9 @@ import com.samuelsumbane.ssptdesktop.ui.states.UIStates.alertAcceptFun
 import com.samuelsumbane.ssptdesktop.ui.states.UIStates.alertText
 import com.samuelsumbane.ssptdesktop.ui.states.UIStates.alertTitle
 import com.samuelsumbane.ssptdesktop.ui.states.UIStates.alertType
+import com.samuelsumbane.ssptdesktop.ui.states.UIStates.formDialogTitle
 import com.samuelsumbane.ssptdesktop.ui.states.UIStates.showAlertDialog
+import com.samuelsumbane.ssptdesktop.ui.states.UIStates.submitButtonText
 //import com.samuelsumbane.ssptdesktop.ui.states.AppState.formErrors
 import com.samuelsumbane.ssptdesktop.ui.utils.FormInputName
 
@@ -39,19 +41,20 @@ fun ClientsPage(clientViewModel: ClientViewModel) {
         clientViewModel = clientViewModel,
         topBarActions = {
             NormalButton(icon = null, text = "+ Cliente") {
+                formDialogTitle = "Adicionar cliente"
+                submitButtonText = "Adicionar"
                 showFormDialog = true
             }
         }
     ) {
+        val allClients by clientViewModel.allClients.collectAsState()
 
         var clientId by remember { mutableStateOf(0) }
         var clientName by remember { mutableStateOf("") }
         var clientTelephone by remember { mutableStateOf("") }
-        val allClients by clientViewModel.allClients.collectAsState()
 
         FlowRow(
-            modifier = Modifier
-                .padding(10.dp)
+            modifier = Modifier.padding(10.dp)
         ) {
             allClients.forEach {client ->
                 with(client) {
@@ -62,12 +65,13 @@ fun ClientsPage(clientViewModel: ClientViewModel) {
                         Row(
                             modifier = Modifier.padding(top = 30.dp)
                         ) {
-                            NormalButton(
-                                text = "Editar",
-                            ) {
+                            NormalButton(text = "Editar") {
                                 clientId = id!! /** Now id in ClientItem is nullable */
                                 clientName = name
                                 clientTelephone = telephone
+
+                                formDialogTitle = "Actualizar cliente"
+                                submitButtonText = "Actualizar"
                                 showFormDialog = true
                             }
                         }
@@ -82,9 +86,9 @@ fun ClientsPage(clientViewModel: ClientViewModel) {
             showFormDialog = false
         }
 
-
-        AnimatedVisibility (showFormDialog) {
-            DialogFormModal("Adicionar cliente",
+        if (showFormDialog) {
+            DialogFormModal(
+                title = formDialogTitle,
                 onDismiss = { cleanFormAndCloseModal() },
                 onSubmit = {
                     if (clientName.isBlank()) {
@@ -121,7 +125,7 @@ fun ClientsPage(clientViewModel: ClientViewModel) {
             ) {
                 InputField(
                     inputValue = clientName,
-                    label = "Nome do cliente",
+                    label = "Nome",
                     errorText = formErrors[FormInputName.ClientName.inString],
                     onValueChanged = { clientName = it },
                 )

@@ -25,9 +25,8 @@ fun main() = application {
 
 
 
-
 @Composable
-fun SPPTTheme(
+fun SSPTTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     content: @Composable () -> Unit
 ) {
@@ -35,6 +34,7 @@ fun SPPTTheme(
         darkColorScheme(
             primary = Color(0xFF027EB1),
             secondary = Color.DarkGray,
+            onSecondary = Color.White,
             tertiary = Color.White
         )
     } else {
