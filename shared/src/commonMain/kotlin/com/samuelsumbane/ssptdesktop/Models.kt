@@ -3,7 +3,7 @@ package com.samuelsumbane.ssptdesktop
 
 // @Serializable
 data class CategoryItem(
-    val id: Int?,
+    val id: Int,
     val name: String,
     val isDefault: Boolean,
 )
@@ -216,7 +216,7 @@ data class ChangeRoleDC(
 
 // @Serializable
 data class BranchItem(
-    val id: Int?,
+    val id: Int,
     val name: String,
     val address: String,
 )

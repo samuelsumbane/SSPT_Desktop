@@ -26,14 +26,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.samuelsumbane.ssptdesktop.ClientsScreen
 import com.samuelsumbane.ssptdesktop.presentation.viewmodel.ClientViewModel
-import com.samuelsumbane.ssptdesktop.ui.ClientsPage
 import com.samuelsumbane.ssptdesktop.ui.utils.PageName
 import kotlin.collections.listOf
 
 @Composable
-fun SideBar(
-    clientViewModel: ClientViewModel
-) {
+fun SideBar() {
     val colorScheme = MaterialTheme.colorScheme
 
     NavigationRail(
@@ -72,7 +69,7 @@ fun SideBar(
                             .clickable {
                                 when (it) {
 //                                    PageName.HOME.itsName ->
-                                    PageName.CLIENTS.itsName -> ClientsScreen(clientViewModel)
+                                    PageName.CLIENTS.itsName -> ClientsScreen()
 //                                    PageName.PRODUCTS.itsName
                                     else -> {}
                                 }

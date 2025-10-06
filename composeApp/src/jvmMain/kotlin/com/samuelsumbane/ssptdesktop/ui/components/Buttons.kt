@@ -31,6 +31,7 @@ fun NormalButton(
     icon: (@Composable () -> Unit)? = null,
     text: String,
     modifier: Modifier = Modifier,
+    enabled: Boolean = true,
     onClick: () -> Unit
 ) {
     Button(
@@ -38,7 +39,9 @@ fun NormalButton(
         colors = ButtonDefaults.buttonColors(
             contentColor = Color.White
         ),
-        shape = RoundedCornerShape(8.dp)
+        shape = RoundedCornerShape(8.dp),
+        modifier = modifier,
+        enabled = enabled
     ) {
         ButtonContent(icon, text)
     }

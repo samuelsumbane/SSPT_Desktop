@@ -28,7 +28,6 @@ import ssptdesktop.composeapp.generated.resources.arrow_back
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CommonPageStructure(
-    clientViewModel: ClientViewModel,
     pageTitle: String = "Clientes",
     topBarActions: @Composable RowScope.() -> Unit = {},
     content: @Composable ColumnScope.() -> Unit
@@ -37,7 +36,7 @@ fun CommonPageStructure(
         modifier = Modifier
 //            .background(Color.Blue)
     ) {
-        SideBar(clientViewModel)
+        SideBar()
 
         Scaffold(
             topBar = {

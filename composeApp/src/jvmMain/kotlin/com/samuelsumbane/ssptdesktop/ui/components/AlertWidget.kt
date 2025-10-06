@@ -2,14 +2,7 @@ package com.samuelsumbane.ssptdesktop.ui.components
 
 import androidx.compose.desktop.ui.tooling.preview.Preview
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -18,31 +11,25 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.input.key.Key
-import androidx.compose.ui.input.key.key
-import androidx.compose.ui.input.key.onKeyEvent
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
-import com.samuelsumbane.ssptdesktop.ui.states.UIStates.alertAcceptFun
-import com.samuelsumbane.ssptdesktop.ui.states.UIStates.alertText
-import com.samuelsumbane.ssptdesktop.ui.states.UIStates.alertTitle
-import com.samuelsumbane.ssptdesktop.ui.states.UIStates.alertType
-import com.samuelsumbane.ssptdesktop.ui.states.UIStates.showAlertDialog
 import com.samuelsumbane.ssptdesktop.ui.utils.AlertType
 import com.samuelsumbane.ssptdesktop.ui.utils.ModalSize
 import org.jetbrains.compose.resources.painterResource
-import ssptdesktop.composeapp.generated.resources.Res
-import ssptdesktop.composeapp.generated.resources.checkCircle
-import ssptdesktop.composeapp.generated.resources.info_circle
-import ssptdesktop.composeapp.generated.resources.warning_circle
-import ssptdesktop.composeapp.generated.resources.xcircle
+import ssptdesktop.composeapp.generated.resources.*
 
 @Composable
 @Preview
-fun AlertWidget() {
+fun AlertWidget(
+    alertTitle: String = "Sucesso",
+    alertText: String,
+    alertType: AlertType = AlertType.SUCCESS,
+    onDismiss: () -> Unit,
+    onAccept: () -> Unit
+) {
     Dialog(
-        onDismissRequest = { showAlertDialog = false },
+        onDismissRequest = onDismiss,
     ) {
         Column(
             modifier = Modifier
@@ -85,7 +72,7 @@ fun AlertWidget() {
             Row(
                horizontalArrangement = Arrangement.End
             ) {
-                NormalButton(text = "OK", onClick = alertAcceptFun)
+                NormalButton(text = "OK", onClick = { onAccept() })
             }
 
         }
