@@ -28,7 +28,7 @@ data class ProductItem(
 
 // @Serializable
 data class OwnerItem(
-    val id: Int?,
+    val id: Int,
     val name: String,
     val telephone: String?,
 )

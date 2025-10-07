@@ -1,18 +1,14 @@
 package com.samuelsumbane.ssptdesktop.ui.view
 
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.safeContentPadding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.material.DropdownMenuItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -21,26 +17,22 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
-//import com.samuelsumbane.ssptdesktop.presentation.viewmodel.categoryViewModel
-import com.samuelsumbane.ssptdesktop.presentation.viewmodel.ProductCategoryViewModel
+import com.samuelsumbane.ssptdesktop.presentation.viewmodel.ProOwnerViewModel
+//import com.samuelsumbane.ssptdesktop.presentation.viewmodel.proOwnerViewModel
 import com.samuelsumbane.ssptdesktop.ui.components.AlertWidget
 import com.samuelsumbane.ssptdesktop.ui.components.CommonPageStructure
 import com.samuelsumbane.ssptdesktop.ui.components.DialogFormModal
-import com.samuelsumbane.ssptdesktop.ui.components.DropDown
 import com.samuelsumbane.ssptdesktop.ui.components.InfoCard
 import com.samuelsumbane.ssptdesktop.ui.components.InputField
-import com.samuelsumbane.ssptdesktop.ui.components.MenuItemText
 import com.samuelsumbane.ssptdesktop.ui.components.NormalButton
 import com.samuelsumbane.ssptdesktop.ui.utils.FormInputName
 import org.koin.java.KoinJavaComponent.getKoin
 
 @Composable
-fun CategoriesPage() {
-    val categoryViewModel by remember { mutableStateOf(getKoin().get<ProductCategoryViewModel>()) }
-    val categoryUIStates by categoryViewModel.uiState.collectAsState()
+fun ProOwnersPage() {
+    val proOwnerViewModel by remember { mutableStateOf(getKoin().get<ProOwnerViewModel>()) }
+    val proOwnerUIStates by proOwnerViewModel.uiState.collectAsState()
 
     var submitButtonText by remember { mutableStateOf("") }
 
@@ -49,29 +41,29 @@ fun CategoriesPage() {
         topBarActions = {
             NormalButton(icon = null, text = "+ Categoria") {
                 submitButtonText = "Adicionar"
-                categoryViewModel.openFormDialog(true, "Adicionar categoria")
+                proOwnerViewModel.openFormDialog(true, "Adicionar proprietario")
             }
         }
     ) {
 
         FlowRow(modifier = Modifier.padding(10.dp)) {
-            categoryUIStates.proCategories.forEach { client ->
+            proOwnerUIStates.allProOwners.forEach { client ->
                 with(client) {
                     InfoCard(modifier = Modifier.size(260.dp, 150.dp)) {
-                        Text("Categoria: $name ")
+                        Text("proprietario: $name ")
 
                         Row(
                             modifier = Modifier.fillMaxWidth(),
                             horizontalArrangement = Arrangement.End
                         ) {
-                            NormalButton(text = "Editar", enabled = !isDefault) {
+                            NormalButton(text = "Editar") {
                                 submitButtonText = "Actualizar"
-                                categoryViewModel.fillCategoryForm(id, name)
-                                categoryViewModel.openFormDialog(true, "Actualizar categoria")
+                                proOwnerViewModel.fillFormFields(id, name, telephone)
+                                proOwnerViewModel.openFormDialog(true, "Actualizar proprietario")
                             }
                             Spacer(Modifier.width(10.dp))
-                            NormalButton(text = "Deletar", enabled = !isDefault) {
-                                categoryViewModel.removeProductCategory(id)
+                            NormalButton(text = "Deletar") {
+                                proOwnerViewModel.removeProOwner(id)
                             }
                         }
                     }
@@ -79,31 +71,36 @@ fun CategoriesPage() {
             }
         }
 
-
-        if (categoryUIStates.commonStates.showFormDialog) {
+        if (proOwnerUIStates.commonUiState.showFormDialog) {
             DialogFormModal(
-                title = categoryUIStates.commonStates.formDialogTitle,
-                onDismiss = { categoryViewModel.resetForm() },
-                onSubmit = { categoryViewModel.onSubmitForm() }
+                title = proOwnerUIStates.commonUiState.formDialogTitle,
+                onDismiss = { proOwnerViewModel.resetForm() },
+                onSubmit = { proOwnerViewModel.onSubmitForm() }
             ) {
                 InputField(
-                    inputValue = categoryUIStates.categoryName,
-                    label = "Categoria",
-                    errorText = categoryUIStates.commonStates.formErrors[FormInputName.CategoryName],
-                    onValueChanged = { categoryViewModel.setCategoryNameData(it) },
+                    inputValue = proOwnerUIStates.proOwnerName,
+                    label = "proprietario",
+                    errorText = proOwnerUIStates.commonUiState.formErrors[FormInputName.OwnerName],
+                    onValueChanged = { proOwnerViewModel.fillFormFields(name = it) },
                 )
 
+                InputField(
+                    inputValue = proOwnerUIStates.proOwnerTelephone,
+                    label = "Telefone",
+                    errorText = proOwnerUIStates.commonUiState.formErrors[FormInputName.OwnerPhone],
+                    onValueChanged = { proOwnerViewModel.fillFormFields(telephone = it) },
+                )
             }
         }
 
-        AnimatedVisibility(categoryUIStates.commonStates.showAlertDialog) {
+        AnimatedVisibility(proOwnerUIStates.commonUiState.showAlertDialog) {
             AlertWidget(
-                categoryUIStates.commonStates.alertTitle,
-                categoryUIStates.commonStates.alertText,
-                categoryUIStates.commonStates.alertType,
-                onDismiss = { categoryViewModel.openAlertDialog(false) },
+                proOwnerUIStates.commonUiState.alertTitle,
+                proOwnerUIStates.commonUiState.alertText,
+                proOwnerUIStates.commonUiState.alertType,
+                onDismiss = { proOwnerViewModel.openAlertDialog(false) },
             ) {
-                categoryUIStates.commonStates.alertOnAccept()
+                proOwnerUIStates.commonUiState.alertOnAccept()
             }
         }
 
