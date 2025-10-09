@@ -1,9 +1,13 @@
 package com.samuelsumbane.ssptdesktop.presentation.viewmodel.viewmodelstates
 
+import com.samuelsumbane.ssptdesktop.CategoryItem
+import com.samuelsumbane.ssptdesktop.OwnerItem
 import com.samuelsumbane.ssptdesktop.ProductItem
 
 data class ProductsUiState(
     val products: List<ProductItem> = emptyList(),
+    val categories: List<CategoryItem> = emptyList(),
+    val owners: List<OwnerItem> = emptyList(),
     val proId: Int = 0,
     val proName: String = "",
     val proType: String = "",
@@ -14,12 +18,14 @@ data class ProductsUiState(
     val proStock: Int = 0,
     val proMinStock: Int? = null,
     val proCategoryId: Int = 0,
-    val proCategoryName: String? = null,
+    val proCategoryName: String = "",
     val proBarcode: String = "",
     val proOwnerId: Int = 0,
     val proOwnerName: String = "",
-    val proTypeExpanded: Boolean = false,
-    val proProductsExpanded: Boolean = false,
+    val dropdownProductTypeExpanded: Boolean = false,
+    val dropdownProductsExpanded: Boolean = false,
+    val dropdownCategoriesExpanded: Boolean = false,
+    val dropdownOwnersExpanded: Boolean = false,
     val isPackTypeSelected: Boolean = false,
     val commonUiState: CommonUiState = CommonUiState(),
 )

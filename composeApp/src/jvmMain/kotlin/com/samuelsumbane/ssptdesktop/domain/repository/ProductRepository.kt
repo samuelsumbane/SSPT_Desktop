@@ -10,4 +10,5 @@ interface ProductRepository {
     suspend fun addProduct(product: ProductItem)
     suspend fun editProduct(product: ProductItem)
     suspend fun changeProductPrice(product: ChangeProductPriceDraft)
+    suspend fun removeProduct(productId: Int)
 }

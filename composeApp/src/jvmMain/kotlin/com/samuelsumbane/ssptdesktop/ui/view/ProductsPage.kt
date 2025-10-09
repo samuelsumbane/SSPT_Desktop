@@ -18,6 +18,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import com.samuelsumbane.ssptdesktop.presentation.viewmodel.ProductsViewModel
 import com.samuelsumbane.ssptdesktop.ui.components.AlertWidget
@@ -26,8 +27,10 @@ import com.samuelsumbane.ssptdesktop.ui.components.DialogFormModal
 import com.samuelsumbane.ssptdesktop.ui.components.DropDown
 import com.samuelsumbane.ssptdesktop.ui.components.InfoCard
 import com.samuelsumbane.ssptdesktop.ui.components.InputField
+import com.samuelsumbane.ssptdesktop.ui.components.LoadingWidget
 import com.samuelsumbane.ssptdesktop.ui.components.MenuItemText
 import com.samuelsumbane.ssptdesktop.ui.components.NormalButton
+import com.samuelsumbane.ssptdesktop.ui.components.ProgressIndicatorSize
 import com.samuelsumbane.ssptdesktop.ui.utils.FormInputName
 import org.koin.java.KoinJavaComponent.getKoin
 
@@ -40,9 +43,12 @@ fun ProductsPage() {
     CommonPageStructure(
         pageTitle = "Productos",
         topBarActions = {
-            NormalButton(icon = null, text = "+ Categoria") {
+            NormalButton(icon = null, text = "+ Producto") {
 //                submitButtonText = "Adicionar"
-//                productsViewModel.openFormDialog(true, "Adicionar producto")
+                productsViewModel.openFormDialog(true, "Adicionar producto")
+                productsViewModel.loadProducts()
+                productsViewModel.loadCategories()
+                productsViewModel.loadProOwners()
             }
         }
     ) {
@@ -59,12 +65,18 @@ fun ProductsPage() {
                         ) {
                             NormalButton(text = "Editar") {
 //                                submitButtonText = "Actualizar"
-//                                productsViewModel.fillFormFields(id, name, telephone)
-//                                productsViewModel.openFormDialog(true, "Actualizar producto")
+                                productsViewModel.fillFormFields(
+                                    proName = name,
+                                    proStock = stock,
+                                    proCost = cost,
+                                    proPrice = price,
+                                    proBarcode = barcode
+                                )
+                                productsViewModel.openFormDialog(true, "Actualizar producto")
                             }
                             Spacer(Modifier.width(10.dp))
                             NormalButton(text = "Deletar") {
-//                                productsViewModel.removeProOwner(id)
+                                productsViewModel.removeProduct(id)
                             }
                         }
                     }
@@ -81,58 +93,67 @@ fun ProductsPage() {
                 InputField(
                     inputValue = productsUiState.proName,
                     label = "Nome",
-                    errorText = productsUiState.commonUiState.formErrors[FormInputName.OwnerName],
-                    onValueChanged = { productsViewModel.fillFormFields(name = it) },
+                    errorText = productsUiState.commonUiState.formErrors[FormInputName.ProName],
+                    onValueChanged = { productsViewModel.fillFormFields(proName = it) },
                 )
-
+                
                 DropDown(
-                    text = "sdas",
-                    expanded = productsUiState.proTypeExpanded,
-                    onDismiss = { productsViewModel.changeProTypeExpandedState(false) },
-                    onDropdownClicked = { productsViewModel.changeProTypeExpandedState(!productStockTypeMenuExpanded) }
+                    label = "Tipo",
+                    text = if (productsUiState.proType == "UNIT") "Unitário" else "Embalagem",
+                    expanded = productsUiState.dropdownProductTypeExpanded,
+                    onDismiss = { productsViewModel.fillFormFields(dropdownProductTypeExpanded = false) },
+                    onDropdownClicked = { productsViewModel.fillFormFields(dropdownProductTypeExpanded = !productStockTypeMenuExpanded) }
                 ) {
-                    DropdownMenuItem(
-                        onClick = {
-                            productsViewModel.changePackTypeSelected(false)
-                        }
-                    ) {
-                        MenuItemText("Unitário")
+                    for((key, value) in mapOf("UNIT" to "Unitário", "PACK" to "Embalagem")) {
+//                        if (!productsUiState.products.isEmpty() && key == "PACK") {
+                            DropdownMenuItem(
+                                onClick = {
+                                    productsViewModel.changePackTypeSelected(false)
+                                    productsViewModel.fillFormFields(
+                                        proType = key,
+                                        dropdownProductTypeExpanded = false
+                                    )
+                                }
+                            ) { MenuItemText(value) }
+//                        }
                     }
 
-                    DropdownMenuItem(onClick = { productsViewModel.changePackTypeSelected(true) }) {
-                        MenuItemText("Embalagem")
-                    }
                 }
 
 //                AnimatedVisibility(productsUiState.proProductsExpanded) {
+                if (productsUiState.proType == "PACK") {
                     DropDown(
-                        text = "Producto relacionado",
-                        expanded = productsUiState.proProductsExpanded,
-                        onDismiss = { productsViewModel.changeProProductExpandedState(false) },
-                        onDropdownClicked = { productsViewModel.changeProProductExpandedState(!productsUiState.proProductsExpanded) }
+                        label = "Producto relacionado",
+                        text = productsUiState.proRelationName,
+                        expanded = productsUiState.dropdownProductsExpanded,
+                        onDismiss = { productsViewModel.fillFormFields(dropdownProductsExpanded = false) },
+                        onDropdownClicked = { productsViewModel.fillFormFields(dropdownProductsExpanded = !productsUiState.dropdownProductsExpanded) }
                     ) {
                         productsUiState.products.forEach { product ->
-                            DropdownMenuItem(onClick = {}) {
+                            DropdownMenuItem(onClick = {
+//                                productsViewModel.fillFormFields()
+                                productsViewModel.fillFormFields(dropdownProductsExpanded = false)
+                            }) {
                                 MenuItemText(product.name)
                             }
                         }
                     }
-//                }
+                }
+
 
                 InputField(
                     inputValue = productsUiState.proStock.toString(),
                     label = "Quantidade",
-                    errorText = productsUiState.commonUiState.formErrors[FormInputName.OwnerPhone],
-                    onValueChanged = {
-//                        productsViewModel.fillFormFields(telephone = it)
-                                     },
+                    errorText = productsUiState.commonUiState.formErrors[FormInputName.ProStock],
+                    onValueChanged = { productsViewModel.fillFormFields(proStock = it.toInt()) },
+                    keyboardType = KeyboardType.Number
                 )
 
 
 //                InputField(
 //                    inputValue = productsUiState.proMinStock.toString(),
 //                    label = "Quantidade Minima",
-//                    errorText = productsUiState.commonUiState.formErrors[FormInputName.OwnerPhone],
+//                    errorText = productsUiState.commonUiState.formErrors[FormInputName.ProMinStock],
 //                    onValueChanged = {
 ////                        productsViewModel.fillFormFields(telephone = it)
 //                    },
@@ -141,30 +162,42 @@ fun ProductsPage() {
                 InputField(
                     inputValue = productsUiState.proCost.toString(),
                     label = "Custo",
-                    errorText = productsUiState.commonUiState.formErrors[FormInputName.OwnerPhone],
-                    onValueChanged = {
-//                        productsViewModel.fillFormFields(telephone = it)
-                    },
+                    errorText = productsUiState.commonUiState.formErrors[FormInputName.ProCost],
+                    onValueChanged = { productsViewModel.fillFormFields(proCost = it.toDouble()) },
+                    keyboardType = KeyboardType.Number
                 )
 
                 InputField(
                     inputValue = productsUiState.proPrice.toString(),
                     label = "Preço",
-                    errorText = productsUiState.commonUiState.formErrors[FormInputName.OwnerPhone],
-                    onValueChanged = {
-//                        productsViewModel.fillFormFields(telephone = it)
-                    },
+                    errorText = productsUiState.commonUiState.formErrors[FormInputName.ProPrice],
+                    onValueChanged = { productsViewModel.fillFormFields(proPrice = it.toDouble()) },
+                    keyboardType = KeyboardType.Phone
                 )
 
-                DropDown(
-                    text = "Categoria",
-                    expanded = productsUiState.proProductsExpanded,
-                    onDismiss = { productsViewModel.changeProProductExpandedState(false) },
-                    onDropdownClicked = { productsViewModel.changeProProductExpandedState(!productsUiState.proProductsExpanded) }
-                ) {
-                    productsUiState.products.forEach { product ->
-                        DropdownMenuItem(onClick = {}) {
-                            MenuItemText(product.name)
+                if (productsUiState.categories.isEmpty()) {
+                    LoadingWidget(ProgressIndicatorSize.Small, "Carregando categoria")
+                } else {
+                    DropDown(
+                        label = "Categoria",
+                        text = productsUiState.proCategoryName,
+                        errorText = productsUiState.commonUiState.formErrors[FormInputName.CategoryName],
+                        expanded = productsUiState.dropdownCategoriesExpanded,
+                        onDismiss = { productsViewModel.fillFormFields(dropdownCategoriesExpanded = false) },
+                        onDropdownClicked = { productsViewModel.fillFormFields(dropdownCategoriesExpanded = !productsUiState.dropdownCategoriesExpanded) }
+                    ) {
+                        productsUiState.categories.forEach { category ->
+                            DropdownMenuItem(
+                                onClick = {
+                                    productsViewModel.fillFormFields(
+                                        proCategoryId = category.id,
+                                        proCategoryName = category.name,
+                                        dropdownCategoriesExpanded = false
+                                    )
+                                }
+                            ) {
+                                MenuItemText(category.name)
+                            }
                         }
                     }
                 }
@@ -173,20 +206,30 @@ fun ProductsPage() {
                     inputValue = productsUiState.proBarcode,
                     label = "Código de barras",
                     errorText = productsUiState.commonUiState.formErrors[FormInputName.OwnerPhone],
-                    onValueChanged = {
-//                        productsViewModel.fillFormFields(telephone = it)
-                    },
+                    onValueChanged = { productsViewModel.fillFormFields(proBarcode = it) },
                 )
 
-                DropDown(
-                    text = "Proprietário",
-                    expanded = productsUiState.proProductsExpanded,
-                    onDismiss = { productsViewModel.changeProProductExpandedState(false) },
-                    onDropdownClicked = { productsViewModel.changeProProductExpandedState(!productsUiState.proProductsExpanded) }
-                ) {
-                    productsUiState.products.forEach { product ->
-                        DropdownMenuItem(onClick = {}) {
-                            MenuItemText(product.name)
+                if (productsUiState.owners.isEmpty()) {
+                    LoadingWidget(ProgressIndicatorSize.Small, "Carregando proprietários")
+                } else {
+                    DropDown(
+                        label = "Proprietário",
+                        text = productsUiState.proOwnerName,
+                        errorText = productsUiState.commonUiState.formErrors[FormInputName.OwnerName],
+                        expanded = productsUiState.dropdownOwnersExpanded,
+                        onDismiss = { productsViewModel.fillFormFields(dropdownOwnersExpanded = false) },
+                        onDropdownClicked = { productsViewModel.fillFormFields(dropdownOwnersExpanded = !productsUiState.dropdownOwnersExpanded) }
+                    ) {
+                        productsUiState.owners.forEach { owner ->
+                            DropdownMenuItem(onClick = {
+                                productsViewModel.fillFormFields(
+                                    proOwnerId = owner.id,
+                                    proOwnerName = owner.name,
+                                    dropdownOwnersExpanded = false
+                                )
+                            }) {
+                                MenuItemText(owner.name)
+                            }
                         }
                     }
                 }

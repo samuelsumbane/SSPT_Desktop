@@ -6,7 +6,12 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 
 class ProOwnerRepositoryImpl : ProOwnerRepository{
-    val _state = MutableStateFlow(emptyList<OwnerItem>())
+    val _state = MutableStateFlow(
+//        emptyList<OwnerItem>()
+        listOf(
+            OwnerItem(1, "Walter Obrain", "878293")
+        )
+    )
 
     override fun getProOwners(): Flow<List<OwnerItem>> = _state
 

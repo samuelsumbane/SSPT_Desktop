@@ -38,6 +38,6 @@ fun App() {
 //    val clientViewModel: ClientViewModel = getKoin().get()
 
     SSPTTheme(darkTheme = false) {
-        Navigator(CategoriesScreen())
+        Navigator(ProductsScreen())
     }
 }

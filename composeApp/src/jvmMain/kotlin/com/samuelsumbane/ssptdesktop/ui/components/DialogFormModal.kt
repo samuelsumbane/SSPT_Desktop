@@ -1,20 +1,17 @@
 package com.samuelsumbane.ssptdesktop.ui.components
 
+//import androidx.compose.foundation.gestures.rememberScrollableState
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.heightIn
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.gestures.scrollable
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.key.Key
 import androidx.compose.ui.input.key.key
 import androidx.compose.ui.input.key.onKeyEvent
@@ -31,11 +28,14 @@ fun DialogFormModal(
     onSubmit: () -> Unit,
     modalContent: @Composable () -> Unit
 ) {
+    val scrollbar = rememberScrollState()
+
     Dialog(onDismissRequest = { onDismiss() }) {
         Column(
             modifier = Modifier
                 .width(modalSize.widthSize)
                 .heightIn(min = 400.dp)
+                .fillMaxHeight(0.85f)
                 .background(MaterialTheme.colorScheme.background, RoundedCornerShape(12.dp))
                 .onKeyEvent { keyEvent ->
                     if (keyEvent.key == Key.Enter) {
@@ -43,10 +43,11 @@ fun DialogFormModal(
                         true
                     } else false
                 }
+                .verticalScroll(scrollbar)
                 .padding(10.dp),
-            verticalArrangement = Arrangement.SpaceBetween
+//            verticalArrangement = Arrangement.SpaceBetween
         ) {
-            Row() {
+            Row(modifier = Modifier.padding(bottom = 50.dp)) {
               Text(title.uppercase(), fontWeight = FontWeight.SemiBold)
             }
 
@@ -60,7 +61,7 @@ fun DialogFormModal(
             }
 
             Row(
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier.padding(top = 50.dp).fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceAround
             ) {
                 NormalOutlineButton(text = "Fechar", onClick = onDismiss)

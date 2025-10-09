@@ -99,9 +99,7 @@ class ClientViewModel(
 
     fun openAlertDialog(setOpen: Boolean) {
         _uiStates.update {
-            it.copy(
-                common = it.common.copy(showAlertDialog = setOpen)
-            )
+            it.copy(common = it.common.copy(showAlertDialog = setOpen))
         }
     }
 

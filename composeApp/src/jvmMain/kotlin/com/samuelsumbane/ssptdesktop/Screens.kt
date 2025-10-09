@@ -5,6 +5,7 @@ import cafe.adriel.voyager.core.screen.Screen
 import com.samuelsumbane.ssptdesktop.presentation.viewmodel.ClientViewModel
 import com.samuelsumbane.ssptdesktop.ui.view.CategoriesPage
 import com.samuelsumbane.ssptdesktop.ui.view.ClientsPage
+import com.samuelsumbane.ssptdesktop.ui.view.ProductsPage
 
 class HomePage : Screen {
     @Composable
@@ -25,5 +26,12 @@ class CategoriesScreen : Screen {
     @Composable
     override fun Content() {
         CategoriesPage()
+    }
+}
+
+class ProductsScreen : Screen {
+    @Composable
+    override fun Content() {
+        ProductsPage()
     }
 }

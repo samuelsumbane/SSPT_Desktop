@@ -30,4 +30,8 @@ class ProductRepositoryImpl : ProductRepository {
         //
     }
 
+    override suspend fun removeProduct(productId: Int) {
+        _state.value = _state.value.filterNot { it.id == productId }
+    }
+
 }

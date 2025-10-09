@@ -7,4 +7,10 @@ enum class FormInputName {
     CategoryName,
     OwnerName,
     OwnerPhone,
+    ProName,
+    ProStock,
+    ProMinStock,
+    ProCost,
+    ProPrice,
+    ProType,
 }

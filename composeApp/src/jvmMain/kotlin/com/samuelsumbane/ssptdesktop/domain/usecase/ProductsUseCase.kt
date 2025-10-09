@@ -11,19 +11,25 @@ class GetProductsUseCase(private val repo: ProductRepository) {
 }
 
 class AddProductsUseCase(private val repo: ProductRepository) {
-    suspend operator fun invoke(productItem: ProductItem) {
-
+    suspend operator fun invoke(product: ProductItem) {
+        repo.addProduct(product)
     }
 }
 
 class EditProductUseCase(private val repo: ProductRepository) {
-    suspend operator fun invoke(productItem: ProductItem) {
-
+    suspend operator fun invoke(product: ProductItem) {
+        repo.editProduct(product)
     }
 }
 
-class UpdateProductPriceUseCase(private val repo: ProductRepository) {
+class ChangeProductPriceUseCase(private val repo: ProductRepository) {
     suspend operator fun invoke(product: ChangeProductPriceDraft) {
+        repo.changeProductPrice(product)
+    }
+}
 
+class RemoveProductUseCase(private val repo: ProductRepository) {
+    suspend operator fun invoke(productId: Int) {
+        repo.removeProduct(productId)
     }
 }

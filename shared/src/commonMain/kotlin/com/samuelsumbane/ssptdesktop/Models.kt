@@ -10,7 +10,7 @@ data class CategoryItem(
 
 // @Serializable
 data class ProductItem(
-    val id: Int?,
+    val id: Int,
     val name: String,
     val type: String,
     val productRelationId: Int?,

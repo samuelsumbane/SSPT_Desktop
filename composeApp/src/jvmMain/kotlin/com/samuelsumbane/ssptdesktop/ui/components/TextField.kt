@@ -96,7 +96,7 @@ fun InputField(
                 .padding(0.dp)
         )
 
-        errorText?.let { Text(text = errorText, fontSize = 12.sp, color = Color.Red) }
+        errorText?.let { ErrorText(errorText) }
     }
 }
 
