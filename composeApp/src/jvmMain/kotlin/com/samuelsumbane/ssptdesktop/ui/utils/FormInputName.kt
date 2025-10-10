@@ -13,4 +13,5 @@ enum class FormInputName {
     ProCost,
     ProPrice,
     ProType,
+    ProBarcode,
 }

@@ -5,5 +5,5 @@ import androidx.compose.ui.unit.dp
 
 enum class ModalSize(val widthSize: Dp) {
     SMALL(400.dp),
-    MEDIUMN(800.dp)
+    MEDIUMN(900.dp)
 }

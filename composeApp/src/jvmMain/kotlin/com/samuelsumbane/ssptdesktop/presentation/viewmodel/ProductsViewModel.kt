@@ -60,9 +60,16 @@ class ProductsViewModel(
         }
     }
 
-
     fun updateProductPrice(product: ChangeProductPriceDraft) {
         viewModelScope.launch { updateProductPriceUseCase(product) }
+    }
+
+    fun startAddingProductProcess() {
+        openFormDialog(true, "Adicionar producto")
+        fillFormFields(proType = "UNIT")
+        loadProducts()
+        loadCategories()
+        loadProOwners()
     }
 
     fun onSubmitForm() {
@@ -70,21 +77,51 @@ class ProductsViewModel(
             setFormError(FormInputName.ProName, "O nome é obrigatorio")
             return
         }
-
-        if (uiState.value.proStock == 0) {
-            setFormError(FormInputName.ProStock, "A quantidade é obrigatoria")
-            return
-        }
+        setFormError(FormInputName.ProName, "")
 
         if (uiState.value.proType !in listOf("UNIT", "PACK")) {
             setFormError(FormInputName.ProType, "O tipo é obrigatorio")
             return
         }
+        setFormError(FormInputName.ProType, "")
+
+        if (uiState.value.proStock == 0) {
+            setFormError(FormInputName.ProStock, "A quantidade é obrigatoria")
+            return
+        }
+        setFormError(FormInputName.ProStock, "")
+
+        if (uiState.value.proCost == 0.0) {
+            setFormError(FormInputName.ProCost, "O custo é obrigatorio")
+            return
+        }
+        setFormError(FormInputName.ProCost, "")
+
+
+        if (uiState.value.proPrice == 0.0) {
+            setFormError(FormInputName.ProPrice, "O preço de venda é obrigatorio")
+            return
+        }
+        setFormError(FormInputName.ProPrice, "")
+
 
         if (uiState.value.proCategoryId == 0) {
             setFormError(FormInputName.CategoryName, "A categoria é obrigatoria")
             return
         }
+        setFormError(FormInputName.CategoryName, "")
+
+//        if (uiState.value.proBarcode.isBlank()) {
+//            setFormError(FormInputName.ProBarcode, "A categoria é obrigatoria")
+//            return
+//        }
+//        setFormError(FormInputName.CategoryName, "")
+
+        if (uiState.value.proOwnerId == 0) {
+            setFormError(FormInputName.OwnerName, "Por favor, selecione um proprietaio")
+            return
+        }
+        setFormError(FormInputName.OwnerName, "")
 
         val product = ProductItem(
             id = uiState.value.proId,

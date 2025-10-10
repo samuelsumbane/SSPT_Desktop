@@ -1,4 +1,4 @@
-package com.samuelsumbane.ssptdesktop.ui.view
+package com.samuelsumbane.ssptdesktop.ui.view.partners
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Arrangement
@@ -18,6 +18,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import cafe.adriel.voyager.navigator.LocalNavigator
+import cafe.adriel.voyager.navigator.currentOrThrow
 import com.samuelsumbane.ssptdesktop.presentation.viewmodel.ProOwnerViewModel
 //import com.samuelsumbane.ssptdesktop.presentation.viewmodel.proOwnerViewModel
 import com.samuelsumbane.ssptdesktop.ui.components.AlertWidget
@@ -33,10 +35,11 @@ import org.koin.java.KoinJavaComponent.getKoin
 fun ProOwnersPage() {
     val proOwnerViewModel by remember { mutableStateOf(getKoin().get<ProOwnerViewModel>()) }
     val proOwnerUIStates by proOwnerViewModel.uiState.collectAsState()
-
+    val navigator = LocalNavigator.currentOrThrow
     var submitButtonText by remember { mutableStateOf("") }
 
     CommonPageStructure(
+        navigator = navigator,
         pageTitle = "Categorias",
         topBarActions = {
             NormalButton(icon = null, text = "+ Categoria") {

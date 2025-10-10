@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.NavigationRail
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -25,9 +26,15 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.samuelsumbane.ssptdesktop.ClientsScreen
-import com.samuelsumbane.ssptdesktop.presentation.viewmodel.ClientViewModel
+import com.samuelsumbane.ssptdesktop.HomeScreen
 import com.samuelsumbane.ssptdesktop.ui.utils.PageName
-import kotlin.collections.listOf
+import org.jetbrains.compose.resources.painterResource
+//import org.jetbrains.compose.resources.painterResource
+//import org.jetbrains.compose.resources.painterResource
+import ssptdesktop.composeapp.generated.resources.Res
+import ssptdesktop.composeapp.generated.resources.adjust_24
+import ssptdesktop.composeapp.generated.resources.details
+import ssptdesktop.composeapp.generated.resources.home
 
 @Composable
 fun SideBar() {
@@ -54,28 +61,36 @@ fun SideBar() {
                 verticalArrangement = Arrangement.SpaceEvenly,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
+                val homePainter by mutableStateOf(painterResource(Res.drawable.home))
+                val clientPainter by mutableStateOf(painterResource(Res.drawable.adjust_24))
+                val productPainter by mutableStateOf(painterResource(Res.drawable.details))
 
-                val pageNames by remember { mutableStateOf(
-                    listOf(
-                        PageName.HOME.itsName,
-                        PageName.CLIENTS.itsName,
-                        PageName.PRODUCTS.itsName
+                val pageButtons by remember { mutableStateOf(
+                    mapOf(
+                        PageName.HOME.itsName to homePainter,
+                        PageName.CLIENTS.itsName to clientPainter,
+                        PageName.PRODUCTS.itsName to productPainter
                     )
                 )}
 
-                pageNames.forEach {
+                for ((text, painter) in pageButtons) {
                     Column(
                         modifier = Modifier
                             .clickable {
-                                when (it) {
-//                                    PageName.HOME.itsName ->
+                                when (text) {
+                                    PageName.HOME.itsName -> HomeScreen()
                                     PageName.CLIENTS.itsName -> ClientsScreen()
 //                                    PageName.PRODUCTS.itsName
                                     else -> {}
                                 }
                             }
                     ) {
-                        Text(it, fontSize = 12.sp)
+                        Icon(
+                            painter, contentDescription = text,
+                            modifier = Modifier.align(Alignment.CenterHorizontally)
+                        )
+
+                        Text(text, fontSize = 12.sp)
                     }
                 }
 

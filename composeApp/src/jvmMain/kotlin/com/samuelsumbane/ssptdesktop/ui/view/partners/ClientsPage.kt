@@ -1,4 +1,4 @@
-package com.samuelsumbane.ssptdesktop.ui.view
+package com.samuelsumbane.ssptdesktop.ui.view.partners
 
 //import com.samuelsumbane.ssptdesktop.ui.states.AppState.formErrors
 import androidx.compose.animation.AnimatedVisibility
@@ -10,6 +10,8 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
+import cafe.adriel.voyager.navigator.LocalNavigator
+import cafe.adriel.voyager.navigator.currentOrThrow
 import com.samuelsumbane.ssptdesktop.presentation.viewmodel.ClientViewModel
 import com.samuelsumbane.ssptdesktop.ui.components.*
 import com.samuelsumbane.ssptdesktop.ui.utils.FormInputName
@@ -19,11 +21,12 @@ import org.koin.java.KoinJavaComponent.getKoin
 fun ClientsPage() {
     val clientViewModel by remember { mutableStateOf(getKoin().get<ClientViewModel>()) }
     val clientUIStates by clientViewModel.uiStates.collectAsState()
-
+    val navigator = LocalNavigator.currentOrThrow
     var submitButtonText by remember { mutableStateOf("") }
 //    var clientTelephone by remember { mutableStateOf("") }
 
     CommonPageStructure(
+        navigator,
         topBarActions = {
             NormalButton(icon = null, text = "+ Cliente") {
                 submitButtonText = "Adicionar"

@@ -18,6 +18,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import cafe.adriel.voyager.navigator.Navigator
 import com.samuelsumbane.ssptdesktop.presentation.viewmodel.ClientViewModel
 import org.jetbrains.compose.resources.painterResource
 import ssptdesktop.composeapp.generated.resources.Res
@@ -28,14 +29,12 @@ import ssptdesktop.composeapp.generated.resources.arrow_back
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CommonPageStructure(
+    navigator: Navigator,
     pageTitle: String = "Clientes",
     topBarActions: @Composable RowScope.() -> Unit = {},
     content: @Composable ColumnScope.() -> Unit
 ) {
-    Row(
-        modifier = Modifier
-//            .background(Color.Blue)
-    ) {
+    Row(modifier = Modifier) {
         SideBar()
 
         Scaffold(
@@ -46,7 +45,7 @@ fun CommonPageStructure(
                     },
                     navigationIcon = {
                         IconButton(
-                            onClick = {}
+                            onClick = { navigator.pop() }
                         ) {
                             Icon(painterResource(Res.drawable.arrow_back), contentDescription = "Go back")
                         }

@@ -9,3 +9,8 @@ import androidx.compose.ui.unit.sp
 fun ErrorText(errorText: String) {
     Text(text = errorText, fontSize = 12.sp, color = Color.Red)
 }
+
+@Composable
+fun CardPItem(key: String, value: String) {
+    Text("$key: $value")
+}

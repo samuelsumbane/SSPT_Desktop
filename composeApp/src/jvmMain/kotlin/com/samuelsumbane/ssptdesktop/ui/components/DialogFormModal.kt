@@ -12,6 +12,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.key.Key
 import androidx.compose.ui.input.key.key
 import androidx.compose.ui.input.key.onKeyEvent
@@ -51,14 +52,15 @@ fun DialogFormModal(
               Text(title.uppercase(), fontWeight = FontWeight.SemiBold)
             }
 
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth(),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.spacedBy(30.dp)
-            ) {
+//            Column(
+//                modifier = Modifier
+//                    .background(Color.Blue)
+//                    .fillMaxWidth(),
+//                horizontalAlignment = Alignment.CenterHorizontally,
+//                verticalArrangement = Arrangement.spacedBy(30.dp)
+//            ) {
                 modalContent()
-            }
+//            }
 
             Row(
                 modifier = Modifier.padding(top = 50.dp).fillMaxWidth(),

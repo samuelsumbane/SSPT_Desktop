@@ -20,7 +20,7 @@ data class ProductItem(
     val stock: Int,
     val minStock: Int?,
     val categoryId: Int,
-    val categoryName: String?,
+    val categoryName: String,
     val barcode: String,
     val ownerId: Int,
     val ownerName: String,
