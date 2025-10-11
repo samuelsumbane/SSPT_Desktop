@@ -18,6 +18,7 @@ import cafe.adriel.voyager.navigator.Navigator
 import com.samuelsumbane.ssptdesktop.*
 import com.samuelsumbane.ssptdesktop.ui.utils.IconPageScreen
 import com.samuelsumbane.ssptdesktop.ui.utils.PageName
+import com.samuelsumbane.ssptdesktop.ui.view.Products.ProductsScreen
 import org.jetbrains.compose.resources.painterResource
 import ssptdesktop.composeapp.generated.resources.*
 
@@ -41,7 +42,7 @@ fun SideBar(navigator: Navigator) {
                 modifier = Modifier
                     .padding(5.dp)
                     .fillMaxWidth()
-                    .height(400.dp)
+                    .height(600.dp)
                     .background(Color.Gray, RoundedCornerShape(12.dp)),
                 verticalArrangement = Arrangement.SpaceEvenly,
                 horizontalAlignment = Alignment.CenterHorizontally
