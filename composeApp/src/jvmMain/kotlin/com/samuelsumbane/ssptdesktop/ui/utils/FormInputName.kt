@@ -14,4 +14,6 @@ enum class FormInputName {
     ProPrice,
     ProType,
     ProBarcode,
+    BranchName,
+    Address
 }

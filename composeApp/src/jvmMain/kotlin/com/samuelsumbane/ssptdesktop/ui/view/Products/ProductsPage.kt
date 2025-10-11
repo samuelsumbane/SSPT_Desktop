@@ -23,6 +23,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
+import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import com.samuelsumbane.ssptdesktop.presentation.viewmodel.ProductsViewModel
@@ -47,6 +48,15 @@ import ssptdesktop.composeapp.generated.resources.delete
 import ssptdesktop.composeapp.generated.resources.details
 import ssptdesktop.composeapp.generated.resources.edit
 import kotlin.collections.iterator
+
+
+class ProductsScreen : Screen {
+    @Composable
+    override fun Content() {
+        ProductsPage()
+    }
+}
+
 
 @Composable
 fun ProductsPage() {

@@ -35,7 +35,7 @@ fun CommonPageStructure(
     content: @Composable ColumnScope.() -> Unit
 ) {
     Row(modifier = Modifier) {
-        SideBar()
+        SideBar(navigator)
 
         Scaffold(
             topBar = {

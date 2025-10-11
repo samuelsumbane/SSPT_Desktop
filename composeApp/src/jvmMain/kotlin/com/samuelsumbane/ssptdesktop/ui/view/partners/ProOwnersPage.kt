@@ -18,6 +18,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import com.samuelsumbane.ssptdesktop.presentation.viewmodel.ProOwnerViewModel
@@ -30,6 +31,13 @@ import com.samuelsumbane.ssptdesktop.ui.components.InputField
 import com.samuelsumbane.ssptdesktop.ui.components.NormalButton
 import com.samuelsumbane.ssptdesktop.ui.utils.FormInputName
 import org.koin.java.KoinJavaComponent.getKoin
+
+class OwnersScreen : Screen {
+    @Composable
+    override fun Content() {
+        ProOwnersPage()
+    }
+}
 
 @Composable
 fun ProOwnersPage() {

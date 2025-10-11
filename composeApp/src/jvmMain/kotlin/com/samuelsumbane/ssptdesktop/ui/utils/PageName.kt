@@ -5,5 +5,11 @@ enum class PageName(val itsName: String) {
     CLIENTS("Clients"),
     OWNERS("Owners"),
     PRODUCTS("Products"),
-    SALES("sales")
+    SALES("sales"),
+    FINANCE("Finance"),
+    MANAGER("Manager"),
+    PARTNERS("Partners"),
+    REPORT("Report"),
+    SELL("Sell"),
+    SETTINGS("Settings")
 }

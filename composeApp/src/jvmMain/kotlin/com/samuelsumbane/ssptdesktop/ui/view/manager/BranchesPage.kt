@@ -1,12 +1,16 @@
-package com.samuelsumbane.ssptdesktop.ui.view.partners
+package com.samuelsumbane.ssptdesktop.ui.view.manager
 
-//import com.samuelsumbane.ssptdesktop.ui.states.AppState.formErrors
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
@@ -14,20 +18,24 @@ import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import com.samuelsumbane.ssptdesktop.presentation.viewmodel.ClientViewModel
-import com.samuelsumbane.ssptdesktop.ui.components.*
+import com.samuelsumbane.ssptdesktop.ui.components.AlertWidget
+import com.samuelsumbane.ssptdesktop.ui.components.CommonPageStructure
+import com.samuelsumbane.ssptdesktop.ui.components.DialogFormModal
+import com.samuelsumbane.ssptdesktop.ui.components.InfoCard
+import com.samuelsumbane.ssptdesktop.ui.components.InputField
+import com.samuelsumbane.ssptdesktop.ui.components.NormalButton
 import com.samuelsumbane.ssptdesktop.ui.utils.FormInputName
 import org.koin.java.KoinJavaComponent.getKoin
 
-
-class ClientsScreen : Screen {
+class BranchScreen : Screen {
     @Composable
     override fun Content() {
-        ClientsPage()
+        BranchPage()
     }
 }
 
 @Composable
-fun ClientsPage() {
+fun BranchPage() {
     val clientViewModel by remember { mutableStateOf(getKoin().get<ClientViewModel>()) }
     val clientUIStates by clientViewModel.uiStates.collectAsState()
     val navigator = LocalNavigator.currentOrThrow
@@ -78,17 +86,16 @@ fun ClientsPage() {
             ) {
                 InputField(
                     inputValue = clientUIStates.clientName,
-                    label = "Nome",
-                    errorText = clientUIStates.common.formErrors[FormInputName.ClientName],
+                    label = "Nome da branch",
+                    errorText = clientUIStates.common.formErrors[FormInputName.BranchName],
                     onValueChanged = { clientViewModel.setClientNameData(it) },
                 )
 
                 InputField(
                     inputValue = clientUIStates.clientPhone,
-                    label = "Telefone",
-                    errorText = clientUIStates.common.formErrors[FormInputName.ClientPhone],
+                    label = "Endereço de branch",
+                    errorText = clientUIStates.common.formErrors[FormInputName.Address],
                     onValueChanged = { clientViewModel.setClientPhoneData(it) },
-                    keyboardType = KeyboardType.Phone
                 )
             }
         }

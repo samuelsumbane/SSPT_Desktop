@@ -10,22 +10,16 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import com.samuelsumbane.ssptdesktop.ui.components.CommonPageStructure
+import com.samuelsumbane.ssptdesktop.ui.utils.IconPageScreen
 
-data class IconAndPageName(
-    val painter: Painter,
-    val page: String,
-    val screenDestination: Screen,
-)
 
 @Composable
-fun AgroupedPages(title: String, pageLists: List<IconAndPageName>) {
+fun AgroupedPages(title: String, pageLists: List<IconPageScreen>) {
     val navigator = LocalNavigator.currentOrThrow
     CommonPageStructure(navigator, pageTitle = title) {
         FlowRow(
