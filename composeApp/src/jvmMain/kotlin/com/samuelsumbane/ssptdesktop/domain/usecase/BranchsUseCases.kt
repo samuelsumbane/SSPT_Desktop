@@ -1,6 +1,6 @@
 package com.samuelsumbane.ssptdesktop.domain.usecase
 
-import com.samuelsumbane.ssptdesktop.BranchItem
+import com.samuelsumbane.ssptdesktop.kclient.BranchItem
 import com.samuelsumbane.ssptdesktop.domain.repository.BranchRepository
 import kotlinx.coroutines.flow.Flow
 

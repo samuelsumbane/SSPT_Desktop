@@ -1,4 +1,4 @@
-package com.samuelsumbane.infrastructure.modules
+package com.samuelsumbane.ssptdesktop.modules
 
 import com.samuelsumbane.infrastructure.repositories.StockRepository
 import com.samuelsumbane.infrastructure.repositories.StockRepository.generateStocksCsv

@@ -1,6 +1,6 @@
 package com.samuelsumbane.ssptdesktop.domain.repository
 
-import com.samuelsumbane.ssptdesktop.CategoryItem
+import com.samuelsumbane.ssptdesktop.kclient.CategoryItem
 import kotlinx.coroutines.flow.Flow
 
 

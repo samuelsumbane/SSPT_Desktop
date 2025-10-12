@@ -1,7 +1,7 @@
-package com.samuelsumbane.infrastructure.repositories
+package com.samuelsumbane.ssptdesktop.repositories
 
 import com.samuelsumbane.ssptdesktop.Clients
-import com.samuelsumbane.ssptdesktop.modules.ClientItem
+import com.samuelsumbane.ssptdesktop.ClientItem
 import kotlinx.coroutines.Dispatchers
 import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq

@@ -5,9 +5,6 @@ package com.samuelsumbane.ssptdesktop
 import com.samuelsumbane.infrastructure.repositories.*
 import com.samuelsumbane.infrastructure.repositories.OrderRepository.generateOrdersCsv
 import com.samuelsumbane.infrastructure.repositories.OrderRepository.generateOrdersItemsExcel
-import com.samuelsumbane.ssptdesktop.modules.LogDraft
-import com.samuelsumbane.ssptdesktop.modules.SaleItem
-import com.samuelsumbane.ssptdesktop.modules.SysConfigItem
 import com.samuelsumbane.ssptdesktop.repositories.ReportRepository
 import com.samuelsumbane.ssptdesktop.repositories.getCurrentTimestamp
 import com.samuelsumbane.ssptdesktop.repositories.longTimeToString

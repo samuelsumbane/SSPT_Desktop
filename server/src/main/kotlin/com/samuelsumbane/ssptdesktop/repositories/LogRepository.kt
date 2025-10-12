@@ -4,9 +4,9 @@ import com.samuelsumbane.ssptdesktop.repositories.getCurrentTimestamp
 import com.samuelsumbane.ssptdesktop.repositories.longTimeToString
 import com.samuelsumbane.ssptdesktop.Logs
 import com.samuelsumbane.ssptdesktop.Users
-import com.samuelsumbane.ssptdesktop.modules.LogDraft
-import com.samuelsumbane.ssptdesktop.modules.LogItem
-import com.samuelsumbane.ssptdesktop.modules.LogLevel
+import com.samuelsumbane.ssptdesktop.LogDraft
+import com.samuelsumbane.ssptdesktop.LogItem
+import com.samuelsumbane.ssptdesktop.LogLevel
 import kotlinx.coroutines.Dispatchers
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.lessEq

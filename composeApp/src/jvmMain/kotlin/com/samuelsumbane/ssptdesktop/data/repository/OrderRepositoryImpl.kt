@@ -1,7 +1,7 @@
 package com.samuelsumbane.ssptdesktop.data.repository
 
-import com.samuelsumbane.ssptdesktop.OrderItem
-import com.samuelsumbane.ssptdesktop.OrderItemDraft
+import com.samuelsumbane.ssptdesktop.kclient.OrderItem
+import com.samuelsumbane.ssptdesktop.kclient.OrderItemDraft
 import com.samuelsumbane.ssptdesktop.domain.repository.OrderRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow

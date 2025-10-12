@@ -1,0 +1,72 @@
+^C%                                                                                                                                                         ╭─younger@debian in ~/IdeaProjects/SSPT Desktop on main ✘ (origin/main)
+╰$ ./gradlew :server:run
+Reusing configuration cache.
+
+> Task :server:run
+2025-10-12 16:56:33.586 [main] DEBUG io.ktor.server.Application - Java Home: /usr/lib/jvm
+2025-10-12 16:56:33.608 [main] DEBUG io.ktor.server.Application - Class Loader: jdk.internal.loader.ClassLoaders$AppClassLoader@639fee48: [file:/home/younger/.gradle/caches/modules-2/files-2.1/ch.qos.logback/logback-classic/1.5.18/fc371f3fc97a639de2d67947cffb7518ec5e3d40/logback-classic-1.5.18.jar!/ch, file:/home/younger/.gradle/caches/modules-2/files-2.1/ch.qos.logback/logback-core/1.5.18/6c0375624f6f36b4e089e2488ba21334a11ef13f/logback-core-1.5.18.jar!/META-INF/versions/21/ch/, file:/home/younger/.gradle/caches/modules-2/files-2.1/com.google.code.findbugs/jsr305/3.0.2/25ea2e8b0c338a877313bd4672d3fe056ea78f0d/jsr305-3.0.2.jar!/javax, file:/home/younger/.gradle/caches/modules-2/files-2.1/io.insert-koin/koin-ktor/3.5.6/e892cc6b179e05098dcc5989c1444ab9655752b/koin-ktor-3.5.6.jar!/org, file:/home/younger/.gradle/caches/modules-2/files-2.1/org.jetbrains.exposed/exposed-dao/0.43.0/e6e4f7a357aac154c1bb1157742e89d5eaf27778/exposed-dao-0.43.0.jar!/org, file:/home/younger/.gradle/caches/modules-2/files-2.1/org.jetbrains.exposed/exposed-jdbc/0.43.0/a859a712d780fc866f7e5af556e729c5a73d2504/exposed-jdbc-0.43.0.jar!/org, file:/home/younger/.gradle/caches/modules-2/files-2.1/org.jetbrains.exposed/exposed-core/0.43.0/aa1aec098f9de64045574bda399c61c948abd28d/exposed-core-0.43.0.jar!/org, file:/home/younger/.gradle/caches/modules-2/files-2.1/org.jetbrains.compose.components/components-resources-desktop/1.9.0/263d44e856cb89a759959eec68dafae6d1931110/library-desktop-1.9.0.jar!/org, file:/home/younger/.gradle/caches/modules-2/files-2.1/org.jetbrains.skiko/skiko-awt/0.9.22.2/f1dab255d499b8ef215b308b531de32029c41dd6/skiko-awt-0.9.22.2.jar!/org, file:/home/younger/.gradle/caches/modules-2/files-2.1/org.jetbrains.compose.components/components-ui-tooling-preview-desktop/1.9.0/5b3acb8bd7379767b72faafacfb25852a6d2d328/library-desktop-1.9.0.jar!/org, file:/home/younger/.gradle/caches/modules-2/files-2.1/io.insert-koin/koin-core-jvm/3.5.6/71c101744c62708690796cdb48ed8522a74687c7/koin-core-jvm-3.5.6.jar!/org, file:/home/younger/.gradle/caches/modules-2/files-2.1/org.mindrot/jbcrypt/0.4/af7e61017f73abb18ac4e036954f9f28c6366c07/jbcrypt-0.4.jar!/org, file:/home/younger/.gradle/caches/modules-2/files-2.1/org.apache.poi/poi-ooxml/5.2.5/df9f2c52371eeba24db8ea8cafa77285c3cc0742/poi-ooxml-5.2.5.jar!/org/, file:/home/younger/.gradle/caches/modules-2/files-2.1/org.eclipse.angus/jakarta.mail/2.0.3/3dea6aeee9603f573687b0d4da5dc1316d921bb7/jakarta.mail-2.0.3.jar!/org, file:/home/younger/.gradle/caches/modules-2/files-2.1/org.jetbrains/annotations/23.0.0/8cc20c07506ec18e0834947b84a864bfc094484e/annotations-23.0.0.jar!/org/, file:/home/younger/.gradle/caches/modules-2/files-2.1/org.slf4j/slf4j-api/2.0.17/d9e58ac9c7779ba3bf8142aff6c830617a7fe60f/slf4j-api-2.0.17.jar!/org/, file:/home/younger/.gradle/caches/modules-2/files-2.1/org.fusesource.jansi/jansi/2.4.2/ba7387c31622c6650b83edba1bbb115f1fe462ba/jansi-2.4.2.jar!/org/, file:/home/younger/.gradle/caches/modules-2/files-2.1/org.eclipse.jetty.alpn/alpn-api/1.1.3.v20160715/a1bf3a937f91b4c953acd13e8c9552347adc2198/alpn-api-1.1.3.v20160715.jar!/org, file:/home/younger/.gradle/caches/modules-2/files-2.1/org.apache.poi/poi/5.2.5/7e00f6b2f76375fe89022d5a7db8acb71cbd55f5/poi-5.2.5.jar!/org/, file:/home/younger/.gradle/caches/modules-2/files-2.1/org.apache.poi/poi-ooxml-lite/5.2.5/eaa61452d8f0d13080fbb4757a392f09f90e4c49/poi-ooxml-lite-5.2.5.jar!/org/, file:/home/younger/.gradle/caches/modules-2/files-2.1/org.apache.xmlbeans/xmlbeans/5.2.0/6198ac997b3f234f2b5393fa415f78fac2e06510/xmlbeans-5.2.0.jar!/META-INF/versions/9/org/, file:/home/younger/.gradle/caches/modules-2/files-2.1/org.apache.commons/commons-compress/1.25.0/9d35aec423da6c8a7f93d7e9e1c6b1d9fe14bb5e/commons-compress-1.25.0.jar!/org/, file:/home/younger/.gradle/caches/modules-2/files-2.1/commons-io/commons-io/2.15.0/5c3c2db10f6f797430a7f9c696b4d1273768c924/commons-io-2.15.0.jar!/org/, file:/home/younger/.gradle/caches/modules-2/files-2.1/org.apache.logging.log4j/log4j-api/2.21.1/74c65e87b9ce1694a01524e192d7be989ba70486/log4j-api-2.21.1.jar!/META-INF/versions/9/org/, file:/home/younger/.gradle/caches/modules-2/files-2.1/org.apache.commons/commons-collections4/4.4/62ebe7544cb7164d87e0637a2a6a2bdc981395e8/commons-collections4-4.4.jar!/org, file:/home/younger/.gradle/caches/modules-2/files-2.1/org.eclipse.angus/angus-activation/2.0.2/41f1e0ddd157c856926ed149ab837d110955a9fc/angus-activation-2.0.2.jar!/org, file:/home/younger/.gradle/caches/modules-2/files-2.1/commons-codec/commons-codec/1.16.0/4e3eb3d79888d76b54e28b350915b5dc3919c9de/commons-codec-1.16.0.jar!/org, file:/home/younger/.gradle/caches/modules-2/files-2.1/org.apache.commons/commons-math3/3.6.1/e4ba98f1d4b3c80ec46392f25e094a6a2e58fcbf/commons-math3-3.6.1.jar!/org, file:/home/younger/.gradle/caches/modules-2/files-2.1/org.checkerframework/checker-qual/3.33.0/de2b60b62da487644fc11f734e73c8b0b431238f/checker-qual-3.33.0.jar!/org, file:/home/younger/.gradle/caches/modules-2/files-2.1/org.jspecify/jspecify/1.0.0/7425a601c1c7ec76645a78d22b8c6a627edee507/jspecify-1.0.0.jar!/org/, file:/home/younger/.gradle/caches/modules-2/files-2.1/io.ktor/ktor-server-netty-jvm/3.3.0/3b54f1a0d37fbe1571c2ec8358416d0cc5e7e9b3/ktor-server-netty-jvm-3.3.0.jar!/io, file:/home/younger/.gradle/caches/modules-2/files-2.1/io.ktor/ktor-server-content-negotiation-jvm/3.3.0/b723d9ce385455716c6c403ed3a93aac6838a1fd/ktor-server-content-negotiation-jvm-3.3.0.jar!/io, file:/home/younger/.gradle/caches/modules-2/files-2.1/io.ktor/ktor-server-auth-jwt-jvm/3.3.0/629d9e5ae14b87dd87171171717a0ed689deda39/ktor-server-auth-jwt-jvm-3.3.0.jar!/io, file:/home/younger/.gradle/caches/modules-2/files-2.1/io.ktor/ktor-server-auth-jvm/3.3.0/921a0f84b47e49928a1564bb9f1942b7c1706e07/ktor-server-auth-jvm-3.3.0.jar!/io, file:/home/younger/.gradle/caches/modules-2/files-2.1/io.ktor/ktor-server-caching-headers-jvm/3.3.0/ebf04740b6d58a7dc1d1e79ec7e148756e19bf1d/ktor-server-caching-headers-jvm-3.3.0.jar!/io, file:/home/younger/.gradle/caches/modules-2/files-2.1/io.ktor/ktor-server-cors-jvm/3.3.0/b25bfd761405e43dbe3372db16f494d366588141/ktor-server-cors-jvm-3.3.0.jar!/io, file:/home/younger/.gradle/caches/modules-2/files-2.1/io.ktor/ktor-server-sessions-jvm/3.3.0/ad43fb51bf677d7780dbe9356bad32a4c1f0617f/ktor-server-sessions-jvm-3.3.0.jar!/io, file:/home/younger/.gradle/caches/modules-2/files-2.1/io.ktor/ktor-server-core-jvm/3.3.0/a75887ca2a0b32ddec0351f889517f74fee2143d/ktor-server-core-jvm-3.3.0.jar!/io, file:/home/younger/.gradle/caches/modules-2/files-2.1/io.ktor/ktor-serialization-kotlinx-json-jvm/3.3.0/8d1c7508fef56af92e6f3987e4df926ae322ac5b/ktor-serialization-kotlinx-json-jvm-3.3.0.jar!/io, file:/home/younger/.gradle/caches/modules-2/files-2.1/io.ktor/ktor-client-content-negotiation-jvm/3.3.0/76bb0c8ccadbd9a223a2ac6afca4a1f8f2bb4fee/ktor-client-content-negotiation-jvm-3.3.0.jar!/io, file:/home/younger/.gradle/caches/modules-2/files-2.1/io.ktor/ktor-client-cio-jvm/3.3.0/7b907efec9bbc89fc70d7186af6f9232366cb2be/ktor-client-cio-jvm-3.3.0.jar!/io, file:/home/younger/.gradle/caches/modules-2/files-2.1/io.ktor/ktor-client-core-jvm/3.3.0/29608f1fee6d4eee03a91c04f43c2043def362f5/ktor-client-core-jvm-3.3.0.jar!/io, file:/home/younger/.gradle/caches/modules-2/files-2.1/io.ktor/ktor-http-cio-jvm/3.3.0/5107799ea75211704419342661cb4552e3fa74f7/ktor-http-cio-jvm-3.3.0.jar!/io, file:/home/younger/.gradle/caches/modules-2/files-2.1/io.ktor/ktor-serialization-kotlinx-jvm/3.3.0/f62c2f4f39c3fcddd790dccd3ae11005709e0cee/ktor-serialization-kotlinx-jvm-3.3.0.jar!/io, file:/home/younger/.gradle/caches/modules-2/files-2.1/io.ktor/ktor-websocket-serialization-jvm/3.3.0/6b82e2bb17bc763dff14d07d8a0c275c27ad4bcf/ktor-websocket-serialization-jvm-3.3.0.jar!/io, file:/home/younger/.gradle/caches/modules-2/files-2.1
+2025-10-12 16:56:33.613 [main] INFO  io.ktor.server.Application - No ktor.deployment.watch patterns match classpath entries, automatic reload is not active
+2025-10-12 16:56:34.264 [main] INFO  io.ktor.server.Application - Application started in 0.912 seconds.
+2025-10-12 16:56:34.394 [main] INFO  io.ktor.server.Application - Responding at http://0.0.0.0:2000
+2025-10-12 16:56:43.648 [eventLoopGroupProxy-4-1] TRACE io.ktor.server.routing.Routing - Trace for [clients, all]
+/, segment:0 -> SUCCESS @ /
+  /json, segment:0 -> FAILURE "Selector didn't match" @ /json
+  /(authenticate auth-jwt), segment:0 -> SUCCESS @ /(authenticate auth-jwt)
+    /(authenticate auth-jwt)/orders, segment:0 -> FAILURE "Selector didn't match" @ /(authenticate auth-jwt)/orders
+  /(authenticate auth-jwt), segment:0 -> SUCCESS @ /(authenticate auth-jwt)
+    /(authenticate auth-jwt)/orders-items, segment:0 -> FAILURE "Selector didn't match" @ /(authenticate auth-jwt)/orders-items
+  /order, segment:0 -> FAILURE "Selector didn't match" @ /order
+  /(authenticate auth-jwt), segment:0 -> SUCCESS @ /(authenticate auth-jwt)
+    /(authenticate auth-jwt)/orders_items, segment:0 -> FAILURE "Selector didn't match" @ /(authenticate auth-jwt)/orders_items
+  /system_configurations, segment:0 -> FAILURE "Selector didn't match" @ /system_configurations
+  /, segment:0 -> SUCCESS @ /
+    /(method:GET), segment:0 -> FAILURE "Not all segments matched" @ /(method:GET)
+  /send-email, segment:0 -> FAILURE "Selector didn't match" @ /send-email
+  /(authenticate auth-jwt), segment:0 -> SUCCESS @ /(authenticate auth-jwt)
+    /(authenticate auth-jwt)/users, segment:0 -> FAILURE "Selector didn't match" @ /(authenticate auth-jwt)/users
+  /user, segment:0 -> FAILURE "Selector didn't match" @ /user
+  /{...}, segment:2 -> SUCCESS @ /{...}
+  /suppliers, segment:0 -> FAILURE "Selector didn't match" @ /suppliers
+  /reports, segment:0 -> FAILURE "Selector didn't match" @ /reports
+  /products, segment:0 -> FAILURE "Selector didn't match" @ /products
+  /clients, segment:1 -> SUCCESS @ /clients
+    /clients/all, segment:2 -> SUCCESS @ /clients/all
+      /clients/all/(method:GET), segment:2 -> SUCCESS @ /clients/all/(method:GET)
+    /clients/create, segment:1 -> FAILURE "Selector didn't match" @ /clients/create
+    /clients/edit, segment:1 -> FAILURE "Selector didn't match" @ /clients/edit
+    /clients/delete, segment:1 -> FAILURE "Selector didn't match" @ /clients/delete
+  /categories, segment:0 -> FAILURE "Selector didn't match" @ /categories
+  /stocks, segment:0 -> FAILURE "Selector didn't match" @ /stocks
+  /branches, segment:0 -> FAILURE "Selector didn't match" @ /branches
+  /payables, segment:0 -> FAILURE "Selector didn't match" @ /payables
+  /receivables, segment:0 -> FAILURE "Selector didn't match" @ /receivables
+  /owners, segment:0 -> FAILURE "Selector didn't match" @ /owners
+  /notifications, segment:0 -> FAILURE "Selector didn't match" @ /notifications
+  /logs, segment:0 -> FAILURE "Selector didn't match" @ /logs
+Matched routes:
+  "" -> "{...}"
+  "" -> "clients" -> "all" -> "(method:GET)"
+Routing resolve result:
+  SUCCESS @ /clients/all/(method:GET)
+2025-10-12 16:56:43.681 [DefaultDispatcher-worker-1] DEBUG Exposed - SELECT clients.id, clients.`name`, clients.telephone, clients.total FROM clients
+2025-10-12 16:56:43.735 [DefaultDispatcher-worker-1] ERROR io.ktor.server.Application - 200 OK: GET - /clients/all
+kotlinx.serialization.SerializationException: Serializer for class 'ClientItem' is not found.
+Please ensure that class is marked as '@Serializable' and that the serialization compiler plugin is applied.
+
+        at kotlinx.serialization.internal.Platform_commonKt.serializerNotRegistered(Platform.common.kt:90)
+        at kotlinx.serialization.SerializersKt__SerializersKt.serializer(Serializers.kt:327)
+        at kotlinx.serialization.SerializersKt.serializer(Unknown Source)
+        at io.ktor.serialization.kotlinx.SerializerLookupKt.guessSerializer(SerializerLookup.kt:54)
+        at io.ktor.serialization.kotlinx.SerializerLookupKt.elementSerializer(SerializerLookup.kt:61)
+        at io.ktor.serialization.kotlinx.SerializerLookupKt.guessSerializer(SerializerLookup.kt:43)
+        at io.ktor.serialization.kotlinx.KotlinxSerializationConverter.serialize(KotlinxSerializationConverter.kt:55)
+        at io.ktor.server.plugins.contentnegotiation.ResponseConverterKt$convertResponseBody$1$2.invokeSuspend(ResponseConverter.kt:66)
+        at io.ktor.server.plugins.contentnegotiation.ResponseConverterKt$convertResponseBody$1$2.invoke(ResponseConverter.kt)
+        at io.ktor.server.plugins.contentnegotiation.ResponseConverterKt$convertResponseBody$1$2.invoke(ResponseConverter.kt)
+        at io.ktor.server.application.OnCallRespondContext.transformBody(KtorCallContexts.kt:102)
+        at io.ktor.server.plugins.contentnegotiation.ResponseConverterKt$convertResponseBody$1.invokeSuspend(ResponseConverter.kt:39)
+        at io.ktor.server.plugins.contentnegotiation.ResponseConverterKt$convertResponseBody$1.invoke(ResponseConverter.kt)
+        at io.ktor.server.plugins.contentnegotiation.ResponseConverterKt$convertResponseBody$1.invoke(ResponseConverter.kt)
+        at io.ktor.server.application.PluginBuilder$onDefaultPhase$1.invokeSuspend(PluginBuilder.kt:245)
+        at io.ktor.server.application.PluginBuilder$onDefaultPhase$1.invoke(PluginBuilder.kt)
+        at io.ktor.server.application.PluginBuilder$onDefaultPhase$1.invoke(PluginBuilder.kt)

@@ -1,6 +1,6 @@
 package com.samuelsumbane.ssptdesktop.presentation.viewmodel.viewmodelstates
 
-import com.samuelsumbane.ssptdesktop.ClientItem
+import com.samuelsumbane.ssptdesktop.kclient.ClientItem
 
 data class ClientUIStates(
     val clientId: Int = 0,

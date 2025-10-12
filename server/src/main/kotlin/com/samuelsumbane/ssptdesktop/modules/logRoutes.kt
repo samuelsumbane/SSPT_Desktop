@@ -1,7 +1,7 @@
 package com.samuelsumbane.infrastructure.modules
 
 import com.samuelsumbane.infrastructure.repositories.LogRepository
-import com.samuelsumbane.ssptdesktop.modules.LogDraft
+import com.samuelsumbane.ssptdesktop.LogDraft
 import com.samuelsumbane.ssptdesktop.repositories.respondWithCache
 import io.ktor.http.*
 import io.ktor.serialization.*

@@ -1,7 +1,6 @@
 package com.samuelsumbane.ssptdesktop.domain.usecase
 
-import androidx.lifecycle.viewmodel.compose.viewModel
-import com.samuelsumbane.ssptdesktop.OwnerItem
+import com.samuelsumbane.ssptdesktop.kclient.OwnerItem
 import com.samuelsumbane.ssptdesktop.domain.usecase.repository.ProOwnerRepository
 import kotlinx.coroutines.flow.Flow
 

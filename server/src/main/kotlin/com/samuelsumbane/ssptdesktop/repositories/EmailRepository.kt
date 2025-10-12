@@ -1,8 +1,8 @@
 package com.samuelsumbane.infrastructure.repositories
 //
-import com.samuelsumbane.ssptdesktop.modules.ErrorMetadata
-import com.samuelsumbane.ssptdesktop.modules.LogDraft
-import com.samuelsumbane.ssptdesktop.modules.LogLevel
+import com.samuelsumbane.ssptdesktop.ErrorMetadata
+import com.samuelsumbane.ssptdesktop.LogDraft
+import com.samuelsumbane.ssptdesktop.LogLevel
 import jakarta.mail.*
 import jakarta.mail.internet.InternetAddress
 import jakarta.mail.internet.MimeMessage

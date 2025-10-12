@@ -1,7 +1,7 @@
 package com.samuelsumbane.ssptdesktop.domain.usecase
 
-import com.samuelsumbane.ssptdesktop.ClientItem
-import com.samuelsumbane.ssptdesktop.domain.usecase.repository.ClientRepository
+import com.samuelsumbane.ssptdesktop.kclient.ClientItem
+import com.samuelsumbane.ssptdesktop.domain.repository.ClientRepository
 import kotlinx.coroutines.flow.Flow
 
 

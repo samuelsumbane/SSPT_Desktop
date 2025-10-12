@@ -2,10 +2,10 @@ package com.samuelsumbane.infrastructure.repositories
 
 
 import com.samuelsumbane.ssptdesktop.*
-import com.samuelsumbane.ssptdesktop.modules.ChangeProductPriceDraft
-import com.samuelsumbane.ssptdesktop.modules.IncreaseProductStockDraft
-import com.samuelsumbane.ssptdesktop.modules.ProductItem
-import com.samuelsumbane.ssptdesktop.modules.ProductNameAndCategory
+import com.samuelsumbane.ssptdesktop.ChangeProductPriceDraft
+import com.samuelsumbane.ssptdesktop.IncreaseProductStockDraft
+import com.samuelsumbane.ssptdesktop.ProductItem
+import com.samuelsumbane.ssptdesktop.ProductNameAndCategory
 import kotlinx.coroutines.Dispatchers
 import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransaction

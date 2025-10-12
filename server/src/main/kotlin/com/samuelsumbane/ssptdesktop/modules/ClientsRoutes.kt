@@ -1,25 +1,25 @@
-package com.samuelsumbane.infrastructure.routes
+package com.samuelsumbane.ssptdesktop.modules
 
 
-import com.samuelsumbane.infrastructure.repositories.ClientRepository
 import com.samuelsumbane.infrastructure.repositories.LogRepository
-import com.samuelsumbane.ssptdesktop.modules.ClientItem
-import com.samuelsumbane.ssptdesktop.modules.LogDraft
-import com.samuelsumbane.ssptdesktop.modules.LogLevel
-import com.samuelsumbane.ssptdesktop.repositories.respondWithCache
+import com.samuelsumbane.ssptdesktop.ClientItem
+import com.samuelsumbane.ssptdesktop.LogDraft
+import com.samuelsumbane.ssptdesktop.LogLevel
+import com.samuelsumbane.ssptdesktop.repositories.ClientRepository
 import io.ktor.http.*
 import io.ktor.serialization.*
-import io.ktor.server.auth.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
 
 fun Route.clientsRoutes() {
     route("/clients") {
-        authenticate("auth-jwt") {
+//        authenticate("auth-jwt") {
             get("/all") {
                 val clients = ClientRepository.getClients()
-                call.respondWithCache(clients)
+//                call.respondWithCache(clients)
+//                call.respond(HttpStatusCode.OK, clients)
+                call.respond(mapOf("status" to clients))
             }
 
             post("/create") {
@@ -66,5 +66,5 @@ fun Route.clientsRoutes() {
                 }
             }
         }
-    }
+//    }
 }

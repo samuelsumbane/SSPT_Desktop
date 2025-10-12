@@ -1,7 +1,7 @@
 package com.samuelsumbane.infrastructure.routes
 
 import com.samuelsumbane.infrastructure.repositories.ProductOwnerRepository
-import com.samuelsumbane.ssptdesktop.modules.OwnerItem
+import com.samuelsumbane.ssptdesktop.OwnerItem
 import com.samuelsumbane.ssptdesktop.repositories.respondWithCache
 import io.ktor.http.*
 import io.ktor.serialization.*

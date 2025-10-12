@@ -2,7 +2,7 @@ package com.samuelsumbane.ssptdesktop.presentation.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.samuelsumbane.ssptdesktop.OwnerItem
+import com.samuelsumbane.ssptdesktop.kclient.OwnerItem
 import com.samuelsumbane.ssptdesktop.domain.usecase.AddProOwnerUseCase
 import com.samuelsumbane.ssptdesktop.domain.usecase.EditProOwnerUseCase
 import com.samuelsumbane.ssptdesktop.domain.usecase.GetProOwnerUseCase

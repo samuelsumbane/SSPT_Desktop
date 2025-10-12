@@ -7,10 +7,10 @@ import com.samuelsumbane.ssptdesktop.repositories.fifteenDaysInMillis
 import com.samuelsumbane.ssptdesktop.repositories.getCurrentTimestamp
 import com.samuelsumbane.ssptdesktop.repositories.longTimeToString
 import com.samuelsumbane.ssptdesktop.repositories.stringDateToLong
-import com.samuelsumbane.ssptdesktop.modules.IdAndStatus
-import com.samuelsumbane.ssptdesktop.modules.NotificationDraft
-import com.samuelsumbane.ssptdesktop.modules.ReceivableDraft
-import com.samuelsumbane.ssptdesktop.modules.ReceivableItem
+import com.samuelsumbane.ssptdesktop.IdAndStatus
+import com.samuelsumbane.ssptdesktop.NotificationDraft
+import com.samuelsumbane.ssptdesktop.ReceivableDraft
+import com.samuelsumbane.ssptdesktop.ReceivableItem
 import com.samuelsumbane.ssptdesktop.receivables
 import com.samuelsumbane.ssptdesktop.returnReceivablesStatus
 import kotlinx.coroutines.Dispatchers

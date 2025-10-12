@@ -1,6 +1,6 @@
-package com.samuelsumbane.infrastructure.modules
+package com.samuelsumbane.ssptdesktop.modules
 
-import com.samuelsumbane.infrastructure.repositories.ClientRepository
+import com.samuelsumbane.ssptdesktop.repositories.ClientRepository
 import com.samuelsumbane.ssptdesktop.repositories.ReportRepository
 import com.samuelsumbane.infrastructure.repositories.SaleRepository
 import com.samuelsumbane.infrastructure.repositories.SupplierRepository

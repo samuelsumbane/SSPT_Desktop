@@ -3,7 +3,7 @@ package com.samuelsumbane.infrastructure.repositories
 import com.samuelsumbane.ssptdesktop.repositories.getCurrentTimestamp
 import com.samuelsumbane.ssptdesktop.repositories.longTimeToString
 import com.samuelsumbane.ssptdesktop.SysConfigurations
-import com.samuelsumbane.ssptdesktop.modules.SysConfigItem
+import com.samuelsumbane.ssptdesktop.SysConfigItem
 import kotlinx.coroutines.Dispatchers
 import org.jetbrains.exposed.sql.insert
 import org.jetbrains.exposed.sql.select

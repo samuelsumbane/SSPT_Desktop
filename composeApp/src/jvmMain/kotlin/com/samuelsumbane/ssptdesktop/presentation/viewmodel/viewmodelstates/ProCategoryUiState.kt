@@ -1,6 +1,6 @@
 package com.samuelsumbane.ssptdesktop.presentation.viewmodel.viewmodelstates
 
-import com.samuelsumbane.ssptdesktop.CategoryItem
+import com.samuelsumbane.ssptdesktop.kclient.CategoryItem
 
 data class ProCategoryUiState(
     val proCategories: List<CategoryItem> = emptyList(),

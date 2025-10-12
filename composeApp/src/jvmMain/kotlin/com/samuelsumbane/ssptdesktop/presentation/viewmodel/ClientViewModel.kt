@@ -2,7 +2,7 @@ package com.samuelsumbane.ssptdesktop.presentation.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.samuelsumbane.ssptdesktop.ClientItem
+import com.samuelsumbane.ssptdesktop.kclient.ClientItem
 import com.samuelsumbane.ssptdesktop.core.utils.generateId
 import com.samuelsumbane.ssptdesktop.domain.usecase.AddClientUseCase
 import com.samuelsumbane.ssptdesktop.domain.usecase.EditClientUseCase
@@ -11,10 +11,7 @@ import com.samuelsumbane.ssptdesktop.presentation.viewmodel.viewmodelstates.Clie
 import com.samuelsumbane.ssptdesktop.ui.utils.AlertType
 import com.samuelsumbane.ssptdesktop.ui.utils.FormInputName
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 

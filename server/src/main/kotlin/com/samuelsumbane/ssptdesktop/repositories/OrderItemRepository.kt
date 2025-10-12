@@ -3,7 +3,7 @@ package com.samuelsumbane.infrastructure.repositories
 import com.samuelsumbane.ssptdesktop.OrdersItems
 import com.samuelsumbane.ssptdesktop.Owners
 import com.samuelsumbane.ssptdesktop.Products
-import com.samuelsumbane.ssptdesktop.modules.OrderItemsItem
+import com.samuelsumbane.ssptdesktop.OrderItemsItem
 import kotlinx.coroutines.Dispatchers
 import org.jetbrains.exposed.sql.select
 import org.jetbrains.exposed.sql.selectAll

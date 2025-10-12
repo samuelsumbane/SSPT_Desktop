@@ -1,7 +1,7 @@
 package com.samuelsumbane.ssptdesktop.data.repository
 
-import com.samuelsumbane.ssptdesktop.ChangeProductPriceDraft
-import com.samuelsumbane.ssptdesktop.ProductItem
+import com.samuelsumbane.ssptdesktop.kclient.ChangeProductPriceDraft
+import com.samuelsumbane.ssptdesktop.kclient.ProductItem
 import com.samuelsumbane.ssptdesktop.domain.repository.ProductRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow

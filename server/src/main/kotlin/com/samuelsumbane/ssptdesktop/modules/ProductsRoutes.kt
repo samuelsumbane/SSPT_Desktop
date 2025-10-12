@@ -1,8 +1,14 @@
-package com.samuelsumbane.infrastructure.routes
+package com.samuelsumbane.ssptdesktop.modules
 
 import com.samuelsumbane.infrastructure.repositories.LogRepository
 import com.samuelsumbane.infrastructure.repositories.ProductRepository
-import com.samuelsumbane.ssptdesktop.modules.*
+import com.samuelsumbane.ssptdesktop.ChangeProductPriceDraft
+import com.samuelsumbane.ssptdesktop.IncreaseProductStockDraft
+import com.samuelsumbane.ssptdesktop.LogDraft
+import com.samuelsumbane.ssptdesktop.LogLevel
+import com.samuelsumbane.ssptdesktop.LogMetadata
+import com.samuelsumbane.ssptdesktop.ProductItem
+import com.samuelsumbane.ssptdesktop.ProductNameAndCategory
 import com.samuelsumbane.ssptdesktop.repositories.respondWithCache
 import io.ktor.http.*
 import io.ktor.serialization.*

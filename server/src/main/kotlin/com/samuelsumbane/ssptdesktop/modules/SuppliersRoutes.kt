@@ -1,7 +1,7 @@
 package com.samuelsumbane.infrastructure.routes
 
 import com.samuelsumbane.infrastructure.repositories.SupplierRepository
-import com.samuelsumbane.ssptdesktop.modules.SupplierItem
+import com.samuelsumbane.ssptdesktop.SupplierItem
 import com.samuelsumbane.ssptdesktop.repositories.respondWithCache
 import io.ktor.http.*
 import io.ktor.serialization.*

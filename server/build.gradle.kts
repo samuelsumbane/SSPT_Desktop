@@ -15,11 +15,35 @@ application {
     applicationDefaultJvmArgs = listOf("-Dio.ktor.development=$isDevelopment")
 }
 
+
+tasks {
+    distTar {
+        enabled = false
+    }
+
+    distZip {
+        enabled = false
+    }
+
+//    distTar {
+//        archiveFileName.set("server.tar")
+//        compression = Compression.GZIP
+//    }
+//
+//    distZip {
+//        archiveFileName.set("server.zip")
+//    }
+}
+
+
+
 dependencies {
     implementation(projects.shared)
     implementation(libs.logback)
     implementation(libs.ktor.serverCore)
     implementation(libs.ktor.serverNetty)
+    implementation(project(":composeApp"))
+//    implementation(project(":composeApp"))
     testImplementation(libs.ktor.serverTestHost)
     testImplementation(libs.kotlin.testJunit)
 
@@ -36,7 +60,6 @@ dependencies {
     implementation("org.jetbrains.exposed:exposed-jdbc:0.43.0")
 
 //    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:3.3.0")
-//    implementation("io.ktor:ktor-client-content-negotiation:3.3.0")
     implementation("io.ktor:ktor-serialization-kotlinx-json:3.3.0")
     implementation("io.ktor:ktor-server-content-negotiation:3.3.0")
 

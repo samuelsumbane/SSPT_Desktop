@@ -5,9 +5,9 @@ import com.samuelsumbane.ssptdesktop.repositories.getCurrentTimestamp
 import com.samuelsumbane.ssptdesktop.repositories.longTimeToString
 import com.samuelsumbane.ssptdesktop.Notifications
 import com.samuelsumbane.ssptdesktop.Users
-import com.samuelsumbane.ssptdesktop.modules.IdAndReadState
-import com.samuelsumbane.ssptdesktop.modules.NotificationDraft
-import com.samuelsumbane.ssptdesktop.modules.NotificationItem
+import com.samuelsumbane.ssptdesktop.IdAndReadState
+import com.samuelsumbane.ssptdesktop.NotificationDraft
+import com.samuelsumbane.ssptdesktop.NotificationItem
 import com.samuelsumbane.ssptdesktop.returnNotificationType
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking

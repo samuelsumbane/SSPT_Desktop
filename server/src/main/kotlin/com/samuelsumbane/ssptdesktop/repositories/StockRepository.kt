@@ -4,7 +4,7 @@ import com.samuelsumbane.ssptdesktop.repositories.generateTimestamp
 import com.samuelsumbane.ssptdesktop.repositories.getCurrentTimestamp
 import com.samuelsumbane.ssptdesktop.repositories.longTimeToString
 import com.samuelsumbane.ssptdesktop.*
-import com.samuelsumbane.ssptdesktop.modules.StockItem
+import com.samuelsumbane.ssptdesktop.StockItem
 import kotlinx.coroutines.Dispatchers
 import org.apache.poi.xssf.usermodel.XSSFWorkbook
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.between

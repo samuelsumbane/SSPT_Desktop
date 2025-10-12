@@ -1,6 +1,6 @@
 package com.samuelsumbane.ssptdesktop.domain.usecase
 
-import com.samuelsumbane.ssptdesktop.CategoryItem
+import com.samuelsumbane.ssptdesktop.kclient.CategoryItem
 import com.samuelsumbane.ssptdesktop.domain.repository.ProductCategoryRepository
 import kotlinx.coroutines.flow.Flow
 

@@ -2,7 +2,7 @@ package com.samuelsumbane.infrastructure.repositories
 
 import com.samuelsumbane.ssptdesktop.Owners
 import com.samuelsumbane.ssptdesktop.Products
-import com.samuelsumbane.ssptdesktop.modules.OwnerItem
+import com.samuelsumbane.ssptdesktop.OwnerItem
 import kotlinx.coroutines.Dispatchers
 import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq

@@ -1,7 +1,7 @@
 package com.samuelsumbane.ssptdesktop.repositories
 
 import com.samuelsumbane.ssptdesktop.*
-import com.samuelsumbane.ssptdesktop.modules.SaleReportItem
+import com.samuelsumbane.ssptdesktop.SaleReportItem
 import kotlinx.coroutines.Dispatchers
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.JsonPrimitive

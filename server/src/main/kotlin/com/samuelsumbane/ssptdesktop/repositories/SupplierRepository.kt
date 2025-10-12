@@ -1,7 +1,7 @@
 package com.samuelsumbane.infrastructure.repositories
 
 import com.samuelsumbane.ssptdesktop.Suppliers
-import com.samuelsumbane.ssptdesktop.modules.SupplierItem
+import com.samuelsumbane.ssptdesktop.SupplierItem
 import kotlinx.coroutines.Dispatchers
 import org.jetbrains.exposed.sql.insert
 import org.jetbrains.exposed.sql.select

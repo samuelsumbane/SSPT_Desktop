@@ -1,6 +1,6 @@
 package com.samuelsumbane.ssptdesktop.presentation.viewmodel.viewmodelstates
 
-import com.samuelsumbane.ssptdesktop.OwnerItem
+import com.samuelsumbane.ssptdesktop.kclient.OwnerItem
 
 data class ProOwnerUiState(
     val proOwnerId: Int = 0,

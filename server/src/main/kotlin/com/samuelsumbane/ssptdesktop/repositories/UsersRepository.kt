@@ -10,15 +10,17 @@ import com.samuelsumbane.ssptdesktop.repositories.longTimeToString
 import com.samuelsumbane.ssptdesktop.CustomHttpStatusCode
 import com.samuelsumbane.ssptdesktop.PasswordResetCodes
 import com.samuelsumbane.ssptdesktop.Users
-import com.samuelsumbane.ssptdesktop.modules.ChangeRoleDC
-import com.samuelsumbane.ssptdesktop.modules.ChangeStatusDC
-import com.samuelsumbane.ssptdesktop.modules.EmailDc
-import com.samuelsumbane.ssptdesktop.modules.LogDraft
-import com.samuelsumbane.ssptdesktop.modules.LogLevel
-import com.samuelsumbane.ssptdesktop.modules.PasswordDraft
-import com.samuelsumbane.ssptdesktop.modules.UpdateUserPersonalData
-import com.samuelsumbane.ssptdesktop.modules.UserItem
-import com.samuelsumbane.ssptdesktop.modules.UserItemDraft
+import com.samuelsumbane.ssptdesktop.kclient.StatusAndMessage
+import com.samuelsumbane.ssptdesktop.ChangeRoleDC
+import com.samuelsumbane.ssptdesktop.ChangeStatusDC
+import com.samuelsumbane.ssptdesktop.EmailDc
+import com.samuelsumbane.ssptdesktop.LogDraft
+import com.samuelsumbane.ssptdesktop.LogLevel
+import com.samuelsumbane.ssptdesktop.PasswordDraft
+import com.samuelsumbane.ssptdesktop.UpdateUserPersonalData
+import com.samuelsumbane.ssptdesktop.UserItem
+import com.samuelsumbane.ssptdesktop.UserItemDraft
+import com.samuelsumbane.ssptdesktop.VerifyResetCodeDraft
 
 import kotlinx.coroutines.Dispatchers
 import org.jetbrains.exposed.exceptions.ExposedSQLException
@@ -367,21 +369,21 @@ object UsersRepository {
         }
     }
 
-//    suspend fun verifyResetCode(data: VerifyResetCodeDraft): Boolean {
-//        return newSuspendedTransaction {
-//            val record = PasswordResetCodes
-//                .select { (PasswordResetCodes.userId eq data.userId) and (PasswordResetCodes.code eq data.inputCode) }
-//                .firstOrNull()
-//
-//            if (record != null) {
-//                val expiresAt = record[PasswordResetCodes.expiresAt]
-////                LocalDateTime.now().isBefore(expiresAt)
-//                getCurrentTimestamp() < expiresAt
-//            } else {
-//                false
-//            }
-//        }
-//    }
+    suspend fun verifyResetCode(data: VerifyResetCodeDraft): Boolean {
+        return newSuspendedTransaction {
+            val record = PasswordResetCodes
+                .select { (PasswordResetCodes.userId eq data.userId) and (PasswordResetCodes.code eq data.inputCode) }
+                .firstOrNull()
+
+            if (record != null) {
+                val expiresAt = record[PasswordResetCodes.expiresAt]
+//                LocalDateTime.now().isBefore(expiresAt)
+                getCurrentTimestamp() < expiresAt
+            } else {
+                false
+            }
+        }
+    }
 
 //    suspend fun deleteExpiredResetCodes() {
 //        newSuspendedTransaction {
@@ -402,10 +404,6 @@ private fun userStatus(status: Int): String {
     }
 }
 
-data class StatusAndMessage(
-    val statusKey: Int,
-    val statusValue: String,
-)
 
 enum class HttpResponseText(val stringValue: String) {
     LITE_PACKAGE_REFUSED_USER("O pacote Lite só pode ter o máximo de 3 usuários"),

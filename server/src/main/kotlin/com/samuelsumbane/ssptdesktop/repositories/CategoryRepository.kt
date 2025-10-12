@@ -3,7 +3,7 @@ package com.samuelsumbane.infrastructure.repositories
 import com.samuelsumbane.ssptdesktop.Categories
 import com.samuelsumbane.ssptdesktop.Products
 import com.samuelsumbane.ssptdesktop.Suppliers
-import com.samuelsumbane.ssptdesktop.modules.CategoryItem
+import com.samuelsumbane.ssptdesktop.CategoryItem
 import kotlinx.coroutines.Dispatchers
 import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq

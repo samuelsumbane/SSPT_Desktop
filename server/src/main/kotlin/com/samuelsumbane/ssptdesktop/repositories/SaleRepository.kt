@@ -12,9 +12,9 @@ import com.samuelsumbane.ssptdesktop.Owners
 import com.samuelsumbane.ssptdesktop.Products
 import com.samuelsumbane.ssptdesktop.StockMovementType
 import com.samuelsumbane.ssptdesktop.Users
-import com.samuelsumbane.ssptdesktop.modules.NotificationDraft
-import com.samuelsumbane.ssptdesktop.modules.SaleItem
-import com.samuelsumbane.ssptdesktop.modules.SaleReportItem
+import com.samuelsumbane.ssptdesktop.NotificationDraft
+import com.samuelsumbane.ssptdesktop.SaleItem
+import com.samuelsumbane.ssptdesktop.SaleReportItem
 import kotlinx.coroutines.Dispatchers
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.JsonPrimitive
@@ -71,17 +71,17 @@ object SaleRepository {
                         it[stock] = newStock
                     }
 
-                    if (proData.minStock != null && newStock <= proData.minStock) {
-                        NotificationRepository.createNotification(
-                            NotificationDraft(
-                                userId = null,
-                                title = "Estoque mínimo atingido",
-                                message = "O produto '${proData.name}' atingiu a quantidade mínima: ${proData.stock} unidades.",
-                                type = 2,
-                                autoDeleteAfter = null
-                            )
-                        )
-                    }
+//                    if (proData.minStock != null && newStock <= proData.minStock) {
+//                        NotificationRepository.createNotification(
+//                            NotificationDraft(
+//                                userId = null,
+//                                title = "Estoque mínimo atingido",
+//                                message = "O produto '${proData.name}' atingiu a quantidade mínima: ${proData.stock} unidades.",
+//                                type = 2,
+//                                autoDeleteAfter = null
+//                            )
+//                        )
+//                    }
 
                     // Save Stock Movements -------->>
                     val afterQtyValue = productData.stock - item.quantity

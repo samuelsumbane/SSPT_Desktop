@@ -5,6 +5,8 @@ plugins {
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
     alias(libs.plugins.composeHotReload)
+    kotlin("plugin.serialization") version "2.2.0"
+
 }
 
 kotlin {
@@ -26,6 +28,8 @@ kotlin {
             implementation("io.insert-koin:koin-core:3.5.6")  // Core do Koin
 
             implementation("cafe.adriel.voyager:voyager-navigator:1.1.0-beta02")
+            implementation("io.ktor:ktor-client-content-negotiation:3.3.0")
+            implementation("io.ktor:ktor-serialization-kotlinx-json:3.3.0")
 
         }
         commonTest.dependencies {
@@ -34,6 +38,8 @@ kotlin {
         jvmMain.dependencies {
             implementation(compose.desktop.currentOs)
             implementation(libs.kotlinx.coroutinesSwing)
+            implementation("io.ktor:ktor-client-core:3.0.0")
+            implementation("io.ktor:ktor-client-cio:3.0.0")
         }
     }
 }

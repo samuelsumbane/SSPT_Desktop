@@ -1,8 +1,8 @@
 package com.samuelsumbane.ssptdesktop.presentation.viewmodel.viewmodelstates
 
-import com.samuelsumbane.ssptdesktop.CategoryItem
-import com.samuelsumbane.ssptdesktop.OwnerItem
-import com.samuelsumbane.ssptdesktop.ProductItem
+import com.samuelsumbane.ssptdesktop.kclient.CategoryItem
+import com.samuelsumbane.ssptdesktop.kclient.OwnerItem
+import com.samuelsumbane.ssptdesktop.kclient.ProductItem
 
 data class ProductsUiState(
     val products: List<ProductItem> = emptyList(),

@@ -1,7 +1,7 @@
 package com.samuelsumbane.infrastructure.modules
 
 import com.samuelsumbane.infrastructure.repositories.NotificationRepository
-import com.samuelsumbane.ssptdesktop.modules.IdAndReadState
+import com.samuelsumbane.ssptdesktop.IdAndReadState
 import com.samuelsumbane.ssptdesktop.repositories.respondWithCache
 import io.ktor.http.*
 import io.ktor.serialization.*

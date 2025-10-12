@@ -2,7 +2,7 @@ package com.samuelsumbane.ssptdesktop.presentation.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.samuelsumbane.ssptdesktop.CategoryItem
+import com.samuelsumbane.ssptdesktop.kclient.CategoryItem
 import com.samuelsumbane.ssptdesktop.domain.usecase.AddProductCategoryUseCase
 import com.samuelsumbane.ssptdesktop.domain.usecase.EditProductCategoryUseCase
 import com.samuelsumbane.ssptdesktop.domain.usecase.GetProductCategoriesUseCase

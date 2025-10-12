@@ -2,8 +2,8 @@ package com.samuelsumbane.ssptdesktop.presentation.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.samuelsumbane.ssptdesktop.ChangeProductPriceDraft
-import com.samuelsumbane.ssptdesktop.ProductItem
+import com.samuelsumbane.ssptdesktop.kclient.ChangeProductPriceDraft
+import com.samuelsumbane.ssptdesktop.kclient.ProductItem
 import com.samuelsumbane.ssptdesktop.domain.usecase.AddProductsUseCase
 import com.samuelsumbane.ssptdesktop.domain.usecase.EditProductUseCase
 import com.samuelsumbane.ssptdesktop.domain.usecase.GetProOwnerUseCase

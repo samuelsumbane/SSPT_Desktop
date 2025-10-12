@@ -1,6 +1,6 @@
 package com.samuelsumbane.ssptdesktop.data.repository
 
-import com.samuelsumbane.ssptdesktop.OwnerItem
+import com.samuelsumbane.ssptdesktop.kclient.OwnerItem
 import com.samuelsumbane.ssptdesktop.domain.usecase.repository.ProOwnerRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow

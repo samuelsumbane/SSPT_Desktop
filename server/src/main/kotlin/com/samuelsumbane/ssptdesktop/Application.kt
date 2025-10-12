@@ -1,5 +1,6 @@
 package com.samuelsumbane.ssptdesktop
 
+import configureRouting
 import io.ktor.server.application.*
 import io.ktor.server.engine.*
 import io.ktor.server.netty.*
@@ -17,5 +18,5 @@ fun Application.module() {
     configureSecurity()
     configureSerialization()
     configureDatabases()
-//    configureRouting()
+    configureRouting()
 }

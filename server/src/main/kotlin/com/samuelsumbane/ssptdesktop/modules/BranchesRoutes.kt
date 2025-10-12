@@ -2,9 +2,9 @@ package com.samuelsumbane.infrastructure.modules
 
 
 import com.samuelsumbane.infrastructure.repositories.LogRepository
-import com.samuelsumbane.ssptdesktop.modules.BranchItem
-import com.samuelsumbane.ssptdesktop.modules.LogDraft
-import com.samuelsumbane.ssptdesktop.modules.LogLevel
+import com.samuelsumbane.ssptdesktop.BranchItem
+import com.samuelsumbane.ssptdesktop.LogDraft
+import com.samuelsumbane.ssptdesktop.LogLevel
 import com.samuelsumbane.ssptdesktop.repositories.BranchRepository
 import io.ktor.http.*
 import io.ktor.serialization.*

@@ -1,7 +1,7 @@
-package com.samuelsumbane.infrastructure.routes
+package com.samuelsumbane.ssptdesktop.modules
 
 import com.samuelsumbane.infrastructure.repositories.CategoryRepository
-import com.samuelsumbane.ssptdesktop.modules.CategoryItem
+import com.samuelsumbane.ssptdesktop.CategoryItem
 import io.ktor.http.*
 import io.ktor.serialization.*
 import io.ktor.server.auth.*

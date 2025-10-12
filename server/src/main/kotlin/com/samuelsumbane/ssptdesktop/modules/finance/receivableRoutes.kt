@@ -1,7 +1,7 @@
 package com.samuelsumbane.infrastructure.modules.finance
 
-import com.samuelsumbane.ssptdesktop.modules.IdAndStatus
-import com.samuelsumbane.ssptdesktop.modules.ReceivableDraft
+import com.samuelsumbane.ssptdesktop.IdAndStatus
+import com.samuelsumbane.ssptdesktop.ReceivableDraft
 import com.samuelsumbane.ssptdesktop.repositories.finnances.ReceivableRepository
 import io.ktor.http.*
 import io.ktor.serialization.*

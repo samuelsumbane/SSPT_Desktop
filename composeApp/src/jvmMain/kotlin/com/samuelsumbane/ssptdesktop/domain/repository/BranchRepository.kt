@@ -1,6 +1,6 @@
 package com.samuelsumbane.ssptdesktop.domain.repository
 
-import com.samuelsumbane.ssptdesktop.BranchItem
+import com.samuelsumbane.ssptdesktop.kclient.BranchItem
 import kotlinx.coroutines.flow.Flow
 
 interface BranchRepository {

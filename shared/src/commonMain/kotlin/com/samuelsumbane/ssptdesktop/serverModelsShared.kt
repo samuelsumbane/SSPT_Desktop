@@ -1,16 +1,22 @@
 //package com.samuelsumbane.ssptdesktop
-//
+////import kotlinx.serialization.KSerializer
+//import kotlinx.serialization.KSerializer
 //import kotlinx.serialization.Serializable
+//import kotlinx.serialization.descriptors.PrimitiveKind
+//import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
+//import kotlinx.serialization.descriptors.SerialDescriptor
+//import kotlinx.serialization.encoding.Decoder
+//import kotlinx.serialization.encoding.Encoder
+//import java.util.UUID
 //
-//
-//// @Serializable
+//@Serializable
 //data class CategoryItem(
 //    val id: Int,
 //    val name: String,
 //    val isDefault: Boolean,
 //)
 //
-//// @Serializable
+//@Serializable
 //data class ProductItem(
 //    val id: Int,
 //    val name: String,
@@ -28,7 +34,7 @@
 //    val ownerName: String,
 //)
 //
-//// @Serializable
+//@Serializable
 //data class OwnerItem(
 //    val id: Int,
 //    val name: String,
@@ -42,9 +48,9 @@
 //    val telephone: String
 //)
 //
-//// @Serializable
+//@Serializable
 //data class OrderItem(
-//    // @Serializable(with = UUIDSerializer::class) val id: UUID,
+//    @Serializable(with = UUIDSerializer::class) val id: UUID,
 //    val clientId: Int?,
 //    val clientName: String?,
 //    val total: Double,
@@ -55,7 +61,7 @@
 //    val branchName: String
 //)
 //
-//// @Serializable
+//@Serializable
 //data class OrderItemDraft(
 //    val clientId: Int?,
 //    val total: Double,
@@ -66,10 +72,10 @@
 //)
 //
 //
-//// @Serializable
+//@Serializable
 //data class OrderItemsItem(
-//    // @Serializable(with = UUIDSerializer::class) val id: UUID?,
-//    // @Serializable(with = UUIDSerializer::class) val orderId: UUID,
+//    @Serializable(with = UUIDSerializer::class) val id: UUID?,
+//    @Serializable(with = UUIDSerializer::class) val orderId: UUID,
 //    val productId: Int,
 //    val productName: String?,
 //    val quantity: Int,
@@ -78,7 +84,7 @@
 //    val ownerName: String,
 //)
 //
-//// @Serializable
+//@Serializable
 //data class SaleReportItem(
 //    val productName: String,
 //    val quantity: Int,
@@ -94,7 +100,7 @@
 //
 //
 //
-//// @Serializable
+//@Serializable
 //data class OrderItemsItemDrafts(
 //    val productId: Int,
 //    val quantity: Int,
@@ -104,14 +110,14 @@
 //    val profit: Double,
 //)
 //
-//// @Serializable
+//@Serializable
 //data class SaleItem(
 //    val order: OrderItemDraft,
 //    val orderItems: List<OrderItemsItemDrafts>
 //)
 //
 //
-//// @Serializable
+//@Serializable
 //data class UserItem(
 //    val id: Int,
 //    val name: String,
@@ -123,7 +129,7 @@
 //)
 //
 //
-//// @Serializable
+//@Serializable
 //data class UserItemDraft(
 //    val name: String,
 //    val email: String,
@@ -131,7 +137,7 @@
 //)
 //
 //
-//// @Serializable
+//@Serializable
 //data class SupplierItem(
 //    val id: Int?,
 //    val name: String,
@@ -140,13 +146,13 @@
 //)
 //
 //
-//// @Serializable
+//@Serializable
 //data class ChangeProductPriceDraft(
 //    val productId: Int,
 //    val newPrice: Double
 //)
 //
-//// @Serializable
+//@Serializable
 //data class IncreaseProductStockDraft(
 //    val productId: Int,
 //    val cost: Double,
@@ -157,7 +163,7 @@
 //    val branchId: Int,
 //)
 //
-//// @Serializable
+//@Serializable
 //data class ProductNameAndCategory(
 //    val productId: Int,
 //    val productName: String,
@@ -165,7 +171,7 @@
 //    val barcode: String,
 //)
 //
-//// @Serializable
+//@Serializable
 //data class StockItem(
 //    val productName: String,
 //    val type: String,
@@ -182,7 +188,7 @@
 //    val branchName: String,
 //)
 //
-//// @Serializable
+//@Serializable
 //data class SysConfigItem(
 //    val id: Int,
 //    val key: String,
@@ -193,41 +199,41 @@
 //    val lastUpdate: String
 //)
 //
-////// @Serializable
+////@Serializable
 ////data class SysConfigDraft(
 ////    val id: Int,
 ////    val key: String,
 ////    val value: String
 ////)
 //
-//// @Serializable
+//@Serializable
 //data class UserSession(
 //    val data: UserItem
 //)
 //
-//// @Serializable
+//@Serializable
 //data class ChangeStatusDC(
 //    val status: Int,
 //    val userId: Int,
 //)
 //
-//// @Serializable
+//@Serializable
 //data class ChangeRoleDC(
 //    val role: String,
 //    val userId: Int,
 //)
 //
-//// @Serializable
+//@Serializable
 //data class BranchItem(
 //    val id: Int,
 //    val name: String,
 //    val address: String,
 //)
 //
-//// @Serializable
+//@Serializable
 //data class LoginRequest(val email: String, val password: String)
 //
-//// @Serializable
+//@Serializable
 //data class PasswordDraft(
 //    val userId: Int,
 //    val hashedPassword: String?,
@@ -235,36 +241,34 @@
 //)
 //
 //
-//// @Serializable
+//@Serializable
 //data class VerifyPasswordDC(
 //    val actualPassword: String,
 //    val hashedPassword: String,
 //)
 //
-//// @Serializable
+//@Serializable
 //data class VerifyResetCodeDraft(
 //    val userId: Int,
 //    val inputCode: String,
 //)
 //
 //
-////object UUIDSerializer : KSerializer<UUID> {
-////    override val descriptor: SerialDescriptor =
-////        PrimitiveSerialDescriptor("UUID", PrimitiveKind.STRING)
-////
-////    override fun serialize(encoder: Encoder, value: UUID) {
-////        encoder.encodeString(value.toString())
-////    }
-////
-////    override fun deserialize(decoder: Decoder): UUID {
-////        return UUID.fromString(decoder.decodeString())
-////    }
-////}
+//object UUIDSerializer : KSerializer<UUID> {
+//    override val descriptor: SerialDescriptor =
+//        PrimitiveSerialDescriptor("UUID", PrimitiveKind.STRING)
+//
+//    override fun serialize(encoder: Encoder, value: UUID) {
+//        encoder.encodeString(value.toString())
+//    }
+//
+//    override fun deserialize(decoder: Decoder): UUID {
+//        return UUID.fromString(decoder.decodeString())
+//    }
+//}
 //
 //
-////
-//
-//// @Serializable
+//@Serializable
 //data class PayableDraft(
 //    val supplier: String,
 //    val description: String,
@@ -273,13 +277,13 @@
 //    val payment_method: String,
 //)
 //
-//// @Serializable
+//@Serializable
 //data class IdAndStatus(
 //    val id: Int,
 //    val status: Int,
 //)
 //
-//// @Serializable
+//@Serializable
 //data class PayableItem(
 //    val id: String,
 //    val supplier: String,
@@ -291,7 +295,7 @@
 //    val status: String,
 //)
 //
-//// @Serializable
+//@Serializable
 //data class ReceivableDraft(
 //    val client: String,
 //    val description: String,
@@ -300,7 +304,7 @@
 //    val received_method: String,
 //)
 //
-//// @Serializable
+//@Serializable
 //data class ReceivableItem(
 //    val id: String,
 //    val client: String,
@@ -312,7 +316,7 @@
 //    val status: String,
 //)
 //
-//// @Serializable
+//@Serializable
 //data class NotificationDraft(
 //    val userId: Int?,
 //    val title: String,
@@ -321,7 +325,7 @@
 //    val autoDeleteAfter: Long?,
 //)
 //
-//// @Serializable
+//@Serializable
 //data class NotificationItem(
 //    val id: Int,
 //    val userName: String?,
@@ -333,20 +337,20 @@
 //    val userId: Int?,
 //)
 //
-//// @Serializable
+//@Serializable
 //data class IdAndReadState(
 //    val id: Int,
 //    val isRead: Boolean,
 //)
 //
-//// @Serializable
+//@Serializable
 //data class UpdateUserPersonalData(
 //    val userId: Int,
 //    val userName: String,
 //    val userEmail: String,
 //)
 //
-//// @Serializable
+//@Serializable
 //data class LogItem(
 //    val id: String,
 //    val datetime: String,
@@ -357,7 +361,7 @@
 //    val metadataJson: String?,
 //)
 //
-//// @Serializable
+//@Serializable
 //data class LogDraft(
 //    val level: String,
 //    val message: String,
@@ -373,7 +377,7 @@
 //    ERROR("ERROR"),
 //}
 //
-//// @Serializable
+//@Serializable
 //data class LogMetadata(
 //    val productId: Int?,
 //    val quantity: Int?,
@@ -381,19 +385,19 @@
 //    val ip: String?
 //)
 //
-//// @Serializable
+//@Serializable
 //data class UserLogMetadata(
 //    val ip: String?,
 //    val method: String = "Web"
 //)
 //
-//// @Serializable
+//@Serializable
 //data class SellMetadata(
 //    val value: Double,
 ////    val mode: String
 //)
 //
-//// @Serializable
+//@Serializable
 //data class ErrorMetadata(
 //    val error: String?,
 //)
@@ -404,7 +408,7 @@
 ////    val content: String,
 ////)
 //
-//// @Serializable
+//@Serializable
 //data class EmailDc(
 //    val email: String
 //)

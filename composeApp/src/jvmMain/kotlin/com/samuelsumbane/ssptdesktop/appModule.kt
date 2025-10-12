@@ -28,7 +28,7 @@ import com.samuelsumbane.ssptdesktop.domain.usecase.RemoveBranchUseCase
 import com.samuelsumbane.ssptdesktop.domain.usecase.RemoveProOwnerUseCase
 import com.samuelsumbane.ssptdesktop.domain.usecase.RemoveProductCategoryUseCase
 import com.samuelsumbane.ssptdesktop.domain.usecase.RemoveProductUseCase
-import com.samuelsumbane.ssptdesktop.domain.usecase.repository.ClientRepository
+import com.samuelsumbane.ssptdesktop.domain.repository.ClientRepository
 import com.samuelsumbane.ssptdesktop.domain.usecase.repository.ProOwnerRepository
 import com.samuelsumbane.ssptdesktop.presentation.viewmodel.BranchViewModel
 import com.samuelsumbane.ssptdesktop.presentation.viewmodel.ClientViewModel

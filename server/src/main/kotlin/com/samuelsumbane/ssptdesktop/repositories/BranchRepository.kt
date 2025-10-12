@@ -2,7 +2,7 @@ package com.samuelsumbane.ssptdesktop.repositories
 
 import com.samuelsumbane.infrastructure.repositories.SysSettingsRepository
 import com.samuelsumbane.ssptdesktop.SysBranches
-import com.samuelsumbane.ssptdesktop.modules.BranchItem
+import com.samuelsumbane.ssptdesktop.BranchItem
 import kotlinx.coroutines.Dispatchers
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.sql.deleteWhere
