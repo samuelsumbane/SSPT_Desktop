@@ -2,13 +2,14 @@ package com.samuelsumbane.ssptdesktop.domain.repository
 
 import com.samuelsumbane.ssptdesktop.kclient.ChangeProductPriceDraft
 import com.samuelsumbane.ssptdesktop.kclient.ProductItem
+import com.samuelsumbane.ssptdesktop.kclient.StatusAndMessage
 import kotlinx.coroutines.flow.Flow
 
 interface ProductRepository {
-    fun getProducts(): Flow<List<ProductItem>>
+    suspend fun getProducts(): List<ProductItem>
     suspend fun getProductById(productId: Int): ProductItem?
-    suspend fun addProduct(product: ProductItem)
-    suspend fun editProduct(product: ProductItem)
-    suspend fun changeProductPrice(product: ChangeProductPriceDraft)
-    suspend fun removeProduct(productId: Int)
+    suspend fun addProduct(product: ProductItem): StatusAndMessage
+    suspend fun editProduct(product: ProductItem): StatusAndMessage
+    suspend fun changeProductPrice(product: ChangeProductPriceDraft): StatusAndMessage
+    suspend fun removeProduct(productId: Int): StatusAndMessage
 }

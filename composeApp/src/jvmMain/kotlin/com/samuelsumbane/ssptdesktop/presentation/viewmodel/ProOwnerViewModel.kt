@@ -2,11 +2,8 @@ package com.samuelsumbane.ssptdesktop.presentation.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.samuelsumbane.ssptdesktop.domain.repository.ProOwnerRepository
 import com.samuelsumbane.ssptdesktop.kclient.OwnerItem
-import com.samuelsumbane.ssptdesktop.domain.usecase.AddProOwnerUseCase
-import com.samuelsumbane.ssptdesktop.domain.usecase.EditProOwnerUseCase
-import com.samuelsumbane.ssptdesktop.domain.usecase.GetProOwnerUseCase
-import com.samuelsumbane.ssptdesktop.domain.usecase.RemoveProOwnerUseCase
 import com.samuelsumbane.ssptdesktop.presentation.viewmodel.viewmodelstates.ProOwnerUiState
 import com.samuelsumbane.ssptdesktop.ui.utils.AlertType
 import com.samuelsumbane.ssptdesktop.ui.utils.FormInputName
@@ -16,14 +13,10 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class ProOwnerViewModel(
-    private val getProOwnerUseCase: GetProOwnerUseCase,
-    private val addProOwnerUseCase: AddProOwnerUseCase,
-    private val editProOwnerUseCase: EditProOwnerUseCase,
-    private val removeProOwnerUseCase: RemoveProOwnerUseCase,
+    private val ownerRepo: ProOwnerRepository
 ) : ViewModel() {
     val _uiState = MutableStateFlow(ProOwnerUiState())
     val uiState = _uiState.asStateFlow()
-
 
     init {
         loadProOwners()
@@ -31,15 +24,14 @@ class ProOwnerViewModel(
 
     fun loadProOwners() {
         viewModelScope.launch {
-            getProOwnerUseCase().collect { proOwners ->
-                _uiState.update { it.copy(allProOwners = proOwners) }
-            }
+            val proOwners = ownerRepo.getProOwners()
+            _uiState.update { it.copy(allProOwners = proOwners) }
         }
     }
 
-    fun addProOwner(proOwner: OwnerItem) = viewModelScope.launch { addProOwnerUseCase(proOwner) }
-    fun editProOwner(proOwner: OwnerItem) = viewModelScope.launch { editProOwnerUseCase(proOwner) }
-    fun removeProOwner(proOwnerId: Int) = viewModelScope.launch { removeProOwnerUseCase(proOwnerId) }
+    fun removeProOwner(proOwnerId: Int) {
+        viewModelScope.launch { ownerRepo.removeOwner(proOwnerId) }
+    }
 
     fun setFormError(field: FormInputName, error: String) {
         _uiState.update {
@@ -50,38 +42,38 @@ class ProOwnerViewModel(
     }
 
     fun onSubmitForm() {
-        if (uiState.value.proOwnerName.isBlank()) {
-            setFormError(FormInputName.OwnerName, "O nome do proprietario é obrigatorio")
-            return
-        } else {
-            setFormError(FormInputName.OwnerName, "")
-        }
+        viewModelScope.launch {
+            if (uiState.value.proOwnerName.isBlank()) {
+                setFormError(FormInputName.OwnerName, "O nome do proprietario é obrigatorio")
+                return@launch
+            } else {
+                setFormError(FormInputName.OwnerName, "")
+            }
 
-        if (uiState.value.proOwnerTelephone.isBlank()) {
-            setFormError(FormInputName.OwnerPhone, "O telefone é obrigatorio")
-            return
-        } else {
-            setFormError(FormInputName.OwnerPhone, "")
-        }
+            if (uiState.value.proOwnerTelephone.isBlank()) {
+                setFormError(FormInputName.OwnerPhone, "O telefone é obrigatorio")
+                return@launch
+            } else {
+                setFormError(FormInputName.OwnerPhone, "")
+            }
 
-        val proOwnerItem = OwnerItem(
-            id = uiState.value.proOwnerId,
-            name = uiState.value.proOwnerName,
-            telephone = uiState.value.proOwnerTelephone,
-        )
+            val proOwnerItem = OwnerItem(
+                id = uiState.value.proOwnerId,
+                name = uiState.value.proOwnerName,
+                telephone = uiState.value.proOwnerTelephone,
+            )
 
-        val alertText = if (uiState.value.proOwnerId != 0) {
-            editProOwner(proOwnerItem)
-            "Proprietario actualizado com sucesso"
-        } else {
-            addProOwner(proOwnerItem)
-            "Proprietario adicionado com sucesso"
-        }
+            val (status, message) = if (uiState.value.proOwnerId != 0) ownerRepo.addOwner(proOwnerItem) else ownerRepo.editOwner(proOwnerItem)
+            val alertTitle = when (status) {
+                200 -> "Sucesso"
+                else -> ""
+            }
 
-        resetForm()
+            resetForm()
 
-        showAlert("Sucesso", alertText) {
-            openAlertDialog(false)
+            showAlert(alertTitle, message) {
+                openAlertDialog(false)
+            }
         }
     }
 

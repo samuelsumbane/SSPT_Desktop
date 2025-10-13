@@ -29,7 +29,7 @@ fun SideBar(navigator: Navigator) {
     NavigationRail(
         modifier = Modifier
             .fillMaxHeight()
-            .width(80.dp),
+            .width(85.dp),
         backgroundColor = colorScheme.background
     ) {
         Box(
@@ -52,7 +52,8 @@ fun SideBar(navigator: Navigator) {
                     IconPageScreen(painterResource(Res.drawable.adjust_24), PageName.PARTNERS.itsName, PartnerModuleScreen()),
                     IconPageScreen(painterResource(Res.drawable.shopping_basket), PageName.SELL.itsName, SellModuleScreen()),
                     IconPageScreen(painterResource(Res.drawable.finance), PageName.FINANCE.itsName, FinanceModuleScreen()),
-                    IconPageScreen(painterResource(Res.drawable.shopping_basket), PageName.PRODUCTS.itsName, ProductsScreen()),
+                    IconPageScreen(painterResource(Res.drawable.shopping_basket), PageName.PRODUCTS.itsName,
+                        ProductsModuleScreen()),
                     IconPageScreen(painterResource(Res.drawable.manager), PageName.MANAGER.itsName, ManagerModuleScreen()),
                     IconPageScreen(painterResource(Res.drawable.bar_chart), PageName.REPORT.itsName, ReportModuleScreen()),
                     IconPageScreen(painterResource(Res.drawable.settings), PageName.SETTINGS.itsName, SettingsModuleScreen()),

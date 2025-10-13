@@ -2,15 +2,11 @@ package com.samuelsumbane.ssptdesktop.presentation.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.samuelsumbane.ssptdesktop.domain.repository.ProOwnerRepository
+import com.samuelsumbane.ssptdesktop.domain.repository.ProductCategoryRepository
+import com.samuelsumbane.ssptdesktop.domain.repository.ProductRepository
 import com.samuelsumbane.ssptdesktop.kclient.ChangeProductPriceDraft
 import com.samuelsumbane.ssptdesktop.kclient.ProductItem
-import com.samuelsumbane.ssptdesktop.domain.usecase.AddProductsUseCase
-import com.samuelsumbane.ssptdesktop.domain.usecase.EditProductUseCase
-import com.samuelsumbane.ssptdesktop.domain.usecase.GetProOwnerUseCase
-import com.samuelsumbane.ssptdesktop.domain.usecase.GetProductCategoriesUseCase
-import com.samuelsumbane.ssptdesktop.domain.usecase.GetProductsUseCase
-import com.samuelsumbane.ssptdesktop.domain.usecase.RemoveProductUseCase
-import com.samuelsumbane.ssptdesktop.domain.usecase.ChangeProductPriceUseCase
 import com.samuelsumbane.ssptdesktop.presentation.viewmodel.viewmodelstates.ProductsUiState
 import com.samuelsumbane.ssptdesktop.ui.utils.AlertType
 import com.samuelsumbane.ssptdesktop.ui.utils.FormInputName
@@ -20,13 +16,9 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class ProductsViewModel(
-    private val getProductsUseCase: GetProductsUseCase,
-    private val addProductUseCase: AddProductsUseCase,
-    private val editProductUseCase: EditProductUseCase,
-    private val updateProductPriceUseCase: ChangeProductPriceUseCase,
-    private val removeProductUseCase: RemoveProductUseCase,
-    private val getProductCategoriesUseCase: GetProductCategoriesUseCase,
-    private val getProOwnerUseCase : GetProOwnerUseCase
+    private val productsRepo: ProductRepository,
+    private val categoryRepo: ProductCategoryRepository,
+    private val ownerRepo: ProOwnerRepository
 ) : ViewModel() {
 
     val _uiState = MutableStateFlow(ProductsUiState())
@@ -38,30 +30,29 @@ class ProductsViewModel(
 
     fun loadProducts() {
         viewModelScope.launch {
-            getProductsUseCase().collect { products ->
+            val products = productsRepo.getProducts()
                 _uiState.update { it.copy(products = products) }
-            }
         }
     }
 
     fun loadCategories() {
         viewModelScope.launch {
-            getProductCategoriesUseCase().collect { categoriesList ->
-                _uiState.update { it.copy(categories = categoriesList) }
-            }
+            val categoriesList = categoryRepo.getProductCategories()
+            _uiState.update { it.copy(categories = categoriesList) }
         }
     }
 
     fun loadProOwners() {
         viewModelScope.launch {
-            getProOwnerUseCase().collect { proOwners ->
-                _uiState.update { it.copy(owners = proOwners) }
-            }
+            val ownersList = ownerRepo.getProOwners()
+            _uiState.update { it.copy(owners = ownersList) }
         }
     }
 
     fun updateProductPrice(product: ChangeProductPriceDraft) {
-        viewModelScope.launch { updateProductPriceUseCase(product) }
+        viewModelScope.launch {
+            productsRepo.changeProductPrice(product)
+        }
     }
 
     fun startAddingProductProcess() {
@@ -73,43 +64,45 @@ class ProductsViewModel(
     }
 
     fun onSubmitForm() {
-        if (uiState.value.proName.isBlank()) {
-            setFormError(FormInputName.ProName, "O nome é obrigatorio")
-            return
-        }
-        setFormError(FormInputName.ProName, "")
+        viewModelScope.launch {
 
-        if (uiState.value.proType !in listOf("UNIT", "PACK")) {
-            setFormError(FormInputName.ProType, "O tipo é obrigatorio")
-            return
-        }
-        setFormError(FormInputName.ProType, "")
+            if (uiState.value.proName.isBlank()) {
+                setFormError(FormInputName.ProName, "O nome é obrigatorio")
+                return@launch
+            }
+            setFormError(FormInputName.ProName, "")
 
-        if (uiState.value.proStock == 0) {
-            setFormError(FormInputName.ProStock, "A quantidade é obrigatoria")
-            return
-        }
-        setFormError(FormInputName.ProStock, "")
+            if (uiState.value.proType !in listOf("UNIT", "PACK")) {
+                setFormError(FormInputName.ProType, "O tipo é obrigatorio")
+                return@launch
+            }
+            setFormError(FormInputName.ProType, "")
 
-        if (uiState.value.proCost == 0.0) {
-            setFormError(FormInputName.ProCost, "O custo é obrigatorio")
-            return
-        }
-        setFormError(FormInputName.ProCost, "")
+            if (uiState.value.proStock == 0) {
+                setFormError(FormInputName.ProStock, "A quantidade é obrigatoria")
+                return@launch
+            }
+            setFormError(FormInputName.ProStock, "")
 
-
-        if (uiState.value.proPrice == 0.0) {
-            setFormError(FormInputName.ProPrice, "O preço de venda é obrigatorio")
-            return
-        }
-        setFormError(FormInputName.ProPrice, "")
+            if (uiState.value.proCost == 0.0) {
+                setFormError(FormInputName.ProCost, "O custo é obrigatorio")
+                return@launch
+            }
+            setFormError(FormInputName.ProCost, "")
 
 
-        if (uiState.value.proCategoryId == 0) {
-            setFormError(FormInputName.CategoryName, "A categoria é obrigatoria")
-            return
-        }
-        setFormError(FormInputName.CategoryName, "")
+            if (uiState.value.proPrice == 0.0) {
+                setFormError(FormInputName.ProPrice, "O preço de venda é obrigatorio")
+                return@launch
+            }
+            setFormError(FormInputName.ProPrice, "")
+
+
+            if (uiState.value.proCategoryId == 0) {
+                setFormError(FormInputName.CategoryName, "A categoria é obrigatoria")
+                return@launch
+            }
+            setFormError(FormInputName.CategoryName, "")
 
 //        if (uiState.value.proBarcode.isBlank()) {
 //            setFormError(FormInputName.ProBarcode, "A categoria é obrigatoria")
@@ -117,39 +110,39 @@ class ProductsViewModel(
 //        }
 //        setFormError(FormInputName.CategoryName, "")
 
-        if (uiState.value.proOwnerId == 0) {
-            setFormError(FormInputName.OwnerName, "Por favor, selecione um proprietaio")
-            return
+            if (uiState.value.proOwnerId == 0) {
+                setFormError(FormInputName.OwnerName, "Por favor, selecione um proprietaio")
+                return@launch
+            }
+            setFormError(FormInputName.OwnerName, "")
+
+            val product = ProductItem(
+                id = uiState.value.proId,
+                name = uiState.value.proName,
+                type = uiState.value.proType,
+                productRelationId = uiState.value.proRelationId,
+                productRelationName = uiState.value.proRelationName,
+                cost = uiState.value.proCost,
+                price = uiState.value.proPrice,
+                stock = uiState.value.proStock,
+                minStock = uiState.value.proMinStock,
+                categoryId = uiState.value.proCategoryId,
+                categoryName = uiState.value.proCategoryName,
+                barcode = uiState.value.proBarcode,
+                ownerId = uiState.value.proOwnerId,
+                ownerName = uiState.value.proOwnerName
+            )
+
+            val (status, message) = if (uiState.value.proId != 0) productsRepo.editProduct(product) else productsRepo.addProduct(product)
+            val alertTitle = when (status) {
+                200 -> "Sucesso"
+                else -> ""
+            }
+
+            openFormDialog(false)
+
+            showAlert(alertTitle, message) { openAlertDialog(false) }
         }
-        setFormError(FormInputName.OwnerName, "")
-
-        val product = ProductItem(
-            id = uiState.value.proId,
-            name = uiState.value.proName,
-            type = uiState.value.proType,
-            productRelationId = uiState.value.proRelationId,
-            productRelationName = uiState.value.proRelationName,
-            cost = uiState.value.proCost,
-            price = uiState.value.proPrice,
-            stock = uiState.value.proStock,
-            minStock = uiState.value.proMinStock,
-            categoryId = uiState.value.proCategoryId,
-            categoryName = uiState.value.proCategoryName,
-            barcode = uiState.value.proBarcode,
-            ownerId = uiState.value.proOwnerId,
-            ownerName = uiState.value.proOwnerName
-        )
-
-        val alertText = if (uiState.value.proId != 0) {
-            viewModelScope.launch { editProductUseCase(product) }
-            "Producto actualizado com sucesso"
-        } else {
-            viewModelScope.launch { addProductUseCase(product) }
-            "Producto adicionado com sucesso"
-        }
-        openFormDialog(false)
-
-        showAlert("Sucesso", alertText) { openAlertDialog(false) }
     }
 
     fun fillFormFields(
@@ -224,7 +217,9 @@ class ProductsViewModel(
     }
 
     fun removeProduct(productId: Int) {
-        viewModelScope.launch { removeProductUseCase(productId) }
+        viewModelScope.launch {
+            productsRepo.removeProduct(productId)
+        }
     }
 
     fun setFormError(field: FormInputName, error: String) {

@@ -2,10 +2,8 @@ package com.samuelsumbane.ssptdesktop.presentation.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.samuelsumbane.ssptdesktop.domain.usecase.AddBranchUseCase
-import com.samuelsumbane.ssptdesktop.domain.usecase.EditBranchUseCase
-import com.samuelsumbane.ssptdesktop.domain.usecase.GetBranchsUseCase
-import com.samuelsumbane.ssptdesktop.domain.usecase.RemoveBranchUseCase
+import com.samuelsumbane.ssptdesktop.domain.repository.BranchRepository
+import com.samuelsumbane.ssptdesktop.kclient.StatusAndMessage
 import com.samuelsumbane.ssptdesktop.presentation.viewmodel.viewmodelstates.BranchUiState
 import com.samuelsumbane.ssptdesktop.ui.utils.FormInputName
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -14,10 +12,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class BranchViewModel(
-    private val getBranchesUseCase: GetBranchsUseCase,
-    private val addBranchViewModel: AddBranchUseCase,
-    private val editBranchUseCase: EditBranchUseCase,
-    private val removeBranchUseCase: RemoveBranchUseCase
+    private val repo: BranchRepository
 ) : ViewModel() {
     val _uiState = MutableStateFlow(BranchUiState())
     val branchUiState = _uiState.asStateFlow()
@@ -26,13 +21,17 @@ class BranchViewModel(
 
     fun loadBranches() {
         viewModelScope.launch {
-            getBranchesUseCase().collect { branches ->
-                _uiState.update { it.copy(branches = branches) }
-            }
+            val branches = repo.getBranchs()
+            _uiState.update { it.copy(branches = branches) }
         }
     }
 
-    fun removeBranch(branchId: Int) = viewModelScope.launch { removeBranchUseCase(branchId) }
+    fun removeBranch(branchId: Int) {
+        viewModelScope.launch {
+            val (status, message) = repo.removeBranch(branchId)
+
+        }
+    }
 
     fun fillFormFields(
         branchId: Int? = null,

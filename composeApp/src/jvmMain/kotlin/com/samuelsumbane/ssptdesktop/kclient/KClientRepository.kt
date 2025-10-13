@@ -1,5 +1,7 @@
 package com.samuelsumbane.ssptdesktop.kclient
 
+import io.ktor.client.HttpClient
+import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.request.delete
 import io.ktor.client.request.header
 import io.ktor.client.request.post
@@ -9,6 +11,8 @@ import io.ktor.client.statement.bodyAsText
 import io.ktor.http.ContentType
 import io.ktor.http.HttpHeaders
 import io.ktor.http.contentType
+import io.ktor.serialization.kotlinx.json.json
+import kotlinx.serialization.json.Json
 
 class KClientRepository : ClassHttpClient() {
     suspend inline fun <reified T : Any> postRequest(
@@ -73,4 +77,5 @@ class KClientRepository : ClassHttpClient() {
             Pair(400, "")
         }
     }
+
 }

@@ -2,11 +2,16 @@ package com.samuelsumbane.ssptdesktop.ui.view.partners
 
 //import com.samuelsumbane.ssptdesktop.ui.states.AppState.formErrors
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
@@ -45,12 +50,10 @@ fun ClientsPage() {
     ) {
 
 
-        FlowRow(
-            modifier = Modifier.padding(10.dp)
-        ) {
+        FlowRow(modifier = Modifier.padding(10.dp)) {
             clientUIStates.clients.forEach { client ->
                 with(client) {
-                    InfoCard() {
+                    InfoCard(modifier = Modifier.size(300.dp, 200.dp)) {
                         Text("Nome: $name ")
                         Text("Telefone: $telephone ")
 
@@ -76,20 +79,22 @@ fun ClientsPage() {
                     clientViewModel.onSubmitClientForm()
                 }
             ) {
-                InputField(
-                    inputValue = clientUIStates.clientName,
-                    label = "Nome",
-                    errorText = clientUIStates.common.formErrors[FormInputName.ClientName],
-                    onValueChanged = { clientViewModel.setClientNameData(it) },
-                )
+                FormColumn(modifier = Modifier.fillMaxWidth()) {
+                    InputField(
+                        inputValue = clientUIStates.clientName,
+                        label = "Nome",
+                        errorText = clientUIStates.common.formErrors[FormInputName.ClientName],
+                        onValueChanged = { clientViewModel.setClientNameData(it) },
+                    )
 
-                InputField(
-                    inputValue = clientUIStates.clientPhone,
-                    label = "Telefone",
-                    errorText = clientUIStates.common.formErrors[FormInputName.ClientPhone],
-                    onValueChanged = { clientViewModel.setClientPhoneData(it) },
-                    keyboardType = KeyboardType.Phone
-                )
+                    InputField(
+                        inputValue = clientUIStates.clientPhone,
+                        label = "Telefone",
+                        errorText = clientUIStates.common.formErrors[FormInputName.ClientPhone],
+                        onValueChanged = { clientViewModel.setClientPhoneData(it) },
+                        keyboardType = KeyboardType.Phone
+                    )
+                }
             }
         }
 

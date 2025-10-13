@@ -2,29 +2,45 @@ package com.samuelsumbane.ssptdesktop.data.repository
 
 import com.samuelsumbane.ssptdesktop.kclient.BranchItem
 import com.samuelsumbane.ssptdesktop.domain.repository.BranchRepository
+import com.samuelsumbane.ssptdesktop.kclient.ClientItem
+import com.samuelsumbane.ssptdesktop.kclient.KClientRepository
+import com.samuelsumbane.ssptdesktop.kclient.Session
+import com.samuelsumbane.ssptdesktop.kclient.StatusAndMessage
+import com.samuelsumbane.ssptdesktop.kclient.apiBranchesPath
+import com.samuelsumbane.ssptdesktop.kclient.apiClientsPath
+import io.ktor.client.call.body
+import io.ktor.client.request.get
+import io.ktor.client.request.header
+import io.ktor.http.HttpHeaders
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 
 class BranchRepositoryImpl : BranchRepository {
-    val _state = MutableStateFlow(
-        listOf(
-            BranchItem(1, "Sede", "Chongoene")
-        )
-    )
 
-    override fun getBranchs(): Flow<List<BranchItem>> = _state
+    val kClientRepo = KClientRepository()
 
-    override fun addBranch(branch: BranchItem) {
-        _state.value += branch
-    }
+    val token = Session.jwtToken ?: ""
 
-    override fun editBranch(branch: BranchItem) {
-        _state.value = _state.value.map {
-            if (it.id == branch.id) branch else it
+    override suspend fun getBranchs(): List<BranchItem> {
+        return try {
+            kClientRepo.httpClient.get("$apiBranchesPath/all") {
+                header(HttpHeaders.Authorization, "Bearer $token")
+            }.body()
+        } catch (e: Exception) {
+            println("Error fetching data: ${e.message}")
+            emptyList()
         }
     }
 
-    override fun removeBranch(branchId: Int) {
-        _state.value.filterNot { it.id == branchId }
+    override suspend fun addBranch(branch: BranchItem): StatusAndMessage {
+        return StatusAndMessage(100, "")
+    }
+
+    override suspend fun editBranch(branch: BranchItem): StatusAndMessage {
+        return StatusAndMessage(100, "")
+    }
+
+    override suspend fun removeBranch(branchId: Int): StatusAndMessage {
+        return StatusAndMessage(100, "")
     }
 }

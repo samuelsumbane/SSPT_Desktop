@@ -10,7 +10,7 @@ import cafe.adriel.voyager.navigator.Navigator
 fun App() {
 //    val clientViewModel: ClientViewModel = getKoin().get()
 
-    SSPTTheme(darkTheme = false) {
+    SSPTTheme(darkTheme = true) {
 //        Navigator(ProductsScreen())
         Navigator(PartnerModuleScreen())
     }

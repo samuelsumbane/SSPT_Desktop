@@ -1,12 +1,13 @@
 package com.samuelsumbane.ssptdesktop.domain.repository
 
 import com.samuelsumbane.ssptdesktop.kclient.CategoryItem
+import com.samuelsumbane.ssptdesktop.kclient.StatusAndMessage
 import kotlinx.coroutines.flow.Flow
 
 
 interface ProductCategoryRepository {
-    fun getProductCategories(): Flow<List<CategoryItem>>
-    fun addProductCategory(category: CategoryItem)
-    fun removeProductCategory(categoryId: Int)
-    fun editProductCategory(category: CategoryItem)
+    suspend fun getProductCategories(): List<CategoryItem>
+    suspend fun addProductCategory(category: CategoryItem): StatusAndMessage
+    suspend fun removeProductCategory(categoryId: Int): StatusAndMessage
+    suspend fun editProductCategory(category: CategoryItem): StatusAndMessage
 }

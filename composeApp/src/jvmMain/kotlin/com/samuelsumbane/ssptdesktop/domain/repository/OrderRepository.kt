@@ -5,6 +5,6 @@ import com.samuelsumbane.ssptdesktop.kclient.OrderItemDraft
 import kotlinx.coroutines.flow.Flow
 
 interface OrderRepository {
-    fun getOrders(): Flow<List<OrderItem>>
+    fun getOrders(): List<OrderItem>
     fun addOrder(order: OrderItemDraft)
 }

@@ -1,11 +1,11 @@
-package com.samuelsumbane.ssptdesktop.domain.usecase.repository
+package com.samuelsumbane.ssptdesktop.domain.repository
 
 import com.samuelsumbane.ssptdesktop.kclient.OwnerItem
-import kotlinx.coroutines.flow.Flow
+import com.samuelsumbane.ssptdesktop.kclient.StatusAndMessage
 
 interface ProOwnerRepository {
-    fun getProOwners(): Flow<List<OwnerItem>>
-    suspend fun addOwner(proOwner: OwnerItem)
-    suspend fun editOwner(proOwner: OwnerItem)
-    suspend fun removeOwner(proOwnerId: Int)
+    suspend fun getProOwners(): List<OwnerItem>
+    suspend fun addOwner(proOwner: OwnerItem): StatusAndMessage
+    suspend fun editOwner(proOwner: OwnerItem): StatusAndMessage
+    suspend fun removeOwner(proOwnerId: Int): StatusAndMessage
 }

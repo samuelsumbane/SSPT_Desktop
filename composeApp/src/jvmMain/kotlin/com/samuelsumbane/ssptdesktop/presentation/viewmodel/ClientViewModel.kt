@@ -2,11 +2,8 @@ package com.samuelsumbane.ssptdesktop.presentation.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.samuelsumbane.ssptdesktop.domain.repository.ClientRepository
 import com.samuelsumbane.ssptdesktop.kclient.ClientItem
-import com.samuelsumbane.ssptdesktop.core.utils.generateId
-import com.samuelsumbane.ssptdesktop.domain.usecase.AddClientUseCase
-import com.samuelsumbane.ssptdesktop.domain.usecase.EditClientUseCase
-import com.samuelsumbane.ssptdesktop.domain.usecase.GetClientsUseCase
 import com.samuelsumbane.ssptdesktop.presentation.viewmodel.viewmodelstates.ClientUIStates
 import com.samuelsumbane.ssptdesktop.ui.utils.AlertType
 import com.samuelsumbane.ssptdesktop.ui.utils.FormInputName
@@ -16,9 +13,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class ClientViewModel(
-    private val getClients: GetClientsUseCase,
-    private val addClient: AddClientUseCase,
-    private val editClient: EditClientUseCase
+    private val repo: ClientRepository
 ) : ViewModel() {
 
     val _uiStates = MutableStateFlow(ClientUIStates())
@@ -30,48 +25,50 @@ class ClientViewModel(
 
     fun loadClients() {
         viewModelScope.launch {
-            getClients().collect { newClientList ->
-                _uiStates.update { it.copy(clients = newClientList) }
-            }
+            val newClientList = repo.getClients()
+            _uiStates.update { it.copy(clients = newClientList) }
         }
     }
 
-    fun addTheClient(client: ClientItem) = viewModelScope.launch { addClient(client) }
-    fun editTheClient(client: ClientItem) = viewModelScope.launch { editClient(client) }
+//    fun addTheClient(client: ClientItem) = viewModelScope.launch { repo.addClient(client) }
+//    fun editTheClient(client: ClientItem) = viewModelScope.launch { repo.editClient(client) }
 
     fun onSubmitClientForm() {
-        if (uiStates.value.clientName.isBlank()) {
-            setFormError(FormInputName.ClientName, "O nome é obrigatório")
-            return
-        } else {
-            setFormError(FormInputName.ClientName, "")
-        }
+        viewModelScope.launch {
 
-        if (uiStates.value.clientPhone.isBlank()) {
-            setFormError(FormInputName.ClientPhone, "O telefone é obrigatório")
-            return
-        } else {
-            setFormError(FormInputName.ClientPhone, "")
-        }
+            if (uiStates.value.clientName.isBlank()) {
+                setFormError(FormInputName.ClientName, "O nome é obrigatório")
+                return@launch
+            } else {
+                setFormError(FormInputName.ClientName, "")
+            }
+
+            if (uiStates.value.clientPhone.isBlank()) {
+                setFormError(FormInputName.ClientPhone, "O telefone é obrigatório")
+                return@launch
+            } else {
+                setFormError(FormInputName.ClientPhone, "")
+            }
+
+            val clientItem = ClientItem(
+                id = if (uiStates.value.clientId != 0) uiStates.value.clientId else 0,
+                name = uiStates.value.clientName,
+                telephone = uiStates.value.clientPhone
+            )
 
 
-        val clientItem = ClientItem(
-            id = if (uiStates.value.clientId != 0) uiStates.value.clientId else generateId(2),
-            name = uiStates.value.clientName,
-            telephone = uiStates.value.clientPhone
-        )
+            val (status, message) = if (uiStates.value.clientId != 0) repo.AddClient(clientItem) else repo.AddClient(clientItem)
 
-        val alertText = if (uiStates.value.clientId != 0) {
-            editTheClient(clientItem)
-            "Cliente editado com sucesso."
-        } else {
-            addTheClient(clientItem)
-            "Cliente adicionado com sucesso."
-        }
-        resetForm()
+            val title = when (status) {
+                200 -> "Sucesso"
+                else -> ""
+            }
 
-        showAlert("Sucesso", alertText) {
-            openAlertDialog(false)
+            resetForm()
+
+            showAlert(title, message) {
+                openAlertDialog(false)
+            }
         }
     }
 
@@ -141,6 +138,7 @@ class ClientViewModel(
                 formErrors = emptyMap()
             ))
         }
+        loadClients()
     }
 
     fun showAlert(

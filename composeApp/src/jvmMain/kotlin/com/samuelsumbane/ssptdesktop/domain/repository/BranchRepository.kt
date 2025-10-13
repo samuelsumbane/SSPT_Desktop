@@ -1,11 +1,12 @@
 package com.samuelsumbane.ssptdesktop.domain.repository
 
 import com.samuelsumbane.ssptdesktop.kclient.BranchItem
+import com.samuelsumbane.ssptdesktop.kclient.StatusAndMessage
 import kotlinx.coroutines.flow.Flow
 
 interface BranchRepository {
-    fun getBranchs(): Flow<List<BranchItem>>
-    fun addBranch(branch: BranchItem)
-    fun editBranch(branch: BranchItem)
-    fun removeBranch(branchId: Int)
+    suspend fun getBranchs(): List<BranchItem>
+    suspend fun addBranch(branch: BranchItem): StatusAndMessage
+    suspend fun editBranch(branch: BranchItem): StatusAndMessage
+    suspend fun removeBranch(branchId: Int): StatusAndMessage
 }
