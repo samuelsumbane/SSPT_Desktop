@@ -30,7 +30,7 @@ class ProductCategoryRepositoryImpl : ProductCategoryRepository {
     }
 
     override suspend fun addProductCategory(category: CategoryItem): StatusAndMessage {
-        val (status, message) = kClientRepo.postRequest("$apiCategoriesPath/edit", category)
+        val (status, message) = kClientRepo.postRequest("$apiCategoriesPath/create", category)
         return StatusAndMessage(status, message)
     }
 

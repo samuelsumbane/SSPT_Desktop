@@ -31,7 +31,7 @@ class ProductsViewModel(
     fun loadProducts() {
         viewModelScope.launch {
             val products = productsRepo.getProducts()
-                _uiState.update { it.copy(products = products) }
+            _uiState.update { it.copy(products = products) }
         }
     }
 
@@ -135,7 +135,7 @@ class ProductsViewModel(
 
             val (status, message) = if (uiState.value.proId != 0) productsRepo.editProduct(product) else productsRepo.addProduct(product)
             val alertTitle = when (status) {
-                200 -> "Sucesso"
+                201 -> "Producto adicionado"
                 else -> ""
             }
 

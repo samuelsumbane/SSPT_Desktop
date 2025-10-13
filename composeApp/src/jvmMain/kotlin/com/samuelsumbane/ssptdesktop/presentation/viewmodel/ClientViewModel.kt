@@ -30,9 +30,6 @@ class ClientViewModel(
         }
     }
 
-//    fun addTheClient(client: ClientItem) = viewModelScope.launch { repo.addClient(client) }
-//    fun editTheClient(client: ClientItem) = viewModelScope.launch { repo.editClient(client) }
-
     fun onSubmitClientForm() {
         viewModelScope.launch {
 
@@ -57,10 +54,11 @@ class ClientViewModel(
             )
 
 
-            val (status, message) = if (uiStates.value.clientId != 0) repo.AddClient(clientItem) else repo.AddClient(clientItem)
+            val (status, message) = if (uiStates.value.clientId != 0) repo.EditClient(clientItem) else repo.AddClient(clientItem)
 
             val title = when (status) {
-                200 -> "Sucesso"
+                200 -> "Cliente actualizado"
+                201 -> "Cliente adicionado"
                 else -> ""
             }
 

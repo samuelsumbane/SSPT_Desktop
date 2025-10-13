@@ -23,7 +23,7 @@ import org.jetbrains.compose.resources.painterResource
 import ssptdesktop.composeapp.generated.resources.*
 
 @Composable
-fun SideBar(navigator: Navigator) {
+fun SideBar(navigator: Navigator, activePage: String = "") {
     val colorScheme = MaterialTheme.colorScheme
 
     NavigationRail(
@@ -60,12 +60,14 @@ fun SideBar(navigator: Navigator) {
                 )
 
                 for ((painter, text, screen) in pageButtons) {
+                    val columnColors = if (activePage == text) colorScheme.primary else Color.Black
                     Column(
                         modifier = Modifier.clickable { navigator.push(screen) }
                     ) {
                         Icon(
                             painter, contentDescription = text,
-                            modifier = Modifier.align(Alignment.CenterHorizontally)
+                            modifier = Modifier.align(Alignment.CenterHorizontally),
+                            tint = columnColors
                         )
                         Text(text, fontSize = 12.sp)
                     }

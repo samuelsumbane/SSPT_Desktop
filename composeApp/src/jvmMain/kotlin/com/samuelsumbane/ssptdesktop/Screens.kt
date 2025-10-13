@@ -12,6 +12,7 @@ import com.samuelsumbane.ssptdesktop.ui.view.partners.ClientsScreen
 import com.samuelsumbane.ssptdesktop.ui.view.partners.OwnersScreen
 import com.samuelsumbane.ssptdesktop.ui.view.report.ReportsScreen
 import com.samuelsumbane.ssptdesktop.ui.view.report.StocksScreen
+import com.samuelsumbane.ssptdesktop.ui.view.sell.SalesScreen
 import com.samuelsumbane.ssptdesktop.ui.view.settings.LogsScreen
 import com.samuelsumbane.ssptdesktop.ui.view.settings.NotificationsScreen
 import com.samuelsumbane.ssptdesktop.ui.view.settings.SettingsScreen
@@ -73,7 +74,7 @@ class ProductsModuleScreen : Screen {
         AgroupedPages(
             title = "Productos",
             pageLists = listOf(
-                IconPageScreen(painterResource(Res.drawable.details), "Productos", ProductsScreen()),
+                IconPageScreen(painterResource(Res.drawable.shopping_basket), "Productos", ProductsScreen()),
                 IconPageScreen(painterResource(Res.drawable.help_24), "Categorias", CategoriesScreen()),
             )
         )
@@ -97,11 +98,9 @@ class SellModuleScreen : Screen{
     @Composable
     override fun Content() {
         AgroupedPages(
-            title = "Configurações",
+            title = "Vendas",
             pageLists = listOf(
-                IconPageScreen(painterResource(Res.drawable.account_circle), "Notificações", NotificationsScreen()),
-                IconPageScreen(painterResource(Res.drawable.account_circle), "Conf. do sistema", SettingsScreen()),
-                IconPageScreen(painterResource(Res.drawable.account_circle), "Logs", LogsScreen()),
+                IconPageScreen(painterResource(Res.drawable.account_circle), "Vendas", SalesScreen()),
             )
         )
     }
@@ -110,6 +109,13 @@ class SellModuleScreen : Screen{
 class SettingsModuleScreen : Screen {
     @Composable
     override fun Content() {
-        TODO("Not yet implemented")
+        AgroupedPages(
+            title = "Configurações",
+            pageLists = listOf(
+                IconPageScreen(painterResource(Res.drawable.account_circle), "Notificações", NotificationsScreen()),
+                IconPageScreen(painterResource(Res.drawable.account_circle), "Conf. do sistema", SettingsScreen()),
+                IconPageScreen(painterResource(Res.drawable.account_circle), "Logs", LogsScreen()),
+            )
+        )
     }
 }

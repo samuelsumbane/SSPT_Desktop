@@ -25,8 +25,9 @@ class ProductCategoryViewModel(
 
     fun loadCategories() {
         viewModelScope.launch {
-            val  newCategoriesList = repo.getProductCategories()
+            val newCategoriesList = repo.getProductCategories()
             _uiState.update { it.copy(proCategories = newCategoriesList) }
+            println("data are: $newCategoriesList")
         }
     }
 
@@ -64,7 +65,8 @@ class ProductCategoryViewModel(
             val (status, message) = if (uiState.value.categoryId != 0) repo.editProductCategory(category) else repo.addProductCategory(category)
 
             val alertTitle = when (status) {
-                200 -> "Sucesso"
+                200 -> "Categoria actualizada"
+                201 -> "Categoria adicionada"
                 else -> ""
             }
 
@@ -104,6 +106,7 @@ class ProductCategoryViewModel(
                 formErrors = emptyMap()
             ))
         }
+        loadCategories()
     }
 
     fun openFormDialog(setOpen: Boolean, title: String = "") {

@@ -31,11 +31,12 @@ import ssptdesktop.composeapp.generated.resources.arrow_back
 fun CommonPageStructure(
     navigator: Navigator,
     pageTitle: String = "Clientes",
+    activePage: String = "",
     topBarActions: @Composable RowScope.() -> Unit = {},
     content: @Composable ColumnScope.() -> Unit
 ) {
     Row(modifier = Modifier) {
-        SideBar(navigator)
+        SideBar(navigator, activePage)
 
         Scaffold(
             topBar = {

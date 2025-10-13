@@ -9,6 +9,8 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -21,7 +23,10 @@ import cafe.adriel.voyager.navigator.currentOrThrow
 import com.samuelsumbane.ssptdesktop.presentation.viewmodel.ClientViewModel
 import com.samuelsumbane.ssptdesktop.ui.components.*
 import com.samuelsumbane.ssptdesktop.ui.utils.FormInputName
+import org.jetbrains.compose.resources.painterResource
 import org.koin.java.KoinJavaComponent.getKoin
+import ssptdesktop.composeapp.generated.resources.Res
+import ssptdesktop.composeapp.generated.resources.edit
 
 
 class ClientsScreen : Screen {
@@ -57,13 +62,15 @@ fun ClientsPage() {
                         Text("Nome: $name ")
                         Text("Telefone: $telephone ")
 
-                        Row(
-                            modifier = Modifier.padding(top = 30.dp)
-                        ) {
-                            NormalButton(text = "Editar") {
-                                submitButtonText = "Actualizar"
-                                clientViewModel.fillAllForm(id!!, name, telephone)
-                                clientViewModel.openFormDialog(true, "Actualizar cliente")
+                        Row(modifier = Modifier.padding(top = 30.dp)) {
+                            IconButton(
+                                onClick = {
+                                    submitButtonText = "Actualizar"
+                                    clientViewModel.fillAllForm(id!!, name, telephone)
+                                    clientViewModel.openFormDialog(true, "Actualizar cliente")
+                                }
+                            ) {
+                                Icon(painterResource(Res.drawable.edit), "Edit client")
                             }
                         }
                     }

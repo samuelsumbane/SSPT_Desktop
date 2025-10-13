@@ -31,17 +31,17 @@ class ProOwnerRepositoryImpl : ProOwnerRepository{
     }
 
     override suspend fun addOwner(proOwner: OwnerItem): StatusAndMessage {
-        val (status, message) = kClientRepo.postRequest("$apiProductsPath/create", proOwner)
+        val (status, message) = kClientRepo.postRequest("$apiOwnersPath/create", proOwner)
         return StatusAndMessage(status, message)
     }
 
     override suspend fun editOwner(proOwner: OwnerItem): StatusAndMessage {
-        val (status, message) = kClientRepo.postRequest("$apiProductsPath/edit", proOwner, "put")
+        val (status, message) = kClientRepo.postRequest("$apiOwnersPath/edit", proOwner, "put")
         return StatusAndMessage(status, message)
     }
 
     override suspend fun removeOwner(proOwnerId: Int): StatusAndMessage {
-        val (status, message) = kClientRepo.deleteRequest("$apiProductsPath/delete/$proOwnerId")
+        val (status, message) = kClientRepo.deleteRequest("$apiOwnersPath/delete/$proOwnerId")
         return StatusAndMessage(status, message)
     }
 }

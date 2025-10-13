@@ -16,7 +16,7 @@ fun FormColumn(
     content: @Composable () -> Unit
 ) {
     Column(
-        modifier = modifier,
+        modifier = modifier.fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(30.dp)
     ) {

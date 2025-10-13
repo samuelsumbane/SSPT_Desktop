@@ -41,6 +41,7 @@ import com.samuelsumbane.ssptdesktop.ui.components.NormalButton
 import com.samuelsumbane.ssptdesktop.ui.components.ProgressIndicatorSize
 import com.samuelsumbane.ssptdesktop.ui.utils.FormInputName
 import com.samuelsumbane.ssptdesktop.ui.utils.ModalSize
+import com.samuelsumbane.ssptdesktop.ui.utils.PageName
 import org.jetbrains.compose.resources.painterResource
 import org.koin.java.KoinJavaComponent.getKoin
 import ssptdesktop.composeapp.generated.resources.Res
@@ -68,6 +69,7 @@ fun ProductsPage() {
     CommonPageStructure(
         navigator = navigator,
         pageTitle = "Productos",
+        activePage = PageName.PRODUCTS.itsName,
         topBarActions = {
             NormalButton(icon = null, text = "+ Producto") {
 //                submitButtonText = "Adicionar"

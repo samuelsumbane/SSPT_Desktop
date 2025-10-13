@@ -28,6 +28,12 @@ fun AgroupedPages(title: String, pageLists: List<IconPageScreen>) {
             verticalArrangement = Arrangement.Center,
             maxItemsInEachRow = 4
         ) {
+            if (pageLists.size == 1) {
+                val (_, _, screenDestination) = pageLists.first()
+                navigator.push(screenDestination)
+                return@FlowRow
+            }
+
             for((buttonIcon, buttonText, screenDestination) in pageLists) {
                 Column(
                     modifier = Modifier
@@ -38,7 +44,11 @@ fun AgroupedPages(title: String, pageLists: List<IconPageScreen>) {
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.SpaceAround
                 ) {
-                    Icon(buttonIcon, contentDescription = buttonText)
+                    Icon(
+                        buttonIcon,
+                        contentDescription = buttonText,
+                        modifier = Modifier.size(50.dp)
+                    )
                     Text(text = buttonText, fontWeight = FontWeight.SemiBold)
                 }
             }

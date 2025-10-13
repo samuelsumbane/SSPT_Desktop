@@ -63,9 +63,10 @@ class ProOwnerViewModel(
                 telephone = uiState.value.proOwnerTelephone,
             )
 
-            val (status, message) = if (uiState.value.proOwnerId != 0) ownerRepo.addOwner(proOwnerItem) else ownerRepo.editOwner(proOwnerItem)
+            val (status, message) = if (uiState.value.proOwnerId != 0) ownerRepo.editOwner(proOwnerItem) else ownerRepo.addOwner(proOwnerItem)
             val alertTitle = when (status) {
-                200 -> "Sucesso"
+                200 -> "Proprietario actualizado"
+                201 -> "Proprietario adicionado"
                 else -> ""
             }
 
@@ -87,7 +88,7 @@ class ProOwnerViewModel(
                 commonUiState = it.commonUiState.copy(formErrors = emptyMap())
             )
         }
-
+        loadProOwners()
     }
 
     fun fillFormFields(
