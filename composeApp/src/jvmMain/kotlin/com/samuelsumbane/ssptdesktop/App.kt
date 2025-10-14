@@ -2,6 +2,8 @@ package com.samuelsumbane.ssptdesktop
 
 import androidx.compose.runtime.Composable
 import cafe.adriel.voyager.navigator.Navigator
+import com.samuelsumbane.ssptdesktop.ui.view.sell.SaleModalScreen
+import com.samuelsumbane.ssptdesktop.ui.view.sell.SalesScreen
 
 //import ssptdesktop.composeapp.generated.resources.compose_multiplatform
 
@@ -10,8 +12,8 @@ import cafe.adriel.voyager.navigator.Navigator
 fun App() {
 //    val clientViewModel: ClientViewModel = getKoin().get()
 
-    SSPTTheme(darkTheme = true) {
+    SSPTTheme(darkTheme = false) {
 //        Navigator(ProductsScreen())
-        Navigator(PartnerModuleScreen())
+        Navigator(SaleModalScreen())
     }
 }

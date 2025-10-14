@@ -48,6 +48,7 @@ fun InputField(
     inputValue: String,
     label: String? = null,
     errorText: String? = null,
+    modifier: Modifier = Modifier,
     onValueChanged: (String) -> Unit,
     keyboardType: KeyboardType = KeyboardType.Text,
     singleLine: Boolean = true,
@@ -92,7 +93,7 @@ fun InputField(
             keyboardActions = KeyboardActions(
                 onDone = { onImeAction?.invoke() }
             ),
-            modifier = Modifier.fillMaxWidth(0.9f)
+            modifier = modifier.fillMaxWidth(0.9f)
                 .padding(0.dp)
         )
 
