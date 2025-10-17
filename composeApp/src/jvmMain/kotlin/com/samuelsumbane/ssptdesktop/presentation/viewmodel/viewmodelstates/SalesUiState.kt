@@ -7,13 +7,14 @@ data class SalesUiState(
     val cardProducts: List<CardProduct> = emptyList(),
     val searchProductsValue: String = "",
     val descont: Double = 0.0,
-    val receivedAmount: Double = 0.0, /** Amount which buyer gave */
+    val receivedAmount: Double = 0.0,/** Amount which buyer gave */
     val clientId: Int = 0,
     val clientName: String = "",
     val paymentMethod: String = "",
     val buyerCharge: Double = 0.0,
     val saleTotal: Double = 0.0,
     val saleSubTotal: Double = 0.0,
+    val saleReason: String = "",
     val commonUiState: CommonUiState = CommonUiState()
 )
 

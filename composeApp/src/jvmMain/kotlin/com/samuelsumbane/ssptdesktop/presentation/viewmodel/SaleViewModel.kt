@@ -1,11 +1,10 @@
 package com.samuelsumbane.ssptdesktop.presentation.viewmodel
 
-import androidx.compose.runtime.derivedStateOf
-import androidx.compose.runtime.getValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.samuelsumbane.ssptdesktop.domain.repository.ProductRepository
 import com.samuelsumbane.ssptdesktop.domain.repository.SalesRepository
+import com.samuelsumbane.ssptdesktop.kclient.OrderItemDraft
 import com.samuelsumbane.ssptdesktop.kclient.ProductItem
 import com.samuelsumbane.ssptdesktop.kclient.SaleItem
 import com.samuelsumbane.ssptdesktop.presentation.viewmodel.viewmodelstates.CardProduct
@@ -157,6 +156,27 @@ class SaleViewModel(
         clientId?.let { newValue -> _uiState.update { it.copy(clientId = newValue) } }
         clientName?.let { newValue -> _uiState.update { it.copy(clientName = newValue) } }
         paymentMethod?.let { newValue -> _uiState.update { it.copy(paymentMethod = newValue) } }
+    }
+
+    fun onSubmit() {
+        if (uiState.value.cardProducts.isEmpty()) {
+            // Nenhum producto encontrado no carinho
+            return
+        }
+
+//        val orderDraft = OrderItemDraft(
+//            clientId = null,
+//            total = uiState.value.saleTotal,
+//            status = uiState.value.saleReason,
+//            userId = 0,
+//            branchId = 1
+//        )
+//
+//        val (status, message) = salesRepo.saleProducts(
+//            SaleItem(
+//
+//            )
+//        )
     }
 
 

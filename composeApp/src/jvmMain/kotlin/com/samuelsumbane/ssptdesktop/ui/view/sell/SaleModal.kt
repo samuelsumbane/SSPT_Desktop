@@ -210,7 +210,7 @@ class SaleModalScreen : Screen {
                             ) {
                                 listOf("Dinheiro").forEach {
                                     DropdownMenuItem(
-                                        text = { Text("Client $it") },
+                                        text = { Text(it) },
                                         onClick = {
                                             salesViewModel.fillFormFields(
                                                 paymentMethod = it
@@ -254,7 +254,11 @@ class SaleModalScreen : Screen {
                         horizontalArrangement = Arrangement.SpaceAround
                     ) {
                         NormalOutlineButton(text = "Fechar", onClick = {})
-                        NormalButton(text = "Submeter", onClick = {})
+                        NormalButton(
+                            enabled = !saleModalUiState.value.cardProducts.isEmpty(),
+                            text = "Submeter",
+                            onClick = {}
+                        )
                     }
                 }
             }

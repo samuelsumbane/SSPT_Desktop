@@ -11,7 +11,7 @@ import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
-import com.samuelsumbane.ssptdesktop.presentation.viewmodel.ClientViewModel
+import com.samuelsumbane.ssptdesktop.presentation.viewmodel.BranchViewModel
 import com.samuelsumbane.ssptdesktop.ui.components.*
 import com.samuelsumbane.ssptdesktop.ui.utils.FormInputName
 import org.koin.java.KoinJavaComponent.getKoin
@@ -25,8 +25,8 @@ class BranchScreen : Screen {
 
 @Composable
 fun BranchPage() {
-    val clientViewModel by remember { mutableStateOf(getKoin().get<ClientViewModel>()) }
-    val clientUIStates by clientViewModel.uiStates.collectAsState()
+    val branchViewModel by remember { mutableStateOf(getKoin().get<BranchViewModel>()) }
+    val branchUiStates by branchViewModel.uiState.collectAsState()
     val navigator = LocalNavigator.currentOrThrow
     var submitButtonText by remember { mutableStateOf("") }
 //    var clientTelephone by remember { mutableStateOf("") }
@@ -36,7 +36,7 @@ fun BranchPage() {
         topBarActions = {
             NormalButton(icon = null, text = "+ Cliente") {
                 submitButtonText = "Adicionar"
-                clientViewModel.openFormDialog(true, "Adicionar cliente")
+                branchViewModel.openFormDialog(true, "Adicionar cliente")
             }
         }
     ) {
@@ -45,19 +45,19 @@ fun BranchPage() {
         FlowRow(
             modifier = Modifier.padding(10.dp)
         ) {
-            clientUIStates.clients.forEach { client ->
+            branchUiStates.branches.forEach { client ->
                 with(client) {
                     InfoCard() {
                         Text("Nome: $name ")
-                        Text("Telefone: $telephone ")
+                        Text("Endereço: $address ")
 
                         Row(
                             modifier = Modifier.padding(top = 30.dp)
                         ) {
                             NormalButton(text = "Editar") {
                                 submitButtonText = "Actualizar"
-                                clientViewModel.fillAllForm(id!!, name, telephone)
-                                clientViewModel.openFormDialog(true, "Actualizar cliente")
+                                branchViewModel.fillFormFields(id, name, address)
+                                branchViewModel.openFormDialog(true, "Actualizar sucursal")
                             }
                         }
                     }
@@ -65,38 +65,36 @@ fun BranchPage() {
             }
         }
 
-        if (clientUIStates.common.showFormDialog) {
+        if (branchUiStates.commonUiState.showFormDialog) {
             DialogFormModal(
-                title = clientUIStates.common.formDialogTitle,
-                onDismiss = { clientViewModel.resetForm() },
-                onSubmit = {
-                    clientViewModel.onSubmitClientForm()
-                }
+                title = branchUiStates.commonUiState.formDialogTitle,
+                onDismiss = { branchViewModel.resetForm() },
+                onSubmit = { branchViewModel }
             ) {
                 InputField(
-                    inputValue = clientUIStates.clientName,
+                    inputValue = branchUiStates.branchName,
                     label = "Nome da branch",
-                    errorText = clientUIStates.common.formErrors[FormInputName.BranchName],
-                    onValueChanged = { clientViewModel.setClientNameData(it) },
+                    errorText = branchUiStates.commonUiState.formErrors[FormInputName.BranchName],
+                    onValueChanged = { branchViewModel.fillFormFields(branchName = it) },
                 )
 
                 InputField(
-                    inputValue = clientUIStates.clientPhone,
+                    inputValue = branchUiStates.branchAddress,
                     label = "Endereço de branch",
-                    errorText = clientUIStates.common.formErrors[FormInputName.Address],
-                    onValueChanged = { clientViewModel.setClientPhoneData(it) },
+                    errorText = branchUiStates.commonUiState.formErrors[FormInputName.Address],
+                    onValueChanged = { branchViewModel.fillFormFields(branchAddress = it) },
                 )
             }
         }
 
-        AnimatedVisibility(clientUIStates.common.showAlertDialog) {
+        AnimatedVisibility(branchUiStates.commonUiState.showAlertDialog) {
             AlertWidget(
-                clientUIStates.common.alertTitle,
-                clientUIStates.common.alertText,
-                clientUIStates.common.alertType,
-                onDismiss = { clientViewModel.openAlertDialog(false) },
+                branchUiStates.commonUiState.alertTitle,
+                branchUiStates.commonUiState.alertText,
+                branchUiStates.commonUiState.alertType,
+                onDismiss = { branchViewModel.openAlertDialog(false) },
             ) {
-                clientUIStates.common.alertOnAccept()
+                branchUiStates.commonUiState.alertOnAccept()
             }
         }
 

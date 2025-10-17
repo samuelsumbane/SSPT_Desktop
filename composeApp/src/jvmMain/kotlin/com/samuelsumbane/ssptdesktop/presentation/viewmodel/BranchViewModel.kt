@@ -3,7 +3,6 @@ package com.samuelsumbane.ssptdesktop.presentation.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.samuelsumbane.ssptdesktop.domain.repository.BranchRepository
-import com.samuelsumbane.ssptdesktop.kclient.StatusAndMessage
 import com.samuelsumbane.ssptdesktop.presentation.viewmodel.viewmodelstates.BranchUiState
 import com.samuelsumbane.ssptdesktop.ui.utils.FormInputName
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -15,7 +14,7 @@ class BranchViewModel(
     private val repo: BranchRepository
 ) : ViewModel() {
     val _uiState = MutableStateFlow(BranchUiState())
-    val branchUiState = _uiState.asStateFlow()
+    val uiState = _uiState.asStateFlow()
 
     init { loadBranches() }
 
