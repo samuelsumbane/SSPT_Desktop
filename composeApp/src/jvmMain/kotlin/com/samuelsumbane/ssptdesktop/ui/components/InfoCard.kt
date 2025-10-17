@@ -6,11 +6,13 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 
 @Composable
 fun InfoCard(
     modifier: Modifier = Modifier,
+    isActive: Boolean = false,
     content: @Composable () -> Unit
 ) {
     val colorScheme = MaterialTheme.colorScheme
@@ -22,7 +24,7 @@ fun InfoCard(
 //            .background(MaterialTheme.colorScheme.secondary),
         elevation = CardDefaults.cardElevation(12.dp),
         colors = CardDefaults.cardColors(
-            containerColor = colorScheme.secondary
+            containerColor = if (isActive) Color.Blue else colorScheme.secondary
         )
     ) {
         Column(

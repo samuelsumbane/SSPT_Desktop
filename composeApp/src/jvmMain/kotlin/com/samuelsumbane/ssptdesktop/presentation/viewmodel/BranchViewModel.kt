@@ -3,8 +3,11 @@ package com.samuelsumbane.ssptdesktop.presentation.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.samuelsumbane.ssptdesktop.domain.repository.BranchRepository
+import com.samuelsumbane.ssptdesktop.kclient.BranchItem
 import com.samuelsumbane.ssptdesktop.presentation.viewmodel.viewmodelstates.BranchUiState
+import com.samuelsumbane.ssptdesktop.ui.utils.AlertType
 import com.samuelsumbane.ssptdesktop.ui.utils.FormInputName
+import com.samuelsumbane.ssptdesktop.ui.utils.PageName
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
@@ -21,6 +24,7 @@ class BranchViewModel(
     fun loadBranches() {
         viewModelScope.launch {
             val branches = repo.getBranchs()
+            println("all branches: $branches")
             _uiState.update { it.copy(branches = branches) }
         }
     }
@@ -42,12 +46,62 @@ class BranchViewModel(
         branchAddress?.let { newValue -> _uiState.update { it.copy(branchAddress = newValue) } }
     }
 
+    fun onBranchSubmitForm() {
+        viewModelScope.launch {
+            if (uiState.value.branchName.isBlank()) {
+                setFormError(FormInputName.BranchName, "O nome é obrigatório")
+                return@launch
+            }
+
+            if (uiState.value.branchAddress.isBlank()) {
+                setFormError(FormInputName.Address, "O endereço é obrigatório")
+                return@launch
+            }
+
+            val branchItem = BranchItem(
+                id = uiState.value.branchId,
+                name = uiState.value.branchName,
+                address = uiState.value.branchAddress
+            )
+
+            val (status, message) = repo.addBranch(branchItem)
+            val alertTitle = when (status) {
+                201 -> "Sucursal adicionado"
+                else -> ""
+            }
+            resetForm()
+            loadBranches()
+            openAlertDialog(true)
+            showAlert(alertTitle, message) {
+                openAlertDialog(false)
+            }
+        }
+    }
+
+    fun showAlert(
+        title: String,
+        text: String,
+        alertType: AlertType = AlertType.SUCCESS,
+        onAccept: () -> Unit
+    ) {
+        _uiState.update {
+            it.copy(commonUiState = it.commonUiState.copy(
+                alertTitle = title,
+                alertText = text,
+                alertType = alertType,
+                showAlertDialog = true,
+                alertOnAccept = onAccept
+            ))
+        }
+    }
+
     fun resetForm() {
         _uiState.update { it.copy(
             branchId = 0,
             branchName = "",
             branchAddress = ""
         ) }
+        openFormDialog(false)
     }
 
     fun setFormError(field: FormInputName, error: String) {

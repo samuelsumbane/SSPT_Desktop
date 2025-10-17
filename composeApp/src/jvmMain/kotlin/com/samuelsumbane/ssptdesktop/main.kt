@@ -8,7 +8,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
+import com.russhwolf.settings.PreferencesSettings
+import com.russhwolf.settings.Settings
 import org.koin.core.context.startKoin
+import java.util.prefs.Preferences
 
 fun main() = application {
     Window(
@@ -47,3 +50,16 @@ fun SSPTTheme(
 
     MaterialTheme(colorScheme, content = content)
 }
+
+ fun createSettings(): Settings {
+    val prefs = Preferences.userRoot().node("sspt_desktop")
+    return PreferencesSettings(prefs)
+}
+
+//val configViewModel = remember { ConfigScreenViewModel(createSettings()) }
+//
+//LaunchedEffect(Unit) {
+//    val configurations = configViewModel.loadConfigurations()
+//
+//    appLocale = configurations.locale
+//    Locale.setDefault(Locale(appLocale))

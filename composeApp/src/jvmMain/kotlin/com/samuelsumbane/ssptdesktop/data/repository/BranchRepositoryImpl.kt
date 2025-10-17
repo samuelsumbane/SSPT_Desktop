@@ -33,7 +33,8 @@ class BranchRepositoryImpl : BranchRepository {
     }
 
     override suspend fun addBranch(branch: BranchItem): StatusAndMessage {
-        return StatusAndMessage(100, "")
+        val (status, message) = kClientRepo.postRequest("$apiBranchesPath/create", branch)
+        return StatusAndMessage(status, message)
     }
 
     override suspend fun editBranch(branch: BranchItem): StatusAndMessage {
