@@ -1,10 +1,16 @@
 package com.samuelsumbane.ssptdesktop.presentation.viewmodel
 
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.samuelsumbane.ssptdesktop.createSettings
 import com.samuelsumbane.ssptdesktop.domain.repository.ProductRepository
 import com.samuelsumbane.ssptdesktop.domain.repository.SalesRepository
 import com.samuelsumbane.ssptdesktop.kclient.OrderItemDraft
+import com.samuelsumbane.ssptdesktop.kclient.OrderItemsItemDrafts
 import com.samuelsumbane.ssptdesktop.kclient.ProductItem
 import com.samuelsumbane.ssptdesktop.kclient.SaleItem
 import com.samuelsumbane.ssptdesktop.presentation.viewmodel.viewmodelstates.CardProduct
@@ -23,9 +29,12 @@ class SaleViewModel(
 ) : ViewModel() {
     val _uiState = MutableStateFlow(SalesUiState())
     val uiState = _uiState.asStateFlow()
+    val configsViewModel = ConfigScreenViewModel(createSettings())
+    var systemLocationId by mutableStateOf(0)
 
     init {
         loadProducts()
+        systemLocationId = configsViewModel.loadConfigurations().systemLocationId
     }
 
     fun loadProducts() {
@@ -158,25 +167,76 @@ class SaleViewModel(
         paymentMethod?.let { newValue -> _uiState.update { it.copy(paymentMethod = newValue) } }
     }
 
-    fun onSubmit() {
-        if (uiState.value.cardProducts.isEmpty()) {
-            // Nenhum producto encontrado no carinho
-            return
-        }
+    fun onSubmitSaleForm() {
+        viewModelScope.launch {
+            if (uiState.value.cardProducts.isEmpty()) {
+                openAlertDialog(true)
+                showAlert(
+                    title = "Carrinho vazio",
+                    text = "Por favor, adicione productos no carrinho",
+                    alertType = AlertType.ERROR
+                ) { openAlertDialog(false) }
 
-//        val orderDraft = OrderItemDraft(
-//            clientId = null,
-//            total = uiState.value.saleTotal,
-//            status = uiState.value.saleReason,
-//            userId = 0,
-//            branchId = 1
-//        )
-//
-//        val (status, message) = salesRepo.saleProducts(
-//            SaleItem(
-//
-//            )
-//        )
+                return@launch
+            }
+
+            if (systemLocationId == 0) {
+                openAlertDialog(true)
+                showAlert(
+                    title = "A localização do sistema não definido",
+                    text = "Navegue até pagina de sucursais e definia a localização do sistema.",
+                    alertType = AlertType.WARNING
+                ) { openAlertDialog(false) }
+
+                return@launch
+            }
+
+            val orderDraft = OrderItemDraft(
+                clientId = null,
+                total = uiState.value.saleTotal,
+                status = "Venda feita com sucesso",
+                reason = uiState.value.saleReason,
+                userId = 0,
+                branchId = systemLocationId,
+            )
+
+            val orderItemsDraftList = uiState.value.cardProducts.map { product ->
+                with (product) {
+                    OrderItemsItemDrafts(
+                        productId = productId,
+                        quantity = productsOnCard,
+                        costPrice = productCost,
+                        sellPrice = productPrice,
+                        subTotal = subTotal,
+                        profit = (productPrice - productCost) * productsOnCard
+                    )
+                }
+            }
+
+            val (status, message) = salesRepo.saleProducts(
+                SaleItem(
+                    order = orderDraft,
+                    orderItems = orderItemsDraftList
+                )
+            )
+
+            if (status == 201) {
+                // Sale successfully completed.
+                _uiState.update { it.copy(snackBarText = message) }
+            } else {
+                val alertTitle = when (status) {
+                    200 -> ""
+                    else -> ""
+                }
+
+                openAlertDialog(true)
+                showAlert(
+                    title = alertTitle,
+                    text = message,
+                    alertType = AlertType.INFO
+                ) { openAlertDialog(false) }
+            }
+        }
     }
 
 

@@ -16,6 +16,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import cafe.adriel.voyager.core.screen.Screen
+import com.samuel.oremoschanganapt.globalComponents.showSnackbar
 import com.samuelsumbane.ssptdesktop.presentation.viewmodel.SaleViewModel
 import com.samuelsumbane.ssptdesktop.ui.components.*
 import com.samuelsumbane.ssptdesktop.ui.utils.ProductQuantityAction
@@ -30,15 +31,20 @@ class SaleModalScreen : Screen {
     @OptIn(ExperimentalMaterial3Api::class)
     @Composable
     override fun Content() {
+        val snackbarHostState = remember { SnackbarHostState() }
         Scaffold(
             topBar = {
                 TopAppBar(title = { Text("Pagina de vendas".uppercase()) })
+            },
+            snackbarHost = {
+                SnackbarHost(snackbarHostState)
             }
         ) {
             val colorScheme = MaterialTheme.colorScheme
             val borderColor = colorScheme.onBackground
             val salesViewModel by remember { mutableStateOf(getKoin().get<SaleViewModel>()) }
             val saleModalUiState = salesViewModel.uiState.collectAsState()
+            val coroutineScope = rememberCoroutineScope()
 
             Row(
                 modifier = Modifier
@@ -253,15 +259,24 @@ class SaleModalScreen : Screen {
                         modifier = Modifier.padding(bottom = 12.dp).fillMaxWidth(),
                         horizontalArrangement = Arrangement.SpaceAround
                     ) {
-                        NormalOutlineButton(text = "Fechar", onClick = {})
+                        NormalOutlineButton(text = "Fechar", onClick = { } )
                         NormalButton(
                             enabled = !saleModalUiState.value.cardProducts.isEmpty(),
                             text = "Submeter",
-                            onClick = {}
+                            onClick = { salesViewModel.onSubmitSaleForm() }
+                        )
+                    }
+
+                    if (!saleModalUiState.value.snackBarText.isBlank()) {
+                        showSnackbar(
+                            scope = coroutineScope,
+                            snackbarHostState = snackbarHostState,
+                            message = saleModalUiState.value.snackBarText
                         )
                     }
                 }
             }
+
         }
     }
 }
@@ -329,8 +344,8 @@ fun SumirizeRow(
     composableSecond: @Composable (() -> Unit)? = null
 ) {
     Row(
-        modifier = Modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.SpaceAround
+        modifier = Modifier.fillMaxWidth().padding(start = 12.dp, end = 12.dp),
+        horizontalArrangement = Arrangement.SpaceBetween
     ) {
         Text(text = first)
         second?.let {
