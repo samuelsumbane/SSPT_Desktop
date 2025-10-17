@@ -34,6 +34,8 @@ data class ProductItem(
     val ownerName: String,
 )
 
+
+
 @Serializable
 data class OwnerItem(
     val id: Int,

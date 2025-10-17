@@ -6,6 +6,7 @@ import com.samuelsumbane.ssptdesktop.domain.repository.ClientRepository
 import com.samuelsumbane.ssptdesktop.domain.repository.ProductCategoryRepository
 import com.samuelsumbane.ssptdesktop.domain.repository.ProductRepository
 import com.samuelsumbane.ssptdesktop.domain.repository.ProOwnerRepository
+import com.samuelsumbane.ssptdesktop.domain.repository.SalesRepository
 import com.samuelsumbane.ssptdesktop.presentation.viewmodel.*
 import org.koin.dsl.module
 
@@ -17,7 +18,7 @@ val appModule = module {
     single<ProOwnerRepository> { ProOwnerRepositoryImpl() }
     single<ProductRepository> { ProductRepositoryImpl() }
     single<BranchRepository> { BranchRepositoryImpl() }
-
+    single<SalesRepository> { SalesRepositoryImpl() }
 
     // ViewModel (for android)
     factory { ClientViewModel(get()) }
@@ -25,4 +26,5 @@ val appModule = module {
     factory { ProOwnerViewModel(get()) }
     factory { ProductsViewModel(get(), get(), get()) }
     factory { BranchViewModel(get()) }
+    factory { SaleViewModel(get(), get()) }
 }
