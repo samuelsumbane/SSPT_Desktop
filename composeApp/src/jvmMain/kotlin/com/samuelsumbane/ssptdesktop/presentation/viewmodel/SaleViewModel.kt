@@ -196,7 +196,7 @@ class SaleViewModel(
                 total = uiState.value.saleTotal,
                 status = "Venda feita com sucesso",
                 reason = uiState.value.saleReason,
-                userId = 0,
+                userId = 1,
                 branchId = systemLocationId,
             )
 

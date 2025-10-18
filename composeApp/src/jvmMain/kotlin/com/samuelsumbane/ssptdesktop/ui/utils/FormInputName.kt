@@ -2,6 +2,7 @@ package com.samuelsumbane.ssptdesktop.ui.utils
 
 
 enum class FormInputName {
+    Name,
     ClientName,
     ClientPhone,
     CategoryName,
@@ -15,5 +16,7 @@ enum class FormInputName {
     ProType,
     ProBarcode,
     BranchName,
-    Address
+    Address,
+    Email,
+    Role
 }
