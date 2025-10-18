@@ -35,4 +35,5 @@ val appModule = module {
     factory { SaleViewModel(get(), get()) }
     factory { UserViewModel(get()) }
     factory { OrdersViewModel(get()) }
+    factory { SupplierViewModel(get()) }
 }

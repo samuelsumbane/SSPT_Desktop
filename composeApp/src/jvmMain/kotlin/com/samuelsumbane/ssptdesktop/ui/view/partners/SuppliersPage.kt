@@ -90,11 +90,11 @@ fun SupplierPage() {
 
                             Spacer(Modifier.width(10.dp))
 
-                            IconButton(
-                                onClick = { supplierViewModel.removeSupplier(id!!) }
-                            ) {
-                                Icon(painterResource(Res.drawable.delete), "Delete supplier")
-                            }
+//                            IconButton(
+//                                onClick = { supplierViewModel.removeSupplier(id!!) }
+//                            ) {
+//                                Icon(painterResource(Res.drawable.delete), "Delete supplier")
+//                            }
 
                         }
                     }

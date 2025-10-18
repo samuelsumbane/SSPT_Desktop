@@ -24,7 +24,6 @@ class BranchViewModel(
     fun loadBranches() {
         viewModelScope.launch {
             val branches = repo.getBranchs()
-            println("all branches: $branches")
             _uiState.update { it.copy(branches = branches) }
         }
     }

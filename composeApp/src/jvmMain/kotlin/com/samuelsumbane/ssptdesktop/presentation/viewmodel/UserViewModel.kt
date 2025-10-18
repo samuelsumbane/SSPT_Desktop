@@ -65,11 +65,6 @@ class UserViewModel(private val userRepo: UserRepository) : ViewModel() {
                 return@launch
             }
 
-            if (uiState.value.userRole.isBlank()) {
-                setFormError(FormInputName.Role, "O papel do usuário é obrigatório")
-                return@launch
-            }
-
             val (status, message) = userRepo.addUser(UserItemDraft(
                 name = uiState.value.userName,
                 email = uiState.value.userEmail,

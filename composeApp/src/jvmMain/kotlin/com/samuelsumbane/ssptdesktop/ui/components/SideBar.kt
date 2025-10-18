@@ -16,9 +16,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import cafe.adriel.voyager.navigator.Navigator
 import com.samuelsumbane.ssptdesktop.*
-import com.samuelsumbane.ssptdesktop.ui.utils.IconPageScreen
+import com.samuelsumbane.ssptdesktop.ui.utils.IconPageNameScreen
 import com.samuelsumbane.ssptdesktop.ui.utils.PageName
-import com.samuelsumbane.ssptdesktop.ui.view.Products.ProductsScreen
 import org.jetbrains.compose.resources.painterResource
 import ssptdesktop.composeapp.generated.resources.*
 
@@ -48,30 +47,30 @@ fun SideBar(navigator: Navigator, activePage: String = "") {
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 val pageButtons = listOf(
-                    IconPageScreen(painterResource(Res.drawable.home), PageName.HOME.itsName, HomeScreen()),
-                    IconPageScreen(painterResource(Res.drawable.adjust_24), PageName.PARTNERS.itsName, PartnerModuleScreen()),
-                    IconPageScreen(painterResource(Res.drawable.shopping_basket), PageName.SELL.itsName, SellModuleScreen()),
-                    IconPageScreen(painterResource(Res.drawable.finance), PageName.FINANCE.itsName, FinanceModuleScreen()),
-                    IconPageScreen(painterResource(Res.drawable.shopping_basket), PageName.PRODUCTS.itsName,
+                    IconPageNameScreen(painterResource(Res.drawable.home), PageName.HOME, HomeScreen()),
+                    IconPageNameScreen(painterResource(Res.drawable.adjust_24), PageName.PARTNERS, PartnerModuleScreen()),
+                    IconPageNameScreen(painterResource(Res.drawable.shopping_basket), PageName.SELL, SellModuleScreen()),
+                    IconPageNameScreen(painterResource(Res.drawable.finance), PageName.FINANCE, FinanceModuleScreen()),
+                    IconPageNameScreen(painterResource(Res.drawable.shopping_basket), PageName.PRODUCTS,
                         ProductsModuleScreen()),
-                    IconPageScreen(painterResource(Res.drawable.manager), PageName.MANAGER.itsName, ManagerModuleScreen()),
-                    IconPageScreen(painterResource(Res.drawable.bar_chart), PageName.REPORT.itsName, ReportModuleScreen()),
-                    IconPageScreen(painterResource(Res.drawable.settings), PageName.SETTINGS.itsName, SettingsModuleScreen()),
+                    IconPageNameScreen(painterResource(Res.drawable.manager), PageName.MANAGER, ManagerModuleScreen()),
+                    IconPageNameScreen(painterResource(Res.drawable.bar_chart), PageName.REPORT, ReportModuleScreen()),
+                    IconPageNameScreen(painterResource(Res.drawable.settings), PageName.SETTINGS, SettingsModuleScreen()),
                 )
 
                 for ((painter, text, screen) in pageButtons) {
-                    val columnColors = if (activePage == text) colorScheme.primary else Color.Black
+                    val columnColors = if (activePage == text.itsName) colorScheme.primary else Color.Black
                     Column(
                         modifier = Modifier.clickable { navigator.push(screen) }
                     ) {
                         painter?.let {
                             Icon(
-                                it, contentDescription = text,
+                                it, contentDescription = text.itsName,
                                 modifier = Modifier.align(Alignment.CenterHorizontally),
                                 tint = columnColors
                             )
                         }
-                        Text(text, fontSize = 12.sp)
+                        Text(text.readableName, fontSize = 12.sp)
                     }
                 }
             }
