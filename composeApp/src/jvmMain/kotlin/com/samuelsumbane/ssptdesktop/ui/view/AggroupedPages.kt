@@ -44,11 +44,13 @@ fun AgroupedPages(title: String, pageLists: List<IconPageScreen>) {
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.SpaceAround
                 ) {
-                    Icon(
-                        buttonIcon,
-                        contentDescription = buttonText,
-                        modifier = Modifier.size(50.dp)
-                    )
+                    buttonIcon?.let {
+                        Icon(
+                            buttonIcon,
+                            contentDescription = buttonText,
+                            modifier = Modifier.size(50.dp)
+                        )
+                    }
                     Text(text = buttonText, fontWeight = FontWeight.SemiBold)
                 }
             }

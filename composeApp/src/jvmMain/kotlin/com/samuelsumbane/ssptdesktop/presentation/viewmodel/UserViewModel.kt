@@ -3,6 +3,7 @@ package com.samuelsumbane.ssptdesktop.presentation.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.samuelsumbane.ssptdesktop.domain.repository.UserRepository
+import com.samuelsumbane.ssptdesktop.kclient.ChangeStatusDC
 import com.samuelsumbane.ssptdesktop.kclient.UserItem
 import com.samuelsumbane.ssptdesktop.kclient.UserItemDraft
 import com.samuelsumbane.ssptdesktop.presentation.viewmodel.viewmodelstates.UserUiState
@@ -28,9 +29,9 @@ class UserViewModel(private val userRepo: UserRepository) : ViewModel() {
         }
     }
 
-    fun addUser(userDraft: UserItemDraft) {
+    fun changeUserStatus(userStatus: ChangeStatusDC) {
         viewModelScope.launch {
-            val (status, message) = userRepo.addUser(userDraft)
+            val (status, message) = userRepo.changeUserStatus(userStatus)
         }
     }
 
@@ -41,14 +42,15 @@ class UserViewModel(private val userRepo: UserRepository) : ViewModel() {
     }
 
     fun fillUserForm(
-        id: Int? = null,
         name: String? = null,
         email: String? = null,
-        role: String? = null
+        role: String? = null,
+        roleDropdownExpanded: Boolean? = null,
     ) {
         name?.let { newValue -> _uiState.update { it.copy(userName = newValue) } }
         email?.let { newValue -> _uiState.update { it.copy(userEmail = newValue) } }
         role?.let { newValue -> _uiState.update { it.copy(userRole = newValue) } }
+        roleDropdownExpanded?.let { newValue -> _uiState.update { it.copy(roleDropdownExpanded = newValue) } }
     }
 
     fun onUserFormSubmit() {
@@ -91,11 +93,11 @@ class UserViewModel(private val userRepo: UserRepository) : ViewModel() {
             it.copy(
                 userName = "",
                 userEmail = "",
-                userRole = ""
+                userRole = "",
             )
         }
         openFormDialog(false)
-        /** Clear all erros */
+        /** Clear all errors */
         _uiState.update {
             it.copy(commonUiState = it.commonUiState.copy(formErrors = emptyMap()))
         }

@@ -1,5 +1,4 @@
 package com.samuelsumbane.ssptdesktop.presentation.viewmodel.viewmodelstates
-
 import com.samuelsumbane.ssptdesktop.kclient.UserItem
 
 data class UserUiState(
@@ -7,5 +6,6 @@ data class UserUiState(
     val userName: String = "",
     val userEmail: String = "",
     val userRole: String = "",
+    val roleDropdownExpanded: Boolean = false,
     val commonUiState: CommonUiState = CommonUiState()
 )

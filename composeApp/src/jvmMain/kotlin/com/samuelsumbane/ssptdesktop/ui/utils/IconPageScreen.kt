@@ -5,7 +5,7 @@ import cafe.adriel.voyager.core.screen.Screen
 
 
 data class IconPageScreen(
-    val painter: Painter,
+    val painter: Painter? = null,
     val page: String,
     val screenDestination: Screen,
 )

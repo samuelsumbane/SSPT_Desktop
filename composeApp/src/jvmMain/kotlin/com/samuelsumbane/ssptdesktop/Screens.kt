@@ -10,6 +10,7 @@ import com.samuelsumbane.ssptdesktop.ui.view.manager.BranchScreen
 import com.samuelsumbane.ssptdesktop.ui.view.manager.usersPackage.UsersScreen
 import com.samuelsumbane.ssptdesktop.ui.view.partners.ClientsScreen
 import com.samuelsumbane.ssptdesktop.ui.view.partners.OwnersScreen
+import com.samuelsumbane.ssptdesktop.ui.view.partners.SupplierScreen
 import com.samuelsumbane.ssptdesktop.ui.view.report.ReportsScreen
 import com.samuelsumbane.ssptdesktop.ui.view.report.StocksScreen
 import com.samuelsumbane.ssptdesktop.ui.view.sell.SalesScreen
@@ -63,6 +64,7 @@ class PartnerModuleScreen : Screen {
             pageLists = listOf(
                 IconPageScreen(painterResource(Res.drawable.details), "Clientes", ClientsScreen()),
                 IconPageScreen(painterResource(Res.drawable.help_24), "Proprietarios", OwnersScreen()),
+                IconPageScreen(painterResource(Res.drawable.help_24), "Fornecedores", SupplierScreen()),
             )
         )
     }

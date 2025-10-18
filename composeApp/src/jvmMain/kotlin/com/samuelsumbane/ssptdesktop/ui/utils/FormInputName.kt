@@ -3,6 +3,7 @@ package com.samuelsumbane.ssptdesktop.ui.utils
 
 enum class FormInputName {
     Name,
+    Phone,
     ClientName,
     ClientPhone,
     CategoryName,

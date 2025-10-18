@@ -64,11 +64,13 @@ fun SideBar(navigator: Navigator, activePage: String = "") {
                     Column(
                         modifier = Modifier.clickable { navigator.push(screen) }
                     ) {
-                        Icon(
-                            painter, contentDescription = text,
-                            modifier = Modifier.align(Alignment.CenterHorizontally),
-                            tint = columnColors
-                        )
+                        painter?.let {
+                            Icon(
+                                it, contentDescription = text,
+                                modifier = Modifier.align(Alignment.CenterHorizontally),
+                                tint = columnColors
+                            )
+                        }
                         Text(text, fontSize = 12.sp)
                     }
                 }

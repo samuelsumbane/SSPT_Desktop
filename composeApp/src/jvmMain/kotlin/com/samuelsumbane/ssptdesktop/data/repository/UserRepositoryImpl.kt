@@ -1,12 +1,13 @@
 package com.samuelsumbane.ssptdesktop.data.repository
 
 import com.samuelsumbane.ssptdesktop.domain.repository.UserRepository
+import com.samuelsumbane.ssptdesktop.kclient.ChangeStatusDC
 import com.samuelsumbane.ssptdesktop.kclient.KClientRepository
 import com.samuelsumbane.ssptdesktop.kclient.Session
 import com.samuelsumbane.ssptdesktop.kclient.StatusAndMessage
 import com.samuelsumbane.ssptdesktop.kclient.UserItem
 import com.samuelsumbane.ssptdesktop.kclient.UserItemDraft
-import com.samuelsumbane.ssptdesktop.kclient.apiPath
+import com.samuelsumbane.ssptdesktop.kclient.apiUsersPath
 import io.ktor.client.call.body
 import io.ktor.client.request.HttpRequest
 import io.ktor.client.request.get
@@ -21,7 +22,7 @@ class UserRepositoryImpl : UserRepository{
 
     override suspend fun getUsers(): List<UserItem> {
         return try {
-            kClientRepo.httpClient.get("$apiPath/users/all") {
+            kClientRepo.httpClient.get("$apiUsersPath/all") {
                 header(HttpHeaders.Authorization , "Bearer $token")
             }.body()
         } catch(e: Exception) {
@@ -31,12 +32,17 @@ class UserRepositoryImpl : UserRepository{
     }
 
     override suspend fun addUser(userDraft: UserItemDraft): StatusAndMessage {
-        val (status, message) = kClientRepo.postRequest("$apiPath/create", userDraft)
+        val (status, message) = kClientRepo.postRequest("$apiUsersPath/create", userDraft)
         return StatusAndMessage(status, message)
     }
 
     override suspend fun removeUser(userId: Int): StatusAndMessage {
-        val (status, message) = kClientRepo.deleteRequest("$apiPath/delete/$userId")
+        val (status, message) = kClientRepo.deleteRequest("$apiUsersPath/delete/$userId")
+        return StatusAndMessage(status, message)
+    }
+    
+    override suspend fun changeUserStatus(userStatus: ChangeStatusDC): StatusAndMessage {
+        val (status, message) = kClientRepo.postRequest("$apiUsersPath/change-status", userStatus)
         return StatusAndMessage(status, message)
     }
 }
