@@ -12,7 +12,7 @@ class SalesRepositoryImpl : SalesRepository {
     val kClientRepo = KClientRepository()
 
     override suspend fun saleProducts(saleItem: SaleItem): StatusAndMessage {
-        val (status, message) = kClientRepo.postRequest("$apiPath/sale-products", saleItem)
+        val (status, message) = kClientRepo.postRequest("$apiPath/order/sale-products", saleItem)
         return StatusAndMessage(status, message)
     }
 }

@@ -18,6 +18,6 @@ fun App() {
     SSPTTheme(darkTheme = true) {
 //        Navigator(ProductsScreen())
 //        Navigator(SaleModalScreen())
-        Navigator(UsersScreen())
+        Navigator(SalesScreen())
     }
 }

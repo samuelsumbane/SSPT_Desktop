@@ -39,33 +39,29 @@ class SaleViewModel(
 
     fun loadProducts() {
         viewModelScope.launch {
-//            val products = proRepo.getProducts()
-            val products = listOf(
-                ProductItem(1, "Fanta", "UNIT", 1, "", 12.0,
-                    price = 20.0, 4, 1, 2, "Sapatos", "", 1, "s"),
-                ProductItem(2, "Teclado", "UNIT", 1, "", 12.0,
-                    price = 20.0, 6, 1, 2, "Sapatos", "", 1, "s"),
-                ProductItem(3, "Telefone", "UNIT", 1, "", 12.0,
-                    price = 20.0, 10, 1, 2, "Sapatos", "", 1, "s"),
-            )
+            val products = proRepo.getProducts()
+//            val products = listOf(
+//                ProductItem(1, "Fanta", "UNIT", 1, "", 12.0,
+//                    price = 20.0, 4, 1, 2, "Sapatos", "", 1, "s"),
+//                ProductItem(2, "Teclado", "UNIT", 1, "", 12.0,
+//                    price = 20.0, 6, 1, 2, "Sapatos", "", 1, "s"),
+//                ProductItem(3, "Telefone", "UNIT", 1, "", 12.0,
+//                    price = 20.0, 10, 1, 2, "Sapatos", "", 1, "s"),
+//            )
             _uiState.update { it.copy(products = products) }
         }
     }
 
-    fun saleProducts(saleItem: SaleItem) {
-        viewModelScope.launch {
-            val (status, message) = salesRepo.saleProducts(saleItem)
-        }
-    }
 
     fun addProductToCard(productItem: ProductItem) {
         val cardProduct = CardProduct(
             product = productItem,
             productsOnCard = 1,
             /** Product is added in cardProducts with 1 quantity */
+            productId = productItem.id,
             productPrice = productItem.price,
+            productCost = productItem.cost,
             subTotal = productItem.price
-
         )
 
         uiState.value.cardProducts
@@ -213,12 +209,17 @@ class SaleViewModel(
                 }
             }
 
+//            println("orderitems: $orderItemsDraftList")
+            println("order is: $orderDraft")
+
             val (status, message) = salesRepo.saleProducts(
                 SaleItem(
                     order = orderDraft,
                     orderItems = orderItemsDraftList
                 )
             )
+
+            println("status is: $status")
 
             if (status == 201) {
                 // Sale successfully completed.

@@ -111,3 +111,4 @@ fun hashString(algorithm: String, input: String): String {
     val bytes = MessageDigest.getInstance(algorithm).digest(input.toByteArray())
     return bytes.joinToString("") { "%02x".format(it) }
 }
+

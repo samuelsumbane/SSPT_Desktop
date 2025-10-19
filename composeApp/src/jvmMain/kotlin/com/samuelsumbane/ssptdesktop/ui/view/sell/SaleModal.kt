@@ -16,6 +16,8 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import cafe.adriel.voyager.core.screen.Screen
+import cafe.adriel.voyager.navigator.LocalNavigator
+import cafe.adriel.voyager.navigator.currentOrThrow
 import com.samuel.oremoschanganapt.globalComponents.showSnackbar
 import com.samuelsumbane.ssptdesktop.presentation.viewmodel.SaleViewModel
 import com.samuelsumbane.ssptdesktop.ui.components.*
@@ -45,6 +47,8 @@ class SaleModalScreen : Screen {
             val salesViewModel by remember { mutableStateOf(getKoin().get<SaleViewModel>()) }
             val saleModalUiState = salesViewModel.uiState.collectAsState()
             val coroutineScope = rememberCoroutineScope()
+
+            val navigator = LocalNavigator.currentOrThrow
 
             Row(
                 modifier = Modifier
@@ -259,7 +263,7 @@ class SaleModalScreen : Screen {
                         modifier = Modifier.padding(bottom = 12.dp).fillMaxWidth(),
                         horizontalArrangement = Arrangement.SpaceAround
                     ) {
-                        NormalOutlineButton(text = "Fechar", onClick = { } )
+                        NormalOutlineButton(text = "Fechar", onClick = { navigator.pop() } )
                         NormalButton(
                             enabled = !saleModalUiState.value.cardProducts.isEmpty(),
                             text = "Submeter",

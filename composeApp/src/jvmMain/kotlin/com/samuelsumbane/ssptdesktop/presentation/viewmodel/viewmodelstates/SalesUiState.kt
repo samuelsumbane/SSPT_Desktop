@@ -1,5 +1,7 @@
 package com.samuelsumbane.ssptdesktop.presentation.viewmodel.viewmodelstates
 
+import com.samuelsumbane.ssptdesktop.kclient.OrderItem
+import com.samuelsumbane.ssptdesktop.kclient.OrderItemsItem
 import com.samuelsumbane.ssptdesktop.kclient.ProductItem
 
 data class SalesUiState(

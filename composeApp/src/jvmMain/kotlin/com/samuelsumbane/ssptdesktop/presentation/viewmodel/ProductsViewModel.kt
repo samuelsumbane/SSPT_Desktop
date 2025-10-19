@@ -193,6 +193,7 @@ class ProductsViewModel(
                 proCategoryName = "",
             )
         }
+        loadProducts()
         openFormDialog(false)
     }
 

@@ -1,14 +1,20 @@
 package com.samuelsumbane.ssptdesktop.ui.view.Products
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.foundation.background
+import androidx.compose.foundation.gestures.rememberScrollableState
+import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.DropdownMenuItem
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -20,6 +26,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
@@ -30,6 +37,7 @@ import com.samuelsumbane.ssptdesktop.presentation.viewmodel.ProductsViewModel
 import com.samuelsumbane.ssptdesktop.ui.components.AlertWidget
 import com.samuelsumbane.ssptdesktop.ui.components.CardPItem
 import com.samuelsumbane.ssptdesktop.ui.components.CommonPageStructure
+import com.samuelsumbane.ssptdesktop.ui.components.CustomFlowRow
 import com.samuelsumbane.ssptdesktop.ui.components.DialogFormModal
 import com.samuelsumbane.ssptdesktop.ui.components.DropDown
 import com.samuelsumbane.ssptdesktop.ui.components.FormColumn
@@ -78,7 +86,7 @@ fun ProductsPage() {
         }
     ) {
 
-        FlowRow(modifier = Modifier.padding(10.dp)) {
+         CustomFlowRow {
             productsUiState.products.forEach {
                 with(it) {
                     InfoCard(modifier = Modifier.size(300.dp, 350.dp)) {
