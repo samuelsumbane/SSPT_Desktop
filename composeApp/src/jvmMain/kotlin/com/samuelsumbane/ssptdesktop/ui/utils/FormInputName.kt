@@ -19,5 +19,9 @@ enum class FormInputName {
     BranchName,
     Address,
     Email,
-    Role
+    Role,
+    Amount,
+    Supplier,
+    Description,
+    ExpirationDate
 }

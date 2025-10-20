@@ -49,7 +49,7 @@ fun UsersPage() {
         }
     ) {
 
-        FlowRow(modifier = Modifier.padding(10.dp)) {
+        CustomFlowRow {
             userUIStates.users.forEach { user ->
                 with(user) {
                     InfoCard(modifier = Modifier.size(260.dp, 220.dp)) {

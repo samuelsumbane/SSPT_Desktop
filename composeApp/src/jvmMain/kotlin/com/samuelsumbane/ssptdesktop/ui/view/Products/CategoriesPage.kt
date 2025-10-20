@@ -27,6 +27,7 @@ import cafe.adriel.voyager.navigator.currentOrThrow
 import com.samuelsumbane.ssptdesktop.presentation.viewmodel.ProductCategoryViewModel
 import com.samuelsumbane.ssptdesktop.ui.components.AlertWidget
 import com.samuelsumbane.ssptdesktop.ui.components.CommonPageStructure
+import com.samuelsumbane.ssptdesktop.ui.components.CustomFlowRow
 import com.samuelsumbane.ssptdesktop.ui.components.DialogFormModal
 import com.samuelsumbane.ssptdesktop.ui.components.FormColumn
 import com.samuelsumbane.ssptdesktop.ui.components.InfoCard
@@ -66,7 +67,7 @@ fun CategoriesPage() {
         }
     ) {
 
-        FlowRow(modifier = Modifier.padding(10.dp)) {
+        CustomFlowRow {
             categoryUIStates.proCategories.forEach { category ->
                 with(category) {
                     InfoCard(modifier = Modifier.size(260.dp, 150.dp)) {

@@ -55,7 +55,7 @@ fun ClientsPage() {
     ) {
 
 
-        FlowRow(modifier = Modifier.padding(10.dp)) {
+        CustomFlowRow {
             clientUIStates.clients.forEach { client ->
                 with(client) {
                     InfoCard(modifier = Modifier.size(300.dp, 200.dp)) {

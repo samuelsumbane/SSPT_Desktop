@@ -29,6 +29,7 @@ import com.samuelsumbane.ssptdesktop.presentation.viewmodel.SupplierViewModel
 import com.samuelsumbane.ssptdesktop.ui.components.AlertWidget
 import com.samuelsumbane.ssptdesktop.ui.components.CardPItem
 import com.samuelsumbane.ssptdesktop.ui.components.CommonPageStructure
+import com.samuelsumbane.ssptdesktop.ui.components.CustomFlowRow
 import com.samuelsumbane.ssptdesktop.ui.components.DialogFormModal
 import com.samuelsumbane.ssptdesktop.ui.components.FormColumn
 import com.samuelsumbane.ssptdesktop.ui.components.InfoCard
@@ -66,7 +67,7 @@ fun SupplierPage() {
         }
     ) {
 
-        FlowRow(modifier = Modifier.padding(10.dp)) {
+        CustomFlowRow {
             supplierUiState.suppliers.forEach { supplier ->
                 with(supplier) {
                     InfoCard(modifier = Modifier.size(290.dp, 180.dp)) {

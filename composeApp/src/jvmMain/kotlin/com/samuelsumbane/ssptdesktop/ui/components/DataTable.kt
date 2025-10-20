@@ -20,12 +20,17 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.pointer.PointerEvent
+import androidx.compose.ui.input.pointer.PointerEventType
+import androidx.compose.ui.input.pointer.onPointerEvent
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.samuelsumbane.ssptdesktop.core.utils.cut
 
+@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun <T> DataTable(
     headers: List<String>,
@@ -68,7 +73,6 @@ fun <T> DataTable(
 //                inputValue = searchValue,
 //                onValueChanged = { searchValue = it },
 //                modifier = Modifier.width(300.dp)
-//
 //            )
 //        }
 
@@ -90,6 +94,7 @@ fun <T> DataTable(
         }
 
         HorizontalDivider()
+        var isHovered by remember { mutableStateOf(false) }
 
         // Linhas
         LazyColumn {
@@ -97,13 +102,19 @@ fun <T> DataTable(
                 val item = rows[index]
                 Row(
                     modifier = Modifier
+                        .padding(start = 5.dp, end = 5.dp)
                         .background(if (index % 2 == 0) datatableOddColor else datatableEvenColor)
                         .fillMaxWidth()
+                        .onPointerEvent(PointerEventType.Enter) { isHovered = true }
+                        .onPointerEvent(PointerEventType.Exit) { isHovered = false },
+                    horizontalArrangement = Arrangement.SpaceBetween
+
                 ) {
                     Row(
                         modifier = Modifier
                             .padding(start = 5.dp, end = 5.dp)
-                            .fillMaxWidth(),
+//                            .fillMaxWidth(),
+                            .background(Color.Green),
                         horizontalArrangement = Arrangement.SpaceBetween
                     ) {
                         cellContent(item)

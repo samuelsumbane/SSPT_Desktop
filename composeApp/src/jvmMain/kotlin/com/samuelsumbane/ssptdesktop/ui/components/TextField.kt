@@ -52,6 +52,7 @@ fun InputField(
     onValueChanged: (String) -> Unit,
     keyboardType: KeyboardType = KeyboardType.Text,
     singleLine: Boolean = true,
+    enabled: Boolean = true,
     isPassword: Boolean = false,
     imeAction: ImeAction = ImeAction.Done,
     onImeAction: (() -> Unit)? = null
@@ -76,6 +77,7 @@ fun InputField(
             },
             label = { label?.let { Text(it) } },
             singleLine = singleLine,
+            enabled = enabled,
             visualTransformation = visualTransformation,
             trailingIcon = {
                 if (isPassword) {

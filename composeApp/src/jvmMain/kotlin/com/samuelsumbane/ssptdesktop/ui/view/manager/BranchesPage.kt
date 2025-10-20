@@ -66,9 +66,7 @@ fun BranchPage() {
     ) {
 
 
-        FlowRow(
-            modifier = Modifier.padding(10.dp)
-        ) {
+        CustomFlowRow {
             branchUiStates.branches.forEach { branch ->
                 with(branch) {
                     InfoCard(

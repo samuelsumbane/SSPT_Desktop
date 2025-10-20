@@ -11,6 +11,7 @@ import androidx.compose.runtime.setValue
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
+import com.samuelsumbane.ssptdesktop.kclient.OrderItem
 import com.samuelsumbane.ssptdesktop.presentation.viewmodel.ClientViewModel
 import com.samuelsumbane.ssptdesktop.presentation.viewmodel.OrdersViewModel
 import com.samuelsumbane.ssptdesktop.presentation.viewmodel.SaleViewModel
@@ -20,6 +21,7 @@ import com.samuelsumbane.ssptdesktop.ui.components.DataTable
 import com.samuelsumbane.ssptdesktop.ui.components.DatatableText
 import com.samuelsumbane.ssptdesktop.ui.components.NormalButton
 import org.koin.java.KoinJavaComponent.getKoin
+import java.util.UUID
 
 class SalesScreen : Screen {
     @Composable
