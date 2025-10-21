@@ -12,5 +12,6 @@ data class CommonUiState(
     val alertText: String = "",
     val alertType: AlertType = AlertType.SUCCESS,
     val alertOnAccept: () -> Unit = {},
-    val formErrors: Map<FormInputName, String> = emptyMap()
+    val formErrors: Map<FormInputName, String> = emptyMap(),
+    val isLoading: Boolean = false
 )

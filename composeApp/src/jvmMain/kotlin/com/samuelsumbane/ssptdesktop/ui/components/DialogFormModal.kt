@@ -15,6 +15,7 @@ import androidx.compose.ui.input.key.onKeyEvent
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
+import androidx.compose.ui.window.DialogProperties
 import com.samuelsumbane.ssptdesktop.ui.utils.ModalSize
 
 @Composable
@@ -23,11 +24,12 @@ fun DialogFormModal(
     modalSize: ModalSize = ModalSize.SMALL,
     onDismiss: () -> Unit,
     onSubmit: () -> Unit,
+    hideSubmitButton: Boolean = false,
     modalContent: @Composable () -> Unit
 ) {
     val scrollbar = rememberScrollState()
 
-    Dialog(onDismissRequest = { onDismiss() }) {
+    Dialog(onDismissRequest = { onDismiss() },) {
         Column(
             modifier = Modifier
                 .width(modalSize.widthSize)
@@ -45,7 +47,7 @@ fun DialogFormModal(
             verticalArrangement = Arrangement.SpaceBetween
         ) {
             Row(modifier = Modifier.padding(top = 10.dp, start = 5.dp)) {
-              Text(title.uppercase(), fontWeight = FontWeight.SemiBold)
+              Text(title.uppercase(), fontWeight = FontWeight.SemiBold, color = MaterialTheme.colorScheme.onBackground)
             }
 
             modalContent()
@@ -55,7 +57,7 @@ fun DialogFormModal(
                 horizontalArrangement = Arrangement.SpaceAround
             ) {
                 NormalOutlineButton(text = "Fechar", onClick = onDismiss)
-                NormalButton(text = "Submeter", onClick = onSubmit)
+                if (!hideSubmitButton) NormalButton(text = "Submeter", onClick = onSubmit)
             }
         }
     }

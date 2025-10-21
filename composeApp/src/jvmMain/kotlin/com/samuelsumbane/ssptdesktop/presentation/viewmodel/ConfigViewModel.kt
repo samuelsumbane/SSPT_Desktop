@@ -1,90 +1,123 @@
 package com.samuelsumbane.ssptdesktop.presentation.viewmodel
 
-//import com.samuel.oremoschanganapt.AppSettings
-import androidx.compose.ui.graphics.Color.Companion.Blue
-import androidx.compose.ui.graphics.toArgb
-import com.russhwolf.settings.Settings
-import com.samuelsumbane.ssptdesktop.apprepository.FontSizeName
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.samuelsumbane.ssptdesktop.domain.repository.ConfigRepository
+import com.samuelsumbane.ssptdesktop.kclient.SysConfigItem
+import com.samuelsumbane.ssptdesktop.presentation.viewmodel.viewmodelstates.ConfigUiState
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 
-//import com.samuel.oremoschanganapt.AppConfigs
+class ConfigViewModel(private val repo: ConfigRepository) : ViewModel() {
+    val _uiState = MutableStateFlow(ConfigUiState())
+    val uiState = _uiState.asStateFlow()
 
-enum class OremosLangs(val string: String) {
-    ChanganaPT("ChanganaPT")
-}
-
-val OremosLangsMap = mapOf(
-    OremosLangs.ChanganaPT.string to "Changana - Português"
-)
-
-
-sealed class ConfigEntry<T>(
-    val key: String,
-    val default: T,
-    val saver: (Settings, String, T) -> Unit,
-    val loader: (Settings, String, T) -> T
-) {
-    object ThemeColor : ConfigEntry<Int>(
-        key = "theme_color",
-        default = Blue.toArgb(),
-        saver = { settings, k, v -> settings.putInt(k, v) },
-        loader = { settings, k, d -> settings.getInt(k, d) }
-    )
-
-    object ThemeMode : ConfigEntry<String>(
-        key = "theme_mode",
-        default = "System",
-        saver = { settings, k, v -> settings.putString(k, v) },
-        loader = { settings, k, d -> settings.getString(k, d)}
-    )
-
-    object Locale : ConfigEntry<String>(
-        key = "locale",
-        default = "pt",
-        saver = { settings, k, v -> settings.putString(k, v) },
-        loader = { settings, k, d -> settings.getString(k, d)}
-    )
-
-    object ConfigFontSize : ConfigEntry<String>(
-        key = "font_scale",
-        default = FontSizeName.NORMAL.string,
-        saver = { settings, k, v -> settings.putString(k, v) },
-        loader = { settings, k, d -> settings.getString(k, d)}
-    )
-
-    object AppConfigLocationId : ConfigEntry<Int>(
-        key = "system_location_id",
-        default = 1,
-        saver = { settings, k, v -> settings.putInt(k, v) },
-        loader = { settings, k, d -> settings.getInt(k, d) }
-    )
-}
-
-
-data class AppSettingsConfigs(
-    val themeColor: Int,
-    val themeMode: String,
-    val locale: String,
-    val fontSize: String,
-    val systemLocationId: Int,
-)
-
-class ConfigScreenViewModel(private val settings: Settings) {
-
-    fun loadConfigurations(): AppSettingsConfigs {
-        return AppSettingsConfigs(
-            themeColor = ConfigEntry.ThemeColor.loader(settings, ConfigEntry.ThemeColor.key,
-                ConfigEntry.ThemeColor.default),
-            themeMode = ConfigEntry.ThemeMode.loader(settings, ConfigEntry.ThemeMode.key,
-                ConfigEntry.ThemeMode.default),
-            locale = ConfigEntry.Locale.loader(settings, ConfigEntry.Locale.key,
-                ConfigEntry.Locale.default),
-            fontSize = ConfigEntry.ConfigFontSize.loader(settings, ConfigEntry.ConfigFontSize.key,
-                ConfigEntry.ConfigFontSize.default),
-            systemLocationId = ConfigEntry.AppConfigLocationId.loader(settings, ConfigEntry.AppConfigLocationId.key, ConfigEntry.AppConfigLocationId.default)
-        )
+    fun loadConfigs() {
+        viewModelScope.launch {
+            val configs = repo.getConfigs()
+            _uiState.update { it.copy(configs = configs) }
+        }
     }
 
-    fun <T> saveConfiguration(entry: ConfigEntry<T>, newValue: T) {
-        entry.saver(settings, entry.key, newValue)
+    fun getPackageName() {
+        viewModelScope.launch {
+            val (status, message) = repo.getPackageName()
+            if (status == 200) _uiState.update { it.copy(packageName = message) }
+        }
+    }
+
+    fun editConfiguration(
+        maxSellValue: Double? = null,
+        percentualIva: Int? = null,
+        alertMinProQuantity: Boolean? = null,
+        isNotifyMaxSellChecked: Boolean? = null,
+        activePackage: String? = null
+    ) {
+        viewModelScope.launch {
+            maxSellValue?.let { newValue ->
+                _uiState.update { it.copy(notifyMaxSellValue = newValue) }
+                if (newValue > 0.0) {
+                    val (status, message) = repo.editConfig(
+                        SysConfigItem(
+                            id = 1,
+                            key = "notifyMaxSellValue",
+                            stringValue = null,
+                            intValue = null,
+                            doubleValue = newValue,
+                            boolValue = null,
+                            lastUpdate = ""
+                        )
+                    )
+                }
+            }
+            percentualIva?.let { newValue ->
+                _uiState.update { it.copy(percentualIva = newValue) }
+                if (newValue > 0) {
+                    val (status, message) = repo.editConfig(
+                        SysConfigItem(
+                            id = 1,
+                            key = "percentual_iva",
+                            stringValue = null,
+                            intValue = 1,
+                            doubleValue = null,
+                            boolValue = null,
+                            lastUpdate = ""
+                        )
+                    )
+                }
+            }
+
+            alertMinProQuantity?.let { newValue ->
+                _uiState.update { it.copy(alertMinProQuantity = newValue) }
+                val (status, message) = repo.editConfig(
+                    SysConfigItem(
+                        id = 1,
+                        key = "alert_min_pro_quantity",
+                        stringValue = null,
+                        intValue = null,
+                        doubleValue = null,
+                        boolValue = newValue,
+                        lastUpdate = ""
+                    )
+                )
+            }
+
+            isNotifyMaxSellChecked?.let { newValue ->
+                _uiState.update { it.copy(isNotifyMaxSellChecked = newValue) }
+                val (status, message) = repo.editConfig(
+                    SysConfigItem(
+                        id = 1,
+                        key = "notifyMaxSell",
+                        stringValue = null,
+                        intValue = null,
+                        doubleValue = null,
+                        boolValue = newValue,
+                        lastUpdate = ""
+                    )
+                )
+
+            }
+
+            activePackage?.let { newValue ->
+                _uiState.update { it.copy(activePackage = newValue) }
+                val (status, message) = repo.editConfig(
+                    SysConfigItem(
+                        id = 1,
+                        key = "active_package",
+                        stringValue = newValue,
+                        intValue = null,
+                        doubleValue = null,
+                        boolValue = null,
+                        lastUpdate = ""
+                    )
+                )
+            }
+        }
+    }
+
+    fun setLoading(value: Boolean) {
+        _uiState.update { it.copy(commonUiState = it.commonUiState.copy(isLoading = value)) }
     }
 }

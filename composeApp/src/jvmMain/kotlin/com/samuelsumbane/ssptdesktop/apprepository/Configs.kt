@@ -23,7 +23,3 @@ enum class FontSizeName(val string: String) {
     BIG("Big"),
     HUGE("Huge")
 }
-
-object ColorObject {
-    var primaryColor = Color.Blue
-}

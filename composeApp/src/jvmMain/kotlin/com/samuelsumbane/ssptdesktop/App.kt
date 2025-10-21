@@ -7,6 +7,9 @@ import com.samuelsumbane.ssptdesktop.ui.view.manager.BranchScreen
 import com.samuelsumbane.ssptdesktop.ui.view.manager.usersPackage.UsersScreen
 import com.samuelsumbane.ssptdesktop.ui.view.sell.SaleModalScreen
 import com.samuelsumbane.ssptdesktop.ui.view.sell.SalesScreen
+import com.samuelsumbane.ssptdesktop.ui.view.settings.NotificationsScreen
+import com.samuelsumbane.ssptdesktop.ui.view.settings.SettingsPage
+import com.samuelsumbane.ssptdesktop.ui.view.settings.SettingsScreen
 
 //import ssptdesktop.composeapp.generated.resources.compose_multiplatform
 
@@ -18,6 +21,6 @@ fun App() {
     SSPTTheme(darkTheme = true) {
 //        Navigator(ProductsScreen())
 //        Navigator(SaleModalScreen())
-        Navigator(SalesScreen())
+        Navigator(NotificationsScreen())
     }
 }
