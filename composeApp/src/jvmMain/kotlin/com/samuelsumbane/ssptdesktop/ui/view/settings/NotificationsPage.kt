@@ -35,6 +35,7 @@ import com.samuelsumbane.ssptdesktop.ui.utils.ModalSize
 import org.jetbrains.compose.resources.painterResource
 import org.koin.java.KoinJavaComponent.getKoin
 import ssptdesktop.composeapp.generated.resources.Res
+import ssptdesktop.composeapp.generated.resources.delete
 import ssptdesktop.composeapp.generated.resources.edit
 
 class NotificationsScreen : Screen {
@@ -79,6 +80,14 @@ fun NotificationPage() {
                     }
                 ) {
                     Icon(painterResource(Res.drawable.edit), "Set read or not read")
+                }
+
+                IconButton(
+                    onClick = {
+                        notificationViewModel.removeNotification(it.id)
+                    }
+                ) {
+                    Icon(painterResource(Res.drawable.delete), "Delete notification")
                 }
             }
         }
