@@ -20,9 +20,17 @@ import com.samuelsumbane.ssptdesktop.ui.utils.IconPageScreen
 
 
 @Composable
-fun AgroupedPages(title: String, pageLists: List<IconPageScreen>) {
+fun AgroupedPages(
+    title: String,
+    pageLists: List<IconPageScreen>,
+    activePage: String = ""
+) {
     val navigator = LocalNavigator.currentOrThrow
-    CommonPageStructure(navigator, pageTitle = title) {
+    CommonPageStructure(
+        navigator,
+        pageTitle = title,
+        activePage = activePage
+    ) {
         FlowRow(
             modifier = Modifier.fillMaxSize(),
             horizontalArrangement = Arrangement.Center,

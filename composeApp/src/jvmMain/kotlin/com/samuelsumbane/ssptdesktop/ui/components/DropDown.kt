@@ -23,13 +23,14 @@ fun DropDown(
     text: String,
     errorText: String? = null,
     expanded: Boolean = false,
+    modifier: Modifier = Modifier,
     onDismiss: () -> Unit,
     onDropdownClicked: () -> Unit,
     content: @Composable () -> Unit
 ) {
 
     Column(
-        modifier = Modifier.fillMaxWidth(0.9f)
+        modifier = modifier.fillMaxWidth(0.9f)
     ) {
         Column(
             modifier = Modifier

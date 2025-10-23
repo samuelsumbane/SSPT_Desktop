@@ -18,6 +18,8 @@ data class SalesUiState(
     val saleSubTotal: Double = 0.0,
     val saleReason: String = "",
     val snackBarText: String = "",
+    val showOrderItemsModal: Boolean = false,
+    val orderID: String = "",
     val commonUiState: CommonUiState = CommonUiState()
 )
 

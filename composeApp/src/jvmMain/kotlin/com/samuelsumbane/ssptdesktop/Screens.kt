@@ -3,6 +3,7 @@ package com.samuelsumbane.ssptdesktop
 import androidx.compose.runtime.Composable
 import cafe.adriel.voyager.core.screen.Screen
 import com.samuelsumbane.ssptdesktop.ui.utils.IconPageScreen
+import com.samuelsumbane.ssptdesktop.ui.utils.PageName
 import com.samuelsumbane.ssptdesktop.ui.view.AgroupedPages
 import com.samuelsumbane.ssptdesktop.ui.view.Products.CategoriesScreen
 import com.samuelsumbane.ssptdesktop.ui.view.Products.ProductsScreen
@@ -11,7 +12,7 @@ import com.samuelsumbane.ssptdesktop.ui.view.manager.usersPackage.UsersScreen
 import com.samuelsumbane.ssptdesktop.ui.view.partners.ClientsScreen
 import com.samuelsumbane.ssptdesktop.ui.view.partners.OwnersScreen
 import com.samuelsumbane.ssptdesktop.ui.view.partners.SupplierScreen
-import com.samuelsumbane.ssptdesktop.ui.view.report.ReportsScreen
+import com.samuelsumbane.ssptdesktop.ui.view.report.SaleReportScreen
 import com.samuelsumbane.ssptdesktop.ui.view.report.StocksScreen
 import com.samuelsumbane.ssptdesktop.ui.view.sell.SalesScreen
 import com.samuelsumbane.ssptdesktop.ui.view.settings.LogsScreen
@@ -38,7 +39,8 @@ class FinanceModuleScreen : Screen {
             pageLists = listOf(
                 IconPageScreen(painterResource(Res.drawable.account_circle), "C. Pagar", ClientsScreen()),
                 IconPageScreen(painterResource(Res.drawable.branch), "C. Receber", OwnersScreen()),
-            )
+            ),
+            activePage = PageName.FINANCE.itsName
         )
     }
 }
@@ -51,7 +53,8 @@ class ManagerModuleScreen : Screen {
             pageLists = listOf(
                 IconPageScreen(painterResource(Res.drawable.account_circle), "Usuários", UsersScreen()),
                 IconPageScreen(painterResource(Res.drawable.branch), "Sucursais", BranchScreen()),
-            )
+            ),
+            activePage = PageName.MANAGER.itsName
         )
     }
 }
@@ -65,7 +68,8 @@ class PartnerModuleScreen : Screen {
                 IconPageScreen(painterResource(Res.drawable.details), "Clientes", ClientsScreen()),
                 IconPageScreen(painterResource(Res.drawable.help_24), "Proprietarios", OwnersScreen()),
                 IconPageScreen(painterResource(Res.drawable.help_24), "Fornecedores", SupplierScreen()),
-            )
+            ),
+            activePage = PageName.PARTNERS.itsName
         )
     }
 }
@@ -78,7 +82,8 @@ class ProductsModuleScreen : Screen {
             pageLists = listOf(
                 IconPageScreen(painterResource(Res.drawable.shopping_basket), "Productos", ProductsScreen()),
                 IconPageScreen(painterResource(Res.drawable.help_24), "Categorias", CategoriesScreen()),
-            )
+            ),
+            activePage = PageName.PRODUCTS.itsName
         )
     }
 }
@@ -89,9 +94,10 @@ class ReportModuleScreen : Screen {
         AgroupedPages(
             title = "Inventários",
             pageLists = listOf(
-                IconPageScreen(painterResource(Res.drawable.account_circle), "Inv. de Vendas", ReportsScreen()),
+                IconPageScreen(painterResource(Res.drawable.account_circle), "Inv. de Vendas", SaleReportScreen()),
                 IconPageScreen(painterResource(Res.drawable.branch), "Inv. de Estoques", StocksScreen()),
-            )
+            ),
+            activePage = PageName.REPORT.itsName
         )
     }
 }
@@ -103,7 +109,8 @@ class SellModuleScreen : Screen{
             title = "Vendas",
             pageLists = listOf(
                 IconPageScreen(painterResource(Res.drawable.account_circle), "Vendas", SalesScreen()),
-            )
+            ),
+            activePage = PageName.SELL.itsName
         )
     }
 }
@@ -117,7 +124,8 @@ class SettingsModuleScreen : Screen {
                 IconPageScreen(painterResource(Res.drawable.account_circle), "Notificações", NotificationsScreen()),
                 IconPageScreen(painterResource(Res.drawable.account_circle), "Conf. do sistema", SettingsScreen()),
                 IconPageScreen(painterResource(Res.drawable.account_circle), "Logs", LogsScreen()),
-            )
+            ),
+            activePage = PageName.SETTINGS.itsName
         )
     }
 }

@@ -1,6 +1,8 @@
 package com.samuelsumbane.ssptdesktop.ui.view.sell
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -12,6 +14,7 @@ import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import com.samuelsumbane.ssptdesktop.kclient.OrderItem
+import com.samuelsumbane.ssptdesktop.kclient.OrderItemsItem
 import com.samuelsumbane.ssptdesktop.presentation.viewmodel.ClientViewModel
 import com.samuelsumbane.ssptdesktop.presentation.viewmodel.OrdersViewModel
 import com.samuelsumbane.ssptdesktop.presentation.viewmodel.SaleViewModel
@@ -19,8 +22,14 @@ import com.samuelsumbane.ssptdesktop.ui.components.AlertWidget
 import com.samuelsumbane.ssptdesktop.ui.components.CommonPageStructure
 import com.samuelsumbane.ssptdesktop.ui.components.DataTable
 import com.samuelsumbane.ssptdesktop.ui.components.DatatableText
+import com.samuelsumbane.ssptdesktop.ui.components.DialogFormModal
 import com.samuelsumbane.ssptdesktop.ui.components.NormalButton
+import com.samuelsumbane.ssptdesktop.ui.utils.ModalSize
+import com.samuelsumbane.ssptdesktop.ui.utils.PageName
+import org.jetbrains.compose.resources.painterResource
 import org.koin.java.KoinJavaComponent.getKoin
+import ssptdesktop.composeapp.generated.resources.Res
+import ssptdesktop.composeapp.generated.resources.details
 import java.util.UUID
 
 class SalesScreen : Screen {
@@ -45,6 +54,7 @@ fun SalesPage() {
     CommonPageStructure(
         navigator,
         pageTitle = "Vendas",
+        activePage = PageName.SELL.itsName,
         topBarActions = {
             NormalButton(icon = null, text = "Nova Venda") {
                 navigator.push(SaleModalScreen())
@@ -53,7 +63,7 @@ fun SalesPage() {
     ) {
 
         DataTable(
-            headers = listOf("Cliente", "Total", "Data e hora", "Status", "Usuário", "Sucursal"),
+            headers = listOf("Cliente", "Total", "Data e hora", "Status", "Usuário", "Sucursal", "Ação"),
             rows = ordersUIStates.orders
         ) { order ->
             DatatableText(order.clientName ?: "Sem cliente")
@@ -62,7 +72,42 @@ fun SalesPage() {
             DatatableText(order.status)
             DatatableText(order.userName)
             DatatableText(order.branchName)
+            IconButton(
+                onClick = {
+
+                }
+            ) {
+                Icon(painterResource(Res.drawable.details), "View items")
+            }
         }
+
+        DialogFormModal(
+            title = "Detalhes da venda ID: ${salesUIStates.orderID}",
+            modalSize = ModalSize.MEDIUMN,
+            onDismiss = { salesViewModel.fillFormFields(showOrderItemsModal = false) },
+            onSubmit = { salesViewModel.fillFormFields(showOrderItemsModal = false) },
+            hideSubmitButton = true
+        ) {
+            DataTable(
+                headers = listOf("ID produto", "Nome produto", "Quantidade", "Sub-Total", "Lucro", "Proprietario"),
+                rows = if (salesUIStates.orderID.isBlank()) emptyList<OrderItemsItem>()
+                else ordersUIStates.orderItems.filter { it.orderId.equals(salesUIStates.orderID) }
+            ) {
+                DatatableText(it.productId.toString())
+                DatatableText(it.productName ?: "")
+                DatatableText(it.quantity.toString())
+                DatatableText(it.subTotal.toString())
+                DatatableText(it.profit.toString())
+                DatatableText(it.ownerName)
+            }
+        }
+
+//        val productId: Int,
+//        val productName: String?,
+//        val quantity: Int,
+//        val subTotal: Double,
+//        val profit: Double,
+//        val ownerName: String,
 
 //        AnimatedVisibility(clientUIStates.common.showAlertDialog) {
 //            AlertWidget(

@@ -5,6 +5,7 @@ import cafe.adriel.voyager.navigator.Navigator
 import com.samuelsumbane.ssptdesktop.kclient.UserSession
 import com.samuelsumbane.ssptdesktop.ui.view.manager.BranchScreen
 import com.samuelsumbane.ssptdesktop.ui.view.manager.usersPackage.UsersScreen
+import com.samuelsumbane.ssptdesktop.ui.view.report.SaleReportScreen
 import com.samuelsumbane.ssptdesktop.ui.view.sell.SaleModalScreen
 import com.samuelsumbane.ssptdesktop.ui.view.sell.SalesScreen
 import com.samuelsumbane.ssptdesktop.ui.view.settings.NotificationsScreen
@@ -19,8 +20,8 @@ fun App() {
 //    val clientViewModel: ClientViewModel = getKoin().get()
 
     SSPTTheme(darkTheme = true) {
-//        Navigator(ProductsScreen())
+        Navigator(SaleReportScreen())
 //        Navigator(SaleModalScreen())
-        Navigator(NotificationsScreen())
+//        Navigator(NotificationsScreen())
     }
 }

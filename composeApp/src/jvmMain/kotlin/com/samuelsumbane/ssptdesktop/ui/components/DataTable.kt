@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
@@ -80,6 +81,7 @@ fun <T> DataTable(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
+                .height(500.dp)
                 .background(datatableHeaderColor),
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
@@ -102,9 +104,8 @@ fun <T> DataTable(
                 val item = rows[index]
                 Row(
                     modifier = Modifier
-                        .padding(start = 5.dp, end = 5.dp)
-                        .background(if (index % 2 == 0) datatableOddColor else datatableEvenColor)
                         .fillMaxWidth()
+                        .background(if (isHovered) colorScheme.primary else if (index % 2 == 0) datatableOddColor else datatableEvenColor)
                         .onPointerEvent(PointerEventType.Enter) { isHovered = true }
                         .onPointerEvent(PointerEventType.Exit) { isHovered = false },
                     horizontalArrangement = Arrangement.SpaceBetween
@@ -112,10 +113,10 @@ fun <T> DataTable(
                 ) {
                     Row(
                         modifier = Modifier
-                            .padding(start = 5.dp, end = 5.dp)
-//                            .fillMaxWidth(),
-                            .background(Color.Green),
-                        horizontalArrangement = Arrangement.SpaceBetween
+                            .fillMaxWidth()
+                            .padding(start = 5.dp, end = 5.dp),
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically
                     ) {
                         cellContent(item)
                     }

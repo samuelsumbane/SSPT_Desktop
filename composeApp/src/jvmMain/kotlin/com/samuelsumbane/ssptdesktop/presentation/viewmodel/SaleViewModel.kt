@@ -142,7 +142,9 @@ class SaleViewModel(
         receivedValueFromBuyer: Double? = null,
         clientId: Int? = null,
         clientName: String? = null,
-        paymentMethod: String? = null
+        paymentMethod: String? = null,
+        showOrderItemsModal: Boolean? = null,
+        orderID: String? = null,
     ) {
         discont?.let { newValue ->
             _uiState.update { it.copy(descont = newValue) }
@@ -154,13 +156,15 @@ class SaleViewModel(
                 _uiState.update { it.copy(buyerCharge = newValue - uiState.value.saleTotal) }
             } else {
                 _uiState.update { it.copy(buyerCharge = uiState.value.saleTotal - uiState.value.saleSubTotal) }
-
             }
 
         }
         clientId?.let { newValue -> _uiState.update { it.copy(clientId = newValue) } }
         clientName?.let { newValue -> _uiState.update { it.copy(clientName = newValue) } }
         paymentMethod?.let { newValue -> _uiState.update { it.copy(paymentMethod = newValue) } }
+
+        showOrderItemsModal?.let { newValue -> _uiState.update { it.copy(showOrderItemsModal = newValue) } }
+        orderID?.let { newValue -> _uiState.update { it.copy(orderID = newValue) } }
     }
 
     fun onSubmitSaleForm() {
