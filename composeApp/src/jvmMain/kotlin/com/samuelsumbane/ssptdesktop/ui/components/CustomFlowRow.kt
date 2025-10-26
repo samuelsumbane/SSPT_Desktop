@@ -10,12 +10,17 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun CustomFlowRow(content: @Composable FlowRowScope.() -> Unit) {
+fun CustomFlowRow(
+    maxItemsInEachRow: Int? = null,
+    content: @Composable FlowRowScope.() -> Unit,
+) {
     val scrollState = rememberScrollState()
 
-    FlowRow(modifier = Modifier
-        .padding(10.dp)
-        .verticalScroll(scrollState)
+    FlowRow(
+        maxItemsInEachRow = maxItemsInEachRow ?: Int.MAX_VALUE,
+        modifier = Modifier
+            .padding(10.dp)
+            .verticalScroll(scrollState)
     ) {
         content()
     }

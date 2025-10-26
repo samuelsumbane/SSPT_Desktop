@@ -81,7 +81,7 @@ fun <T> DataTable(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(500.dp)
+//                .height(500.dp)
                 .background(datatableHeaderColor),
             horizontalArrangement = Arrangement.SpaceBetween
         ) {

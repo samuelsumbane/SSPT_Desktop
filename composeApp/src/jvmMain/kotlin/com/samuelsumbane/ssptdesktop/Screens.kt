@@ -21,14 +21,6 @@ import com.samuelsumbane.ssptdesktop.ui.view.settings.SettingsScreen
 import org.jetbrains.compose.resources.painterResource
 import ssptdesktop.composeapp.generated.resources.*
 
-class HomeScreen : Screen {
-    @Composable
-    override fun Content() {
-
-    }
-}
-
-
 // Groupped
 
 class FinanceModuleScreen : Screen {

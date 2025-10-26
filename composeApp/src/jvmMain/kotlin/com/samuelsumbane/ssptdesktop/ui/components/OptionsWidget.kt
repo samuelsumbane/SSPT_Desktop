@@ -22,11 +22,12 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun OptionsWidget(
     buttonText: String,
+    optionExpanded: Boolean,
+    onExpand: () -> Unit,
     content: @Composable () -> Unit
 ) {
-    val colorScheme = MaterialTheme.colorScheme
-    var expanded by remember { mutableStateOf(false) }
-
+    var expanded by remember { mutableStateOf(optionExpanded) }
+//    val on = optionExpanded()
     Box() {
         NormalOutlineButton(icon = null, text = buttonText) {
             expanded = !expanded
@@ -34,12 +35,13 @@ fun OptionsWidget(
         AnimatedVisibility(expanded) {
             DropdownMenu(
                 expanded = expanded,
-                onDismissRequest = { expanded = false}
+                onDismissRequest = { onExpand() }
             ) {
                 content()
             }
         }
     }
+
 }
 
 

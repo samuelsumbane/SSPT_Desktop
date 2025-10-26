@@ -14,6 +14,7 @@ import cafe.adriel.voyager.navigator.currentOrThrow
 import com.samuelsumbane.ssptdesktop.core.utils.downloadFile
 import com.samuelsumbane.ssptdesktop.kclient.apiPath
 import com.samuelsumbane.ssptdesktop.presentation.viewmodel.SaleReportViewModel
+import com.samuelsumbane.ssptdesktop.presentation.viewmodel.viewmodelstates.SaleReportUiState
 import com.samuelsumbane.ssptdesktop.ui.components.CommonPageStructure
 import com.samuelsumbane.ssptdesktop.ui.components.DataTable
 import com.samuelsumbane.ssptdesktop.ui.components.DatatableText
@@ -47,37 +48,59 @@ fun SalesReports() {
 
             Row(horizontalArrangement = Arrangement.spacedBy(15.dp)) {
 
-                OptionsWidget(buttonText = "Vendas de hoje") {
+                OptionsWidget(
+                    buttonText = "Vendas de hoje",
+                    optionExpanded = salesReportUiState.expandOptionsTodaySales,
+                    onExpand = {}
+                ) {
                     DropdownMenuItemForOptions(
                         {
-
+                            salesReportViewModel.fillSaleReportFields(expandOptionsTodaySales = false)
                         }
                     ) {
                         TextAndIconItem(text = "Filtrar", icon = painterResource(Res.drawable.delete))
                     }
 
-                    DropdownMenuItemForOptions (onClick = {}) {
+                    DropdownMenuItemForOptions (onClick = {
+                        salesReportViewModel.fillSaleReportFields(expandOptionsTodaySales = false)
+                    }) {
                         TextAndIconItem(text = "Filtrar", icon = painterResource(Res.drawable.delete))
                     }
                 }
 
-                OptionsWidget(buttonText = "Exportar") {
+                OptionsWidget(
+                    buttonText = "Exportar",
+                    optionExpanded = salesReportUiState.expandOptionsExportData,
+                    onExpand = {}
+                ) {
                     DropdownMenuItemForOptions(
                         onClick = {
                             val url = "$apiPath/order/export/orders"
-                            val destination = "orders.csv" // ou caminho completo ex.: "/home/samuel/Downloads/orders.csv"
-                            downloadFile(url, destination)
+                            downloadFile(url, "orders.xlsx")
+                            salesReportViewModel.fillSaleReportFields(expandOptionsExportData = false)
+                        }
+                    ) {
+                        TextAndIconItem(text = "Excel", icon = painterResource(Res.drawable.delete))
+                    }
+
+                    DropdownMenuItemForOptions (
+                        onClick = {
+                            val url = "$apiPath/order/export/orders/csv"
+                            downloadFile(url, "orders.csv")
+                            salesReportViewModel.fillSaleReportFields(expandOptionsExportData = false)
                         }
                     ) {
                         TextAndIconItem(text = "CSV", icon = painterResource(Res.drawable.delete))
                     }
 
-                    DropdownMenuItemForOptions (onClick = {}) {
-                        TextAndIconItem(text = "Excel", icon = painterResource(Res.drawable.delete))
-                    }
-
-                    DropdownMenuItemForOptions (onClick = {}) {
-                        TextAndIconItem(text = "CSV", icon = painterResource(Res.drawable.delete))
+                    DropdownMenuItemForOptions (
+                        onClick = {
+                            val url = "$apiPath/order/export/orders/json"
+                            downloadFile(url, "orders.json")
+                            salesReportViewModel.fillSaleReportFields(expandOptionsExportData = false)
+                        }
+                    ) {
+                        TextAndIconItem(text = "Json", icon = painterResource(Res.drawable.delete))
                     }
                 }
             }

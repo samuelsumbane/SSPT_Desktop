@@ -3,7 +3,9 @@ package com.samuelsumbane.ssptdesktop
 import androidx.compose.runtime.Composable
 import cafe.adriel.voyager.navigator.Navigator
 import com.samuelsumbane.ssptdesktop.kclient.UserSession
+import com.samuelsumbane.ssptdesktop.ui.view.HomeScreen
 import com.samuelsumbane.ssptdesktop.ui.view.manager.BranchScreen
+import com.samuelsumbane.ssptdesktop.ui.view.manager.usersPackage.UserProfileScreen
 import com.samuelsumbane.ssptdesktop.ui.view.manager.usersPackage.UsersScreen
 import com.samuelsumbane.ssptdesktop.ui.view.report.SaleReportScreen
 import com.samuelsumbane.ssptdesktop.ui.view.sell.SaleModalScreen
@@ -20,7 +22,7 @@ fun App() {
 //    val clientViewModel: ClientViewModel = getKoin().get()
 
     SSPTTheme(darkTheme = true) {
-        Navigator(SaleReportScreen())
+        Navigator(UserProfileScreen())
 //        Navigator(SaleModalScreen())
 //        Navigator(NotificationsScreen())
     }

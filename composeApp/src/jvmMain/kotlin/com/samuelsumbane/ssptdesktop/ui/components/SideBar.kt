@@ -18,6 +18,7 @@ import cafe.adriel.voyager.navigator.Navigator
 import com.samuelsumbane.ssptdesktop.*
 import com.samuelsumbane.ssptdesktop.ui.utils.IconPageNameScreen
 import com.samuelsumbane.ssptdesktop.ui.utils.PageName
+import com.samuelsumbane.ssptdesktop.ui.view.HomeScreen
 import org.jetbrains.compose.resources.painterResource
 import ssptdesktop.composeapp.generated.resources.*
 

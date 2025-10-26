@@ -44,4 +44,12 @@ class SaleReportViewModel : ViewModel() {
             _uiState.update { it.copy(reportSales = reportSales) }
         }
     }
+
+    fun fillSaleReportFields(
+        expandOptionsTodaySales: Boolean? = null,
+        expandOptionsExportData: Boolean? = null,
+    ) {
+        expandOptionsTodaySales?.let { newValue -> _uiState.update { it.copy(expandOptionsTodaySales = newValue) }}
+        expandOptionsExportData?.let { newValue -> _uiState.update { it.copy(expandOptionsExportData = newValue) }}
+    }
 }

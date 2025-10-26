@@ -4,5 +4,6 @@ import com.samuelsumbane.ssptdesktop.kclient.SaleReportItem
 
 data class SaleReportUiState(
     val reportSales: List<SaleReportItem> = emptyList(),
-
+    val expandOptionsTodaySales: Boolean = false,
+    val expandOptionsExportData: Boolean = false,
 )

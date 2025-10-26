@@ -2,7 +2,9 @@ package com.samuelsumbane.ssptdesktop.ui.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.NavigationRail
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -21,6 +23,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.navigator.Navigator
 import com.samuelsumbane.ssptdesktop.presentation.viewmodel.ClientViewModel
+import com.samuelsumbane.ssptdesktop.ui.utils.PageName
 import org.jetbrains.compose.resources.painterResource
 import ssptdesktop.composeapp.generated.resources.Res
 import ssptdesktop.composeapp.generated.resources.arrow_back
@@ -33,6 +36,7 @@ fun CommonPageStructure(
     navigator: Navigator,
     pageTitle: String = "Clientes",
     activePage: String = "",
+    enableScroll: Boolean = true,
     topBarActions: @Composable RowScope.() -> Unit = {},
     content: @Composable ColumnScope.() -> Unit
 ) {
@@ -46,24 +50,35 @@ fun CommonPageStructure(
                         Text(text = pageTitle.uppercase(), fontWeight = FontWeight.Bold)
                     },
                     navigationIcon = {
-                        IconButton(
-                            onClick = { navigator.pop() }
-                        ) {
-                            Icon(painterResource(Res.drawable.arrow_back), contentDescription = "Go back")
+                        if (activePage != PageName.HOME.itsName) {
+                            IconButton(
+                                onClick = { navigator.pop() }
+                            ) {
+                                Icon(painterResource(Res.drawable.arrow_back), contentDescription = "Go back")
+                            }
                         }
                     },
                     actions = { topBarActions() },
                 )
             }
         ) {
+            val scrollState = rememberScrollState()
+
+            fun Modifier.possiblyVerticalScroll(): Modifier {
+                return if (enableScroll) {
+                    this.verticalScroll(scrollState)
+                } else this
+            }
+
             Column(
                 modifier = Modifier
                     .padding(it)
                     .fillMaxSize()
-//                    .background(Color.Gray)
+                    .possiblyVerticalScroll()
             ) {
                 content()
             }
+
         }
     }
 
