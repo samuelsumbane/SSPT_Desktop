@@ -3,8 +3,10 @@ package com.samuelsumbane.ssptdesktop.data.repository
 import com.samuelsumbane.ssptdesktop.domain.repository.UserRepository
 import com.samuelsumbane.ssptdesktop.kclient.ChangeStatusDC
 import com.samuelsumbane.ssptdesktop.kclient.KClientRepository
+import com.samuelsumbane.ssptdesktop.kclient.PasswordDraft
 import com.samuelsumbane.ssptdesktop.kclient.Session
 import com.samuelsumbane.ssptdesktop.kclient.StatusAndMessage
+import com.samuelsumbane.ssptdesktop.kclient.UpdateUserPersonalData
 import com.samuelsumbane.ssptdesktop.kclient.UserItem
 import com.samuelsumbane.ssptdesktop.kclient.UserItemDraft
 import com.samuelsumbane.ssptdesktop.kclient.apiUsersPath
@@ -33,6 +35,16 @@ class UserRepositoryImpl : UserRepository{
 
     override suspend fun addUser(userDraft: UserItemDraft): StatusAndMessage {
         val (status, message) = kClientRepo.postRequest("$apiUsersPath/create", userDraft)
+        return StatusAndMessage(status, message)
+    }
+
+    override suspend fun editUserPersonalData(userPersonalData: UpdateUserPersonalData): StatusAndMessage {
+        val (status, message) = kClientRepo.postRequest(url = "$apiUsersPath/update-user-personal-data", UpdateUserPersonalData, "put")
+        return StatusAndMessage(status, message)
+    }
+
+    override suspend fun editUserPassword(passwordDraft: PasswordDraft): StatusAndMessage {
+        val (status, message) = kClientRepo.postRequest(url = "$apiUsersPath/update-user-password", UpdateUserPersonalData, "put")
         return StatusAndMessage(status, message)
     }
 

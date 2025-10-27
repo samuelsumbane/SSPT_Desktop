@@ -23,5 +23,8 @@ enum class FormInputName {
     Amount,
     Supplier,
     Description,
-    ExpirationDate
+    ExpirationDate,
+    CurrentPassword,
+    NewPassword,
+    ConfirmationPassword
 }

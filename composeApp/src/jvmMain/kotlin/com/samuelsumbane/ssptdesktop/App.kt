@@ -21,7 +21,7 @@ import com.samuelsumbane.ssptdesktop.ui.view.settings.SettingsScreen
 fun App() {
 //    val clientViewModel: ClientViewModel = getKoin().get()
 
-    SSPTTheme(darkTheme = true) {
+    SSPTTheme(darkTheme = false) {
         Navigator(UserProfileScreen())
 //        Navigator(SaleModalScreen())
 //        Navigator(NotificationsScreen())

@@ -24,6 +24,7 @@ fun DialogFormModal(
     modalSize: ModalSize = ModalSize.SMALL,
     onDismiss: () -> Unit,
     onSubmit: () -> Unit,
+    isSubmitEnabled: Boolean = false,
     hideSubmitButton: Boolean = false,
     modalContent: @Composable () -> Unit
 ) {
@@ -57,7 +58,13 @@ fun DialogFormModal(
                 horizontalArrangement = Arrangement.SpaceAround
             ) {
                 NormalOutlineButton(text = "Fechar", onClick = onDismiss)
-                if (!hideSubmitButton) NormalButton(text = "Submeter", onClick = onSubmit)
+                if (!hideSubmitButton) {
+                    NormalButton(
+                        text = "Submeter",
+                        enabled = isSubmitEnabled,
+                        onClick = onSubmit
+                    )
+                }
             }
         }
     }

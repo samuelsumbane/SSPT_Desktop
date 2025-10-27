@@ -44,4 +44,5 @@ val appModule = module {
     factory { NotificationViewModel(get()) }
     factory { LogViewModel() }
     factory { SaleReportViewModel() }
+    factory { UserProfileViewModel(get()) }
 }
