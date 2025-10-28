@@ -1,14 +1,12 @@
 package com.samuelsumbane.ssptdesktop.presentation.viewmodel.viewmodelstates
 
-import com.samuelsumbane.ssptdesktop.kclient.OrderItem
-import com.samuelsumbane.ssptdesktop.kclient.OrderItemsItem
 import com.samuelsumbane.ssptdesktop.kclient.ProductItem
 
 data class SalesUiState(
     val products: List<ProductItem> = emptyList(),
     val cardProducts: List<CardProduct> = emptyList(),
     val searchProductsValue: String = "",
-    val descont: Double = 0.0,
+    val discount: Double = 0.0,
     val receivedAmount: Double = 0.0,/** Amount which buyer gave */
     val clientId: Int = 0,
     val clientName: String = "",
@@ -19,7 +17,6 @@ data class SalesUiState(
     val saleReason: String = "",
     val snackBarText: String = "",
     val showOrderItemsModal: Boolean = false,
-    val orderID: String = "",
     val commonUiState: CommonUiState = CommonUiState()
 )
 

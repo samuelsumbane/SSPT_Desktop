@@ -8,7 +8,9 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.key.Key
 import androidx.compose.ui.input.key.key
 import androidx.compose.ui.input.key.onKeyEvent
@@ -16,8 +18,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
+import androidx.compose.ui.zIndex
 import com.samuelsumbane.ssptdesktop.ui.utils.ModalSize
 
+@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun DialogFormModal(
     title: String,
@@ -25,12 +29,19 @@ fun DialogFormModal(
     onDismiss: () -> Unit,
     onSubmit: () -> Unit,
     isSubmitEnabled: Boolean = false,
+    isLoading: Boolean = false,
     hideSubmitButton: Boolean = false,
+    enableScroll: Boolean = true,
     modalContent: @Composable () -> Unit
 ) {
     val scrollbar = rememberScrollState()
 
-    Dialog(onDismissRequest = { onDismiss() },) {
+    Dialog(
+        onDismissRequest = { onDismiss() },
+        properties = DialogProperties(
+            usePlatformDefaultWidth = false
+        )
+    ) {
         Column(
             modifier = Modifier
                 .width(modalSize.widthSize)
@@ -43,13 +54,11 @@ fun DialogFormModal(
                         true
                     } else false
                 }
-                .verticalScroll(scrollbar)
+                .possiblyVerticalScroll(enableScroll, scrollbar)
                 .padding(10.dp),
             verticalArrangement = Arrangement.SpaceBetween
         ) {
-            Row(modifier = Modifier.padding(top = 10.dp, start = 5.dp)) {
-              Text(title.uppercase(), fontWeight = FontWeight.SemiBold, color = MaterialTheme.colorScheme.onBackground)
-            }
+            Text(title.uppercase(), fontWeight = FontWeight.SemiBold, color = MaterialTheme.colorScheme.onBackground, modifier = Modifier.padding(top = 10.dp, start = 5.dp))
 
             modalContent()
 
@@ -62,6 +71,7 @@ fun DialogFormModal(
                     NormalButton(
                         text = "Submeter",
                         enabled = isSubmitEnabled,
+                        isLoading = isLoading,
                         onClick = onSubmit
                     )
                 }
@@ -69,3 +79,4 @@ fun DialogFormModal(
         }
     }
 }
+

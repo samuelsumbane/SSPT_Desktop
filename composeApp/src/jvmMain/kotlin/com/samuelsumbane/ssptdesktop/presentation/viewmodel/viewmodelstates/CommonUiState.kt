@@ -13,5 +13,7 @@ data class CommonUiState(
     val alertType: AlertType = AlertType.SUCCESS,
     val alertOnAccept: () -> Unit = {},
     val formErrors: Map<FormInputName, String> = emptyMap(),
-    val isLoading: Boolean = false
+    val isLoading: Boolean = false,
+    val showSnackbar: Boolean = false,
+    val snackbarMessage: String = "",
 )

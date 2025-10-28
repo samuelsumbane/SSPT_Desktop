@@ -13,12 +13,14 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
@@ -27,6 +29,7 @@ import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.Navigator
 import cafe.adriel.voyager.navigator.currentOrThrow
+import com.samuel.oremoschanganapt.globalComponents.showSnackbar
 import com.samuelsumbane.ssptdesktop.presentation.viewmodel.UserProfileViewModel
 import com.samuelsumbane.ssptdesktop.ui.components.CommonPageStructure
 import com.samuelsumbane.ssptdesktop.ui.components.DialogFormModal
@@ -54,21 +57,34 @@ fun UserProfile() {
     val navigator = LocalNavigator.currentOrThrow
     val userProfileViewModel by remember { mutableStateOf(getKoin().get<UserProfileViewModel>()) }
     val userProfileUiState by userProfileViewModel.uiState.collectAsState()
+//    val snackbarHostState = remember { SnackbarHostState() }
+    val scrollState = rememberScrollState()
+    val coroutineScope = rememberCoroutineScope()
 
     CommonPageStructure(
         navigator,
         pageTitle = "Perfil",
         activePage = PageName.MANAGER.itsName,
-        enableScroll = false
+        enableScroll = false,
+        onPerfomeSnackbarHost = {
+            if (userProfileUiState.commonUiState.showSnackbar) {
+                showSnackbar(
+                    scope = coroutineScope,
+                    snackbarHostState = it,
+                    message = userProfileUiState.commonUiState.snackbarMessage
+                )
+                userProfileViewModel.displaySnackbar(false)
+            }
+        }
     ) {
         with(userProfileUiState) {
-            // Personal data ------->>
+            // Personal data
             val personalData = mapOf(
                 "Nome" to userName,
                 "Email" to userEmail
             )
 
-            // Account data ------->>
+            // Account data
             val afData = mapOf(
                 "Papel" to userRole,
                 "Estado" to userState,
@@ -81,36 +97,6 @@ fun UserProfile() {
             )
 
 
-//
-//        Div(attrs = { classes("div-item", "no-border") }) {
-//            P {}
-//            C.outlineButton("Editar dados pessoais") {
-////                    minModalState = "open-min-modal"
-////                    console.log("clicked")
-//                showMinModal = true
-//            }
-//        }
-//        Br()
-//
-//        C.h3("Dados da conta")
-//        afData.forEach { pItem(it.key, it.value) }
-//        Br()
-//
-//        C.h3("Segurança")
-//        afSec.forEach { pItem(it.key, it.value) }
-//
-//        Div(attrs = { classes("div-item", "no-border") }) {
-//            P {}
-//            C.outlineButton("Editar senha") {
-//                securityModalState = "open-min-modal"
-//                afPasscode = ""
-//                errors["actualPassword"] = ""
-//                afNewPassword = ""
-//                afNewPasswordError = ""
-//                afConfirmPassword = ""
-//                afConfirmPasswordError = ""
-//            }
-//        }
 //        Div(attrs = { classes("div-item", "no-border") }) {
 //            P {}
 //            C.outlineButton("Encerrar a sessão") {
@@ -123,7 +109,6 @@ fun UserProfile() {
 //            }
 //        }
 
-            val scrollState = rememberScrollState()
 
             Row(
                 modifier = Modifier
@@ -228,11 +213,7 @@ fun UserProfile() {
                 }
             }
 
-
-
         }
-
-
 
     }
 }

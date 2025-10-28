@@ -12,10 +12,13 @@ import androidx.compose.material3.IconButton
 //import androidx.compose.material.TopAppBar
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -38,11 +41,13 @@ fun CommonPageStructure(
     activePage: String = "",
     enableScroll: Boolean = true,
     topBarActions: @Composable RowScope.() -> Unit = {},
+    onPerfomeSnackbarHost: ((SnackbarHostState) -> Unit)? = null,
     content: @Composable ColumnScope.() -> Unit
 ) {
+    val snackbarHostState = remember { SnackbarHostState() }
+
     Row(modifier = Modifier) {
         SideBar(navigator, activePage)
-
         Scaffold(
             topBar = {
                 TopAppBar(
@@ -60,23 +65,21 @@ fun CommonPageStructure(
                     },
                     actions = { topBarActions() },
                 )
+            },
+            snackbarHost = {
+                SnackbarHost(snackbarHostState)
             }
         ) {
             val scrollState = rememberScrollState()
-
-            fun Modifier.possiblyVerticalScroll(): Modifier {
-                return if (enableScroll) {
-                    this.verticalScroll(scrollState)
-                } else this
-            }
 
             Column(
                 modifier = Modifier
                     .padding(it)
                     .fillMaxSize()
-                    .possiblyVerticalScroll()
+                    .possiblyVerticalScroll(enableScroll, scrollState)
             ) {
                 content()
+                onPerfomeSnackbarHost?.invoke(snackbarHostState)
             }
 
         }

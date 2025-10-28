@@ -34,4 +34,32 @@ class OrdersViewModel(private val repo: OrderRepository) : ViewModel() {
             _uiState.update { it.copy(orderItems = ordersItems) }
         }
     }
+
+    fun showOrderItem(orderId: String) {
+        viewModelScope.launch {
+            val filteredOrderItems = repo.getOrderItems()
+                .filter { it.orderId.equals(orderId) }
+
+            _uiState.update {
+                it.copy(
+                    orderItems = filteredOrderItems,
+                    showOrderItemModal = true,
+                    orderID = orderId
+                )
+            }
+        }
+    }
+
+    fun closeOrderItemModal() {
+        _uiState.update {
+            it.copy(
+                orderItems = emptyList(),
+                showOrderItemModal = false,
+                orderID = ""
+            )
+        }
+    }
+
+//    orderID?.let { newValue -> _uiState.update { it.copy(orderID = newValue) } }
+
 }

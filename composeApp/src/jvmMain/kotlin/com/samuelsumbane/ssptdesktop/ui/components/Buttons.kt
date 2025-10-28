@@ -32,6 +32,7 @@ fun NormalButton(
     text: String,
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
+    isLoading: Boolean = false,
     onClick: () -> Unit
 ) {
     Button(
@@ -43,7 +44,7 @@ fun NormalButton(
         modifier = modifier,
         enabled = enabled
     ) {
-        ButtonContent(icon, text)
+        if (isLoading) LoadingWidget(ProgressIndicatorSize.Small) else ButtonContent(icon, text)
     }
 }
 
@@ -66,4 +67,3 @@ fun NormalOutlineButton(
         ButtonContent(icon, text)
     }
 }
-

@@ -24,7 +24,9 @@ class UserProfileViewModel(private val repo: UserRepository) : ViewModel() {
         formModalTitle: String? = null,
         actualPassword: String? = null,
         newPassword: String? = null,
-        confirmationPassword: String? = null
+        confirmationPassword: String? = null,
+        snackbarMessage: String? = null,
+        showSnackbar: Boolean? = null
     ) {
         userName?.let { newValue -> _uiState.update { it.copy(userName = newValue) }}
         userEmail?.let { newValue -> _uiState.update { it.copy(userEmail = newValue) }}
@@ -33,10 +35,20 @@ class UserProfileViewModel(private val repo: UserRepository) : ViewModel() {
         newPassword?.let { newValue -> _uiState.update { it.copy(newPassword = newValue) }}
         confirmationPassword?.let { newValue -> _uiState.update { it.copy(confirmationPassword = newValue) }}
 
-
         formModalTitle?.let { newValue ->
             _uiState.update { it.copy(commonUiState = it.commonUiState.copy(formDialogTitle = formModalTitle)) }
         }
+    }
+
+    fun displaySnackbar(showSnackbar: Boolean, snackbarMessae: String? = null) {
+            _uiState.update {
+                it.copy(
+                    commonUiState = it.commonUiState.copy(
+                        showSnackbar = showSnackbar,
+                        snackbarMessage = snackbarMessae ?: ""
+                    )
+                )
+            }
     }
 
     fun onSubmitUserDataForm() {
@@ -63,6 +75,9 @@ class UserProfileViewModel(private val repo: UserRepository) : ViewModel() {
                 )
             )
 
+            if (status == 201) {
+                displaySnackbar(true, message)
+            }
 
         }
     }
@@ -97,6 +112,10 @@ class UserProfileViewModel(private val repo: UserRepository) : ViewModel() {
                     newPassword = uiState.value.newPassword
                 )
             )
+
+            if (status == 201) {
+                displaySnackbar(true, message)
+            }
         }
     }
 

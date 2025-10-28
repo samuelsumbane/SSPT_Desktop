@@ -2,7 +2,6 @@ package com.samuelsumbane.ssptdesktop.presentation.viewmodel
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -117,7 +116,7 @@ class SaleViewModel(
         _uiState.update {
             val calculedSaleSubTotal =  uiState.value.cardProducts.sumOf { cardProducts -> cardProducts.subTotal }
 
-            val newSaleTotal = calculedSaleSubTotal - uiState.value.descont
+            val newSaleTotal = calculedSaleSubTotal - uiState.value.discount
             println("newsaletotal was $newSaleTotal")
             if (newSaleTotal < 0) { // -3
                 it.copy(
@@ -131,7 +130,6 @@ class SaleViewModel(
                     saleTotal = newSaleTotal,
                 )
             }
-
         }
     }
 
@@ -144,10 +142,9 @@ class SaleViewModel(
         clientName: String? = null,
         paymentMethod: String? = null,
         showOrderItemsModal: Boolean? = null,
-        orderID: String? = null,
     ) {
         discont?.let { newValue ->
-            _uiState.update { it.copy(descont = newValue) }
+            _uiState.update { it.copy(discount = newValue) }
             updateSaleAmount()
         }
         receivedValueFromBuyer?.let { newValue ->
@@ -164,7 +161,6 @@ class SaleViewModel(
         paymentMethod?.let { newValue -> _uiState.update { it.copy(paymentMethod = newValue) } }
 
         showOrderItemsModal?.let { newValue -> _uiState.update { it.copy(showOrderItemsModal = newValue) } }
-        orderID?.let { newValue -> _uiState.update { it.copy(orderID = newValue) } }
     }
 
     fun onSubmitSaleForm() {

@@ -23,6 +23,7 @@ import com.samuelsumbane.ssptdesktop.ui.components.CommonPageStructure
 import com.samuelsumbane.ssptdesktop.ui.components.DataTable
 import com.samuelsumbane.ssptdesktop.ui.components.DatatableText
 import com.samuelsumbane.ssptdesktop.ui.components.DialogFormModal
+//import com.samuelsumbane.ssptdesktop.ui.components.Modal
 import com.samuelsumbane.ssptdesktop.ui.components.NormalButton
 import com.samuelsumbane.ssptdesktop.ui.utils.ModalSize
 import com.samuelsumbane.ssptdesktop.ui.utils.PageName
@@ -55,6 +56,7 @@ fun SalesPage() {
         navigator,
         pageTitle = "Vendas",
         activePage = PageName.SELL.itsName,
+        enableScroll = false,
         topBarActions = {
             NormalButton(icon = null, text = "Nova Venda") {
                 navigator.push(SaleModalScreen())
@@ -81,12 +83,14 @@ fun SalesPage() {
             }
         }
 
+
         DialogFormModal(
             title = "Detalhes da venda ID: ${salesUIStates.orderID}",
             modalSize = ModalSize.MEDIUMN,
             onDismiss = { salesViewModel.fillFormFields(showOrderItemsModal = false) },
             onSubmit = { salesViewModel.fillFormFields(showOrderItemsModal = false) },
-            hideSubmitButton = true
+            hideSubmitButton = true,
+            enableScroll = false
         ) {
             DataTable(
                 headers = listOf("ID produto", "Nome produto", "Quantidade", "Sub-Total", "Lucro", "Proprietario"),

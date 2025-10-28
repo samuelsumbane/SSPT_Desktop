@@ -162,7 +162,7 @@ class SaleModalScreen : Screen {
                         horizontalArrangement = Arrangement.SpaceEvenly
                     ) {
                         InputField(
-                            inputValue = saleModalUiState.value.descont.toString(),
+                            inputValue = saleModalUiState.value.discount.toString(),
                             label = "Desconto",
                             modifier = Modifier.width(200.dp),
                             onValueChanged = { salesViewModel.fillFormFields(discont = it.toDouble()) },
@@ -234,7 +234,7 @@ class SaleModalScreen : Screen {
 
                             Column {
                                 SumirizeRow("Sub-total do pedido", "${saleModalUiState.value.saleSubTotal} MT")
-                                SumirizeRow("Desconto", "${saleModalUiState.value.descont} MT")
+                                SumirizeRow("Desconto", "${saleModalUiState.value.discount} MT")
                                 SumirizeRow("Troco", composableSecond = {
                                     Text(
                                         text = "${saleModalUiState.value.buyerCharge} MT",
