@@ -9,6 +9,8 @@ import com.samuelsumbane.ssptdesktop.kclient.UserItemDraft
 
 interface UserRepository {
     suspend fun getUsers(): List<UserItem>
+    suspend fun getUserById(userId: Int): UserItem?
+    suspend fun getUsersStatus(): Pair<Int, Int>
     suspend fun addUser(userDraft: UserItemDraft): StatusAndMessage
     suspend fun editUserPersonalData(userPersonalData: UpdateUserPersonalData): StatusAndMessage
     suspend fun editUserPassword(passwordDraft: PasswordDraft): StatusAndMessage

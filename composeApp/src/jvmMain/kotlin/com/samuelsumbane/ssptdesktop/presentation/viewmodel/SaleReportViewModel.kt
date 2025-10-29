@@ -2,6 +2,7 @@ package com.samuelsumbane.ssptdesktop.presentation.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.samuelsumbane.ssptdesktop.domain.repository.SaleReportRepository
 import com.samuelsumbane.ssptdesktop.kclient.KClientRepository
 import com.samuelsumbane.ssptdesktop.kclient.SaleReportItem
 import com.samuelsumbane.ssptdesktop.kclient.Session
@@ -16,7 +17,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-class SaleReportViewModel : ViewModel() {
+class SaleReportViewModel(private val repo: SaleReportRepository) : ViewModel() {
     val _uiState = MutableStateFlow(SaleReportUiState())
     val uiState = _uiState.asStateFlow()
     val token = Session.jwtToken ?: ""
@@ -24,23 +25,12 @@ class SaleReportViewModel : ViewModel() {
 
 
     init {
-
-    }
-
-    suspend fun getSaleReports(): List<SaleReportItem> {
-        return try {
-            kClientRepo.httpClient.get("$apiReportPath/all") {
-                header(HttpHeaders.Authorization, "Bearer $token")
-            }.body()
-        } catch (e: Exception) {
-            println("Error fetching sale Reports: $e")
-            emptyList()
-        }
+        loadSaleReports()
     }
 
     fun loadSaleReports() {
         viewModelScope.launch {
-            val reportSales = getSaleReports()
+            val reportSales = repo.fetchSalesReports()
             _uiState.update { it.copy(reportSales = reportSales) }
         }
     }

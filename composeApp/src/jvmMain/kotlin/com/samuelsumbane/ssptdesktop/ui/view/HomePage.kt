@@ -20,6 +20,10 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -28,12 +32,16 @@ import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
+import com.samuelsumbane.ssptdesktop.presentation.viewmodel.DashboardViewModel
+import com.samuelsumbane.ssptdesktop.presentation.viewmodel.SaleReportViewModel
+import com.samuelsumbane.ssptdesktop.presentation.viewmodel.UserViewModel
 import com.samuelsumbane.ssptdesktop.ui.components.CommonPageStructure
 import com.samuelsumbane.ssptdesktop.ui.components.CustomFlowRow
 import com.samuelsumbane.ssptdesktop.ui.components.TextRow
 import com.samuelsumbane.ssptdesktop.ui.utils.PageName
 import com.samuelsumbane.ssptdesktop.ui.view.manager.usersPackage.UserProfileScreen
 import org.jetbrains.compose.resources.painterResource
+import org.koin.java.KoinJavaComponent.getKoin
 import ssptdesktop.composeapp.generated.resources.Res
 import ssptdesktop.composeapp.generated.resources.account_circle
 import ssptdesktop.composeapp.generated.resources.home
@@ -49,8 +57,13 @@ class HomeScreen : Screen {
 
 @Composable
 fun HomePage() {
+    val userViewModel by remember { mutableStateOf(getKoin().get<UserViewModel>()) }
+
+    val dashboardViewModel by remember { mutableStateOf(getKoin().get<DashboardViewModel>()) }
+    val dashboardUiState by dashboardViewModel.uiState.collectAsState()
 
     val navigator = LocalNavigator.currentOrThrow
+
 
     CommonPageStructure(
         navigator,
@@ -96,16 +109,16 @@ fun HomePage() {
         ) {
             val data = mapOf(
                 "Usuários" to mapOf(
-                    "Ativos" to "2",
-                    "Todos" to "10"
+                    "Ativos" to dashboardUiState.activeUsers,
+                    "Todos" to dashboardUiState.allUsersCount
                 ),
                 "Parceiros" to mapOf(
-                    "Clientes" to "2",
-                    "Fornecedores" to "0"
+                    "Clientes" to dashboardUiState.allClientsCount,
+                    "Fornecedores" to dashboardUiState.allSuppliersCount
                 ),
                 "Ganhos Totais" to mapOf(
-                    "Vendas" to "2.0 MT",
-                    "Lucros" to "0.0 MT"
+                    "Vendas" to "${dashboardUiState.totalSales} MT",
+                    "Lucros" to "${dashboardUiState.totalProfits} MT"
                 )
             )
 

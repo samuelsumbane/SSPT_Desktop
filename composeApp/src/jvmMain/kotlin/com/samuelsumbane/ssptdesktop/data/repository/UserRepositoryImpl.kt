@@ -16,6 +16,7 @@ import io.ktor.client.request.get
 import io.ktor.client.request.header
 import io.ktor.http.Headers
 import io.ktor.http.HttpHeaders
+import io.ktor.http.HttpStatusCode
 import jdk.jshell.Snippet
 
 class UserRepositoryImpl : UserRepository{
@@ -33,6 +34,29 @@ class UserRepositoryImpl : UserRepository{
         }
     }
 
+    override suspend fun getUserById(userId: Int): UserItem? {
+        return try {
+            val response = kClientRepo.httpClient.get("$apiUsersPath/by-user-id/$userId") {
+                header(HttpHeaders.Authorization , "Bearer $token")
+            }
+            if (response.status == HttpStatusCode.OK) response.body() else null
+        } catch(e: Exception) {
+            println("Error fetching users data: $e")
+            null
+        }
+    }
+
+    override suspend fun getUsersStatus(): Pair<Int, Int> {
+        return try {
+            kClientRepo.httpClient.get("$apiUsersPath/usersStatus") {
+                header(HttpHeaders.Authorization , "Bearer $token")
+            }.body()
+        } catch(e: Exception) {
+            println("Error fetching users data: $e")
+            Pair(0, 0)
+        }
+    }
+
     override suspend fun addUser(userDraft: UserItemDraft): StatusAndMessage {
         val (status, message) = kClientRepo.postRequest("$apiUsersPath/create", userDraft)
         return StatusAndMessage(status, message)
@@ -40,6 +64,7 @@ class UserRepositoryImpl : UserRepository{
 
     override suspend fun editUserPersonalData(userPersonalData: UpdateUserPersonalData): StatusAndMessage {
         val (status, message) = kClientRepo.postRequest(url = "$apiUsersPath/update-user-personal-data", UpdateUserPersonalData, "put")
+        println("status: $status, message: $message")
         return StatusAndMessage(status, message)
     }
 

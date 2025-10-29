@@ -44,7 +44,7 @@ class SalesScreen : Screen {
 @Composable
 fun SalesPage() {
     val salesViewModel by remember { mutableStateOf(getKoin().get<SaleViewModel>()) }
-    val  ordersViewModel by remember { mutableStateOf(getKoin().get<OrdersViewModel>()) }
+    val ordersViewModel by remember { mutableStateOf(getKoin().get<OrdersViewModel>()) }
     val salesUIStates by salesViewModel.uiState.collectAsState()
     val ordersUIStates by ordersViewModel.uiState.collectAsState()
     val navigator = LocalNavigator.currentOrThrow
@@ -76,33 +76,34 @@ fun SalesPage() {
             DatatableText(order.branchName)
             IconButton(
                 onClick = {
-
+                    ordersViewModel.showOrderItem(order.id.toString())
                 }
             ) {
                 Icon(painterResource(Res.drawable.details), "View items")
             }
         }
 
-
-        DialogFormModal(
-            title = "Detalhes da venda ID: ${salesUIStates.orderID}",
-            modalSize = ModalSize.MEDIUMN,
-            onDismiss = { salesViewModel.fillFormFields(showOrderItemsModal = false) },
-            onSubmit = { salesViewModel.fillFormFields(showOrderItemsModal = false) },
-            hideSubmitButton = true,
-            enableScroll = false
-        ) {
-            DataTable(
-                headers = listOf("ID produto", "Nome produto", "Quantidade", "Sub-Total", "Lucro", "Proprietario"),
-                rows = if (salesUIStates.orderID.isBlank()) emptyList<OrderItemsItem>()
-                else ordersUIStates.orderItems.filter { it.orderId.equals(salesUIStates.orderID) }
+        AnimatedVisibility(ordersUIStates.showOrderItemModal) {
+            DialogFormModal(
+                title = "Detalhes da venda ID: ${ordersUIStates.orderID}",
+                modalSize = ModalSize.MEDIUMN,
+                onDismiss = { ordersViewModel.closeOrderItemModal() },
+                onSubmit = { ordersViewModel.closeOrderItemModal() },
+                hideSubmitButton = true,
+                enableScroll = false
             ) {
-                DatatableText(it.productId.toString())
-                DatatableText(it.productName ?: "")
-                DatatableText(it.quantity.toString())
-                DatatableText(it.subTotal.toString())
-                DatatableText(it.profit.toString())
-                DatatableText(it.ownerName)
+                DataTable(
+                    headers = listOf("ID produto", "Nome produto", "Quantidade", "Sub-Total", "Lucro", "Proprietario"),
+                    rows = if (ordersUIStates.orderID.isBlank()) emptyList<OrderItemsItem>()
+                    else ordersUIStates.orderItems
+                ) {
+                    DatatableText(it.productId.toString())
+                    DatatableText(it.productName ?: "")
+                    DatatableText(it.quantity.toString())
+                    DatatableText(it.subTotal.toString())
+                    DatatableText(it.profit.toString())
+                    DatatableText(it.ownerName)
+                }
             }
         }
 

@@ -16,51 +16,60 @@ class UserProfileViewModel(private val repo: UserRepository) : ViewModel() {
 
     val _uiState = MutableStateFlow(UserProfileUiState())
     val uiState = _uiState.asStateFlow()
+    val loggedUserId = 1
+
+    init {
+        getUserData(loggedUserId)
+    }
+    fun getUserData(userId: Int) {
+        viewModelScope.launch {
+            val userItem = repo.getUserById(userId)
+            userItem?.let {
+                _uiState.update { it.copy(userData = userItem) }
+            }
+        }
+    }
 
     fun fillFields(
+        userId: Int? = null,
         userName: String? = null,
         userEmail: String? = null,
-        showUserPersonalDataModal: Boolean? = false,
-        formModalTitle: String? = null,
         actualPassword: String? = null,
         newPassword: String? = null,
         confirmationPassword: String? = null,
         snackbarMessage: String? = null,
         showSnackbar: Boolean? = null
     ) {
-        userName?.let { newValue -> _uiState.update { it.copy(userName = newValue) }}
-        userEmail?.let { newValue -> _uiState.update { it.copy(userEmail = newValue) }}
-        showUserPersonalDataModal?.let { newValue -> _uiState.update { it.copy(showUserPersonalDataModal = showUserPersonalDataModal) }}
+        userId?.let { newValue -> _uiState.update { it.copy(userId = newValue) } }
+        userName?.let { newValue -> _uiState.update { it.copy(newUserName = newValue) } }
+        userEmail?.let { newValue -> _uiState.update { it.copy(newUserEmail = newValue) }}
         actualPassword?.let { newValue -> _uiState.update { it.copy(actualPassword = newValue) }}
         newPassword?.let { newValue -> _uiState.update { it.copy(newPassword = newValue) }}
         confirmationPassword?.let { newValue -> _uiState.update { it.copy(confirmationPassword = newValue) }}
+    }
 
-        formModalTitle?.let { newValue ->
-            _uiState.update { it.copy(commonUiState = it.commonUiState.copy(formDialogTitle = formModalTitle)) }
+
+    fun displaySnackbar(showSnackbar: Boolean, snackbarMessae: String? = null) {
+        _uiState.update {
+            it.copy(
+                commonUiState = it.commonUiState.copy(
+                    showSnackbar = showSnackbar,
+                    snackbarMessage = snackbarMessae ?: ""
+                )
+            )
         }
     }
 
-    fun displaySnackbar(showSnackbar: Boolean, snackbarMessae: String? = null) {
-            _uiState.update {
-                it.copy(
-                    commonUiState = it.commonUiState.copy(
-                        showSnackbar = showSnackbar,
-                        snackbarMessage = snackbarMessae ?: ""
-                    )
-                )
-            }
-    }
-
-    fun onSubmitUserDataForm() {
+    private fun onSubmitUserDataForm() {
         viewModelScope.launch {
-            if (uiState.value.userName.isBlank()) {
+            if (uiState.value.newUserName.isBlank()) {
                 setFormError(FormInputName.Name, "O nome é obrigatório")
                 return@launch
             } else {
                 setFormError(FormInputName.Name, "")
             }
 
-            if (uiState.value.userEmail.isBlank()) {
+            if (uiState.value.newUserEmail.isBlank()) {
                 setFormError(FormInputName.Email, "O email é obrigatório")
                 return@launch
             } else {
@@ -70,19 +79,20 @@ class UserProfileViewModel(private val repo: UserRepository) : ViewModel() {
             val (status, message) = repo.editUserPersonalData(
                 UpdateUserPersonalData(
                     userId = uiState.value.userId,
-                    userName = uiState.value.userName,
-                    userEmail = uiState.value.userEmail
+                    userName = uiState.value.newUserName,
+                    userEmail = uiState.value.newUserEmail
                 )
             )
 
             if (status == 201) {
                 displaySnackbar(true, message)
+                getUserData(loggedUserId)
             }
 
         }
     }
 
-    fun onSubmitUserPassword() {
+    private fun onSubmitUserPassword() {
         viewModelScope.launch {
             if (uiState.value.actualPassword.isBlank()) {
                 setFormError(FormInputName.CurrentPassword, "A senha é obrigatória")
@@ -119,8 +129,15 @@ class UserProfileViewModel(private val repo: UserRepository) : ViewModel() {
         }
     }
 
+    fun onSubmitForm() = if (uiState.value.showUserPersonalDataModal) onSubmitUserDataForm() else onSubmitUserPassword()
+
     fun resetForm() {
-        _uiState.update { it.copy(userName = "", userEmail = "") }
+        _uiState.update {
+            it.copy(userData = it.userData.copy(
+                name = "",
+                email = ""
+            ))
+        }
         openFormDialog(false)
     }
 
@@ -132,9 +149,14 @@ class UserProfileViewModel(private val repo: UserRepository) : ViewModel() {
         }
     }
 
-    fun openFormDialog(setOpen: Boolean, title: String = "") {
+    fun openFormDialog(
+        setOpen: Boolean,
+        title: String = "",
+        showUserPersonalDataForm: Boolean = true
+    ) {
         _uiState.update {
             it.copy(
+                showUserPersonalDataModal = showUserPersonalDataForm,
                 commonUiState = it.commonUiState.copy(
                     showFormDialog = setOpen,
                     formDialogTitle = title

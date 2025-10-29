@@ -141,7 +141,6 @@ class SaleViewModel(
         clientId: Int? = null,
         clientName: String? = null,
         paymentMethod: String? = null,
-        showOrderItemsModal: Boolean? = null,
     ) {
         discont?.let { newValue ->
             _uiState.update { it.copy(discount = newValue) }
@@ -159,8 +158,6 @@ class SaleViewModel(
         clientId?.let { newValue -> _uiState.update { it.copy(clientId = newValue) } }
         clientName?.let { newValue -> _uiState.update { it.copy(clientName = newValue) } }
         paymentMethod?.let { newValue -> _uiState.update { it.copy(paymentMethod = newValue) } }
-
-        showOrderItemsModal?.let { newValue -> _uiState.update { it.copy(showOrderItemsModal = newValue) } }
     }
 
     fun onSubmitSaleForm() {

@@ -37,9 +37,7 @@ class OrdersViewModel(private val repo: OrderRepository) : ViewModel() {
 
     fun showOrderItem(orderId: String) {
         viewModelScope.launch {
-            val filteredOrderItems = repo.getOrderItems()
-                .filter { it.orderId.equals(orderId) }
-
+            val filteredOrderItems = repo.getOrderItems().filter { it.orderId.toString() == orderId }
             _uiState.update {
                 it.copy(
                     orderItems = filteredOrderItems,

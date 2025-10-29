@@ -1,47 +1,25 @@
 package com.samuelsumbane.ssptdesktop.ui.view.manager.usersPackage
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
-import cafe.adriel.voyager.navigator.Navigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import com.samuel.oremoschanganapt.globalComponents.showSnackbar
 import com.samuelsumbane.ssptdesktop.presentation.viewmodel.UserProfileViewModel
-import com.samuelsumbane.ssptdesktop.ui.components.CommonPageStructure
-import com.samuelsumbane.ssptdesktop.ui.components.DialogFormModal
-import com.samuelsumbane.ssptdesktop.ui.components.FormColumn
-import com.samuelsumbane.ssptdesktop.ui.components.InputField
-import com.samuelsumbane.ssptdesktop.ui.components.NormalOutlineButton
-import com.samuelsumbane.ssptdesktop.ui.components.TextRow
+import com.samuelsumbane.ssptdesktop.ui.components.*
 import com.samuelsumbane.ssptdesktop.ui.utils.FormInputName
 import com.samuelsumbane.ssptdesktop.ui.utils.PageName
-import kotlinx.coroutines.launch
-import org.jetbrains.skia.paragraph.Alignment
-import org.jetbrains.skia.paragraph.TextStyle
 import org.koin.java.KoinJavaComponent.getKoin
 
 
@@ -60,6 +38,7 @@ fun UserProfile() {
 //    val snackbarHostState = remember { SnackbarHostState() }
     val scrollState = rememberScrollState()
     val coroutineScope = rememberCoroutineScope()
+
 
     CommonPageStructure(
         navigator,
@@ -80,15 +59,15 @@ fun UserProfile() {
         with(userProfileUiState) {
             // Personal data
             val personalData = mapOf(
-                "Nome" to userName,
-                "Email" to userEmail
+                "Nome" to userData.name,
+                "Email" to userData.email
             )
 
             // Account data
             val afData = mapOf(
-                "Papel" to userRole,
-                "Estado" to userState,
-                "Último login" to lastLogin,
+                "Papel" to userData.role,
+                "Estado" to userData.status,
+                "Último login" to userData.lastLogin,
             )
 
             // Security ------->>
@@ -96,23 +75,8 @@ fun UserProfile() {
                 "Senha" to "********",
             )
 
-
-//        Div(attrs = { classes("div-item", "no-border") }) {
-//            P {}
-//            C.outlineButton("Encerrar a sessão") {
-//                coroutineScope.launch {
-//                    val (status, _) = users.logout()
-//                    sessionStorage.removeItem("jwt_token")
-////                        router.navigate("/")
-//                    window.location.href = "/"
-//                }
-//            }
-//        }
-
-
             Row(
-                modifier = Modifier
-                    .fillMaxSize(),
+                modifier = Modifier.fillMaxSize(),
                 horizontalArrangement = Arrangement.Center,
                 verticalAlignment = androidx.compose.ui.Alignment.CenterVertically
             ) {
@@ -127,36 +91,29 @@ fun UserProfile() {
                     verticalArrangement = Arrangement.spacedBy(30.dp)
                 ) {
                     ItemsGroupTitle("Dados pessoais")
-                    personalData.forEach {
-                        TextRow(it.key, it.value)
-                    }
+                    personalData.forEach { TextRow(it.key, it.value) }
 
                     NormalOutlineButton(text = "Editar dados pessoais") {
-
-                        userProfileViewModel.apply {
-                            fillFields(showUserPersonalDataModal = true)
-                            openFormDialog(true, "Editar dados pessoais")
-                        }
-
+                        userProfileViewModel.openFormDialog(true, "Editar dados pessoais", true)
+                        userProfileViewModel.fillFields(
+                            userId = userData.id,
+                            userName = userData.name,
+                            userEmail = userData.email
+                        )
                     }
+
                     HorizontalDivider()
 
                     ItemsGroupTitle("Dados da conta")
-                    afData.forEach {
-                        TextRow(it.key, it.value)
-                    }
+                    afData.forEach { TextRow(it.key, it.value) }
                     HorizontalDivider()
 
                     ItemsGroupTitle("Segurança")
-                    afSec.forEach {
-                        TextRow(it.key, it.value)
-                    }
+                    afSec.forEach { TextRow(it.key, it.value) }
 
                     NormalOutlineButton(text = "Editar a senha") {
-                        userProfileViewModel.apply {
-                            fillFields(showUserPersonalDataModal = false)
-                            userProfileViewModel.openFormDialog(true, "Editar a senha")
-                        }
+                        userProfileViewModel.openFormDialog(true, "Editar a senha", true)
+                        userProfileViewModel.fillFields(userId = userData.id)
                     }
 
                     NormalOutlineButton(text = "Encerar a sensão") {
@@ -169,20 +126,20 @@ fun UserProfile() {
                 DialogFormModal(
                     title = commonUiState.formDialogTitle,
                     onDismiss = { userProfileViewModel.openFormDialog(false) },
-                    onSubmit = {},
-                    isSubmitEnabled = if (showUserPersonalDataModal) userName.isBlank() && userEmail.isBlank() else actualPassword.isBlank() && newPassword.isBlank() && confirmationPassword.isBlank()
+                    onSubmit = { userProfileViewModel.onSubmitForm() },
+                    isSubmitEnabled = if (showUserPersonalDataModal) !newUserName.isBlank() && !newUserName.isBlank() else !actualPassword.isBlank() && !newPassword.isBlank() && !confirmationPassword.isBlank()
                 ) {
                     FormColumn {
                         if (showUserPersonalDataModal) {
                             InputField(
-                                inputValue = userName,
+                                inputValue = newUserName,
                                 label = "Nome do usuário",
                                 errorText = commonUiState.formErrors[FormInputName.Name],
                                 onValueChanged = { userProfileViewModel.fillFields(userName = it) }
                             )
 
                             InputField(
-                                inputValue = userEmail,
+                                inputValue = newUserEmail,
                                 label = "Email",
                                 errorText = commonUiState.formErrors[FormInputName.Email],
                                 onValueChanged = { userProfileViewModel.fillFields(userEmail = it) }
@@ -212,11 +169,10 @@ fun UserProfile() {
                     }
                 }
             }
-
         }
-
     }
 }
 
 @Composable
 fun ItemsGroupTitle(text: String) = Text(text = text, fontWeight = FontWeight.SemiBold, modifier = Modifier.padding(top = 20.dp))
+// was 4224
