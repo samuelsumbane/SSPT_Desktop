@@ -166,7 +166,7 @@ class SaleModalScreen : Screen {
                             label = "Desconto",
                             modifier = Modifier.width(200.dp),
                             onValueChanged = { salesViewModel.fillFormFields(discont = it.toDouble()) },
-                            keyboardType = KeyboardType.Decimal
+                            keyboardType = KeyboardType.Number
                         )
 
                         InputField(
@@ -174,7 +174,7 @@ class SaleModalScreen : Screen {
                             label = "Valor recebido",
                             modifier = Modifier.width(200.dp),
                             onValueChanged = { salesViewModel.fillFormFields(receivedValueFromBuyer = it.toDouble()) },
-                            keyboardType = KeyboardType.Decimal
+                            keyboardType = KeyboardType.Number
                         )
                     }
                 }

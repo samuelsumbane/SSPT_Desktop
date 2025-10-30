@@ -33,8 +33,8 @@ kotlin {
 
             implementation("com.russhwolf:multiplatform-settings:1.1.1")
 
-//            implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.6.1")
 
+//            implementation ("io.github.ehsannarmani:compose-charts:0.2.0")
 
         }
         commonTest.dependencies {

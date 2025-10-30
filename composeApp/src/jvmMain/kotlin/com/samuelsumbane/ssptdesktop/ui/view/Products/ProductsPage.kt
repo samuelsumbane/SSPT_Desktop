@@ -76,7 +76,7 @@ fun ProductsPage() {
 
     CommonPageStructure(
         navigator = navigator,
-        pageTitle = "Productos",
+        pageTitle = "Produtos",
         activePage = PageName.PRODUCTS.itsName,
         topBarActions = {
             NormalButton(icon = null, text = "+ Producto") {
@@ -202,8 +202,17 @@ fun ProductsPage() {
                             onValueChanged = { productsViewModel.fillFormFields(proStock = it.toInt()) },
                             keyboardType = KeyboardType.Number
                         )
+
+//                        InputField(
+//                            inputValue = productsUiState.proMinStock.toString(),
+//                            label = "Minima quantidade",
+////                            errorText = productsUiState.commonUiState.formErrors[FormInputName.],
+//                            onValueChanged = { productsViewModel.fillFormFields(proMinStock = it.toInt()) },
+//                            keyboardType = KeyboardType.Number
+//                        )
                     }
 
+                    // Left side
                     FormColumn(Modifier.weight(1f)) {
                         InputField(
                             inputValue = productsUiState.proCost.toString(),
@@ -218,7 +227,7 @@ fun ProductsPage() {
                             label = "Preço",
                             errorText = productsUiState.commonUiState.formErrors[FormInputName.ProPrice],
                             onValueChanged = { productsViewModel.fillFormFields(proPrice = it.toDouble()) },
-                            keyboardType = KeyboardType.Phone
+                            keyboardType = KeyboardType.Number
                         )
 
                         if (productsUiState.categories.isEmpty()) {
@@ -281,19 +290,6 @@ fun ProductsPage() {
                         }
                     }
                 }
-
-
-
-//                InputField(
-//                    inputValue = productsUiState.proMinStock.toString(),
-//                    label = "Quantidade Minima",
-//                    errorText = productsUiState.commonUiState.formErrors[FormInputName.ProMinStock],
-//                    onValueChanged = {
-////                        productsViewModel.fillFormFields(telephone = it)
-//                    },
-//                )
-
-
 
             }
         }
