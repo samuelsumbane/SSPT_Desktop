@@ -56,7 +56,6 @@ fun SalesPage() {
         navigator,
         pageTitle = "Vendas",
         activePage = PageName.SELL.itsName,
-        enableScroll = false,
         topBarActions = {
             NormalButton(icon = null, text = "Nova Venda") {
                 navigator.push(SaleModalScreen())

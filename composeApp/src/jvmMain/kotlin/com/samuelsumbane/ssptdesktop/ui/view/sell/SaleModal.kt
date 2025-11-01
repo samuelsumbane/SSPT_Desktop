@@ -100,8 +100,7 @@ class SaleModalScreen : Screen {
                                 }
                             }
                         }
-                        }
-
+                    }
                 }
 
                 // Second column (in center)
@@ -135,15 +134,16 @@ class SaleModalScreen : Screen {
                             SellTableAddedProTitle("Ações")
                         }
                         LazyColumn {
-                            items(saleModalUiState.value.cardProducts) {
-                                with (it) {
+                            items(saleModalUiState.value.cardProducts) { item ->
+                                with (item) {
                                     SellTableAddedProItem(
                                         name = product.name,
-                                        qtd = product.stock,
+                                        qtd = productsOnCard,
                                         cost = product.cost,
                                         price = product.price,
                                         subTotal = subTotal,
-                                        availableQtd = productsOnCard,
+                                        availableQtd = product.stock,
+                                        addButtonEnabled = productsOnCard < product.stock,
                                         onIncreaseAction = { salesViewModel.changeBuyingProductQuantity(
                                             ProductQuantityAction.Increase, product.id) },
                                         onDecreaseAction = { salesViewModel.changeBuyingProductQuantity(
@@ -254,7 +254,6 @@ class SaleModalScreen : Screen {
                                     fontWeight = FontWeight.SemiBold
                                 )
                             })
-
                             HorizontalDivider()
                         }
                     }
@@ -280,16 +279,14 @@ class SaleModalScreen : Screen {
                     }
                 }
             }
-
         }
     }
 }
 
 
 @Composable
-fun SellTableAddedProTitle(text: String) {
-    Text(text = text, fontWeight = FontWeight.SemiBold)
-}
+fun SellTableAddedProTitle(text: String) = Text(text = text, fontWeight = FontWeight.SemiBold)
+
 
 @Composable
 fun SellTableAddedProItem(
@@ -299,6 +296,7 @@ fun SellTableAddedProItem(
     price: Double,
     subTotal: Double,
     availableQtd: Int,
+    addButtonEnabled: Boolean,
     onIncreaseAction: () -> Unit,
     onDecreaseAction: () -> Unit
 ) {
@@ -322,7 +320,7 @@ fun SellTableAddedProItem(
                 .padding(top = 5.dp, end = 5.dp)
                 .background(colorScheme.background.copy(red = 0.85f, green = 0.85f, blue = 0.85f), RoundedCornerShape(50))
         ) {
-            IconButton( onClick = onIncreaseAction) {
+            IconButton(onClick = onIncreaseAction) {
                 Icon(
                     painterResource(Res.drawable.add),
                     "add quantity",

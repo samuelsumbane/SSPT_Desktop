@@ -1,8 +1,10 @@
 package com.samuelsumbane.ssptdesktop.kclient
 
+import com.samuelsumbane.ssptdesktop.ui.utils.ConnectionType
 import io.ktor.client.HttpClient
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.request.delete
+import io.ktor.client.request.get
 import io.ktor.client.request.header
 import io.ktor.client.request.post
 import io.ktor.client.request.put
@@ -10,9 +12,11 @@ import io.ktor.client.request.setBody
 import io.ktor.client.statement.bodyAsText
 import io.ktor.http.ContentType
 import io.ktor.http.HttpHeaders
+import io.ktor.http.HttpStatusCode
 import io.ktor.http.contentType
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
+import java.net.ConnectException
 
 class KClientRepository : ClassHttpClient() {
     suspend inline fun <reified T : Any> postRequest(
@@ -75,6 +79,17 @@ class KClientRepository : ClassHttpClient() {
             Pair(response.status.value, response.bodyAsText())
         } catch (e: Exception) {
             Pair(400, "")
+        }
+    }
+
+    suspend fun checkConnection(): ConnectionType {
+        return try {
+            val response = httpClient.get("$apiPath") {
+                header(HttpHeaders.Authorization, "Bearer")
+            }
+            ConnectionType.Stabilished
+        } catch(e: ConnectException) {
+            ConnectionType.Refused
         }
     }
 

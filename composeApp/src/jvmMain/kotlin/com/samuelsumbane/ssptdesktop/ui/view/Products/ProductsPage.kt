@@ -1,32 +1,13 @@
 package com.samuelsumbane.ssptdesktop.ui.view.Products
 
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.foundation.background
-import androidx.compose.foundation.gestures.rememberScrollableState
-import androidx.compose.foundation.gestures.scrollable
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.FlowRow
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.DropdownMenuItem
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
@@ -34,19 +15,7 @@ import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import com.samuelsumbane.ssptdesktop.presentation.viewmodel.ProductsViewModel
-import com.samuelsumbane.ssptdesktop.ui.components.AlertWidget
-import com.samuelsumbane.ssptdesktop.ui.components.CardPItem
-import com.samuelsumbane.ssptdesktop.ui.components.CommonPageStructure
-import com.samuelsumbane.ssptdesktop.ui.components.CustomFlowRow
-import com.samuelsumbane.ssptdesktop.ui.components.DialogFormModal
-import com.samuelsumbane.ssptdesktop.ui.components.DropDown
-import com.samuelsumbane.ssptdesktop.ui.components.FormColumn
-import com.samuelsumbane.ssptdesktop.ui.components.InfoCard
-import com.samuelsumbane.ssptdesktop.ui.components.InputField
-import com.samuelsumbane.ssptdesktop.ui.components.LoadingWidget
-import com.samuelsumbane.ssptdesktop.ui.components.MenuItemText
-import com.samuelsumbane.ssptdesktop.ui.components.NormalButton
-import com.samuelsumbane.ssptdesktop.ui.components.ProgressIndicatorSize
+import com.samuelsumbane.ssptdesktop.ui.components.*
 import com.samuelsumbane.ssptdesktop.ui.utils.FormInputName
 import com.samuelsumbane.ssptdesktop.ui.utils.ModalSize
 import com.samuelsumbane.ssptdesktop.ui.utils.PageName
@@ -56,7 +25,6 @@ import ssptdesktop.composeapp.generated.resources.Res
 import ssptdesktop.composeapp.generated.resources.delete
 import ssptdesktop.composeapp.generated.resources.details
 import ssptdesktop.composeapp.generated.resources.edit
-import kotlin.collections.iterator
 
 
 class ProductsScreen : Screen {
@@ -137,7 +105,7 @@ fun ProductsPage() {
             DialogFormModal(
                 title = productsUiState.commonUiState.formDialogTitle,
                 modalSize = ModalSize.MEDIUMN,
-                onDismiss = { productsViewModel.resetForm() },
+                onDismiss = { productsViewModel.apply { resetForm(); openFormDialog(false) } },
                 onSubmit = { productsViewModel.onSubmitForm() }
             ) {
                 Row(
@@ -196,10 +164,10 @@ fun ProductsPage() {
                         }
 
                         InputField(
-                            inputValue = productsUiState.proStock.toString(),
+                            inputValue = productsUiState.proStock.toInputValue(),
                             label = "Quantidade",
                             errorText = productsUiState.commonUiState.formErrors[FormInputName.ProStock],
-                            onValueChanged = { productsViewModel.fillFormFields(proStock = it.toInt()) },
+                            onValueChanged = { productsViewModel.fillFormFields(proStock = if(it == "") 0 else it.toInt()) },
                             keyboardType = KeyboardType.Number
                         )
 
@@ -215,7 +183,7 @@ fun ProductsPage() {
                     // Left side
                     FormColumn(Modifier.weight(1f)) {
                         InputField(
-                            inputValue = productsUiState.proCost.toString(),
+                            inputValue = productsUiState.proCost.toInputValue(),
                             label = "Custo",
                             errorText = productsUiState.commonUiState.formErrors[FormInputName.ProCost],
                             onValueChanged = { productsViewModel.fillFormFields(proCost = it.toDouble()) },
@@ -223,7 +191,7 @@ fun ProductsPage() {
                         )
 
                         InputField(
-                            inputValue = productsUiState.proPrice.toString(),
+                            inputValue = productsUiState.proPrice.toInputValue(),
                             label = "Preço",
                             errorText = productsUiState.commonUiState.formErrors[FormInputName.ProPrice],
                             onValueChanged = { productsViewModel.fillFormFields(proPrice = it.toDouble()) },

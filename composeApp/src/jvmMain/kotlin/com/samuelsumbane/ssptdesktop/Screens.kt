@@ -4,7 +4,7 @@ import androidx.compose.runtime.Composable
 import cafe.adriel.voyager.core.screen.Screen
 import com.samuelsumbane.ssptdesktop.ui.utils.IconPageScreen
 import com.samuelsumbane.ssptdesktop.ui.utils.PageName
-import com.samuelsumbane.ssptdesktop.ui.view.AgroupedPages
+import com.samuelsumbane.ssptdesktop.ui.view.GroupedPages
 import com.samuelsumbane.ssptdesktop.ui.view.Products.CategoriesScreen
 import com.samuelsumbane.ssptdesktop.ui.view.Products.ProductsScreen
 import com.samuelsumbane.ssptdesktop.ui.view.manager.BranchScreen
@@ -14,6 +14,7 @@ import com.samuelsumbane.ssptdesktop.ui.view.partners.OwnersScreen
 import com.samuelsumbane.ssptdesktop.ui.view.partners.SupplierScreen
 import com.samuelsumbane.ssptdesktop.ui.view.report.SaleReportScreen
 import com.samuelsumbane.ssptdesktop.ui.view.report.StocksScreen
+import com.samuelsumbane.ssptdesktop.ui.view.sell.SaleModalScreen
 import com.samuelsumbane.ssptdesktop.ui.view.sell.SalesScreen
 import com.samuelsumbane.ssptdesktop.ui.view.settings.LogsScreen
 import com.samuelsumbane.ssptdesktop.ui.view.settings.NotificationsScreen
@@ -26,7 +27,7 @@ import ssptdesktop.composeapp.generated.resources.*
 class FinanceModuleScreen : Screen {
     @Composable
     override fun Content() {
-        AgroupedPages(
+        GroupedPages(
             title = "Finanças",
             pageLists = listOf(
                 IconPageScreen(painterResource(Res.drawable.account_circle), "C. Pagar", ClientsScreen()),
@@ -40,7 +41,7 @@ class FinanceModuleScreen : Screen {
 class ManagerModuleScreen : Screen {
     @Composable
     override fun Content() {
-        AgroupedPages(
+        GroupedPages(
             title = "Gestão",
             pageLists = listOf(
                 IconPageScreen(painterResource(Res.drawable.account_circle), "Usuários", UsersScreen()),
@@ -54,12 +55,12 @@ class ManagerModuleScreen : Screen {
 class PartnerModuleScreen : Screen {
     @Composable
     override fun Content() {
-        AgroupedPages(
+        GroupedPages(
             title = "Parceiros",
             pageLists = listOf(
-                IconPageScreen(painterResource(Res.drawable.details), "Clientes", ClientsScreen()),
-                IconPageScreen(painterResource(Res.drawable.help_24), "Proprietarios", OwnersScreen()),
-                IconPageScreen(painterResource(Res.drawable.help_24), "Fornecedores", SupplierScreen()),
+                IconPageScreen(painterResource(Res.drawable.account_circle), "Clientes", ClientsScreen()),
+                IconPageScreen(painter = null, "Proprietarios", OwnersScreen()),
+                IconPageScreen(painter = null, "Fornecedores", SupplierScreen()),
             ),
             activePage = PageName.PARTNERS.itsName
         )
@@ -69,7 +70,7 @@ class PartnerModuleScreen : Screen {
 class ProductsModuleScreen : Screen {
     @Composable
     override fun Content() {
-        AgroupedPages(
+        GroupedPages(
             title = "Productos",
             pageLists = listOf(
                 IconPageScreen(painterResource(Res.drawable.shopping_basket), "Productos", ProductsScreen()),
@@ -83,7 +84,7 @@ class ProductsModuleScreen : Screen {
 class ReportModuleScreen : Screen {
     @Composable
     override fun Content() {
-        AgroupedPages(
+        GroupedPages(
             title = "Inventários",
             pageLists = listOf(
                 IconPageScreen(painterResource(Res.drawable.account_circle), "Inv. de Vendas", SaleReportScreen()),
@@ -97,10 +98,11 @@ class ReportModuleScreen : Screen {
 class SellModuleScreen : Screen{
     @Composable
     override fun Content() {
-        AgroupedPages(
+        GroupedPages(
             title = "Vendas",
             pageLists = listOf(
                 IconPageScreen(painterResource(Res.drawable.account_circle), "Vendas", SalesScreen()),
+                IconPageScreen(painter = null, "Nova venda", SaleModalScreen()),
             ),
             activePage = PageName.SELL.itsName
         )
@@ -110,7 +112,7 @@ class SellModuleScreen : Screen{
 class SettingsModuleScreen : Screen {
     @Composable
     override fun Content() {
-        AgroupedPages(
+        GroupedPages(
             title = "Configurações",
             pageLists = listOf(
                 IconPageScreen(painterResource(Res.drawable.account_circle), "Notificações", NotificationsScreen()),

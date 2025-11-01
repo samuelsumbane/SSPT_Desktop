@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.IconButton
@@ -21,26 +22,27 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 //@Composable
-//fun InputField(
+//fun InputNum(
 //    inputValue: String,
 //    label: String? = null,
 //    keyboardType: KeyboardType = KeyboardType.Number,
 //    onValueChanged: (String) -> Unit,
 //) {
-//    OutlinedTextField(
-//        value = inputValue,
-//        onValueChange = { onValueChanged(it) },
-//        label = { label?.let { Text(label) } },
-//        keyboardOptions = KeyboardOptions(
-//            keyboardType = keyboardType
-//        )
+//    BasicTextField(
+//        value = TextFieldValue,
+//        onValueChange = {
+//
+//        }
 //    )
 //}
+
+
 
 
 @Composable

@@ -38,7 +38,10 @@ class SaleViewModel(
 
     fun loadProducts() {
         viewModelScope.launch {
-            val products = proRepo.getProducts()
+            val products = proRepo.getProducts().filter { it.stock > 0 }
+//            val x = products.sort
+//            println(products)
+
 //            val products = listOf(
 //                ProductItem(1, "Fanta", "UNIT", 1, "", 12.0,
 //                    price = 20.0, 4, 1, 2, "Sapatos", "", 1, "s"),
@@ -93,17 +96,19 @@ class SaleViewModel(
                 it.copy(
                     cardProducts = it.cardProducts.toMutableList().apply { remove(product) },
                 )
-
             } else {
                 it.copy(
                     cardProducts = uiState.value.cardProducts
                         .map { cardPro ->
                             if (cardPro.product.id == productId) {
-                                val newProductsOnCardQuantity = if (action == ProductQuantityAction.Increase) cardPro.productsOnCard + 1 else cardPro.productsOnCard - 1
-                                cardPro.copy(
-                                    productsOnCard = newProductsOnCardQuantity,
-                                    subTotal = cardPro.productPrice * newProductsOnCardQuantity
-                                )
+//                                if (product.productsOnCard < product.product.stock) {
+                                    val newProductsOnCardQuantity = if (action == ProductQuantityAction.Increase) cardPro.productsOnCard + 1 else cardPro.productsOnCard - 1
+                                    cardPro.copy(
+                                        productsOnCard = newProductsOnCardQuantity,
+                                        subTotal = cardPro.productPrice * newProductsOnCardQuantity
+                                    )
+//                                } else return
+
                             } else cardPro
                         }
                 )
@@ -117,7 +122,6 @@ class SaleViewModel(
             val calculedSaleSubTotal =  uiState.value.cardProducts.sumOf { cardProducts -> cardProducts.subTotal }
 
             val newSaleTotal = calculedSaleSubTotal - uiState.value.discount
-            println("newsaletotal was $newSaleTotal")
             if (newSaleTotal < 0) { // -3
                 it.copy(
                     saleSubTotal = calculedSaleSubTotal,

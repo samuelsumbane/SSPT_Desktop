@@ -28,7 +28,6 @@ fun DialogFormModal(
     modalSize: ModalSize = ModalSize.SMALL,
     onDismiss: () -> Unit,
     onSubmit: () -> Unit,
-    isSubmitEnabled: Boolean = false,
     isLoading: Boolean = false,
     hideSubmitButton: Boolean = false,
     enableScroll: Boolean = true,
@@ -70,7 +69,6 @@ fun DialogFormModal(
                 if (!hideSubmitButton) {
                     NormalButton(
                         text = "Submeter",
-                        enabled = isSubmitEnabled,
                         isLoading = isLoading,
                         onClick = onSubmit
                     )

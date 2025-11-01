@@ -44,7 +44,6 @@ fun UserProfile() {
         navigator,
         pageTitle = "Perfil",
         activePage = PageName.MANAGER.itsName,
-        enableScroll = false,
         onPerfomeSnackbarHost = {
             if (userProfileUiState.commonUiState.showSnackbar) {
                 showSnackbar(
@@ -127,7 +126,6 @@ fun UserProfile() {
                     title = commonUiState.formDialogTitle,
                     onDismiss = { userProfileViewModel.openFormDialog(false) },
                     onSubmit = { userProfileViewModel.onSubmitForm() },
-                    isSubmitEnabled = if (showUserPersonalDataModal) !newUserName.isBlank() && !newUserName.isBlank() else !actualPassword.isBlank() && !newPassword.isBlank() && !confirmationPassword.isBlank()
                 ) {
                     FormColumn {
                         if (showUserPersonalDataModal) {

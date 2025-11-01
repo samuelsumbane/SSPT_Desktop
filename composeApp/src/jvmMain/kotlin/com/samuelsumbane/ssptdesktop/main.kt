@@ -13,13 +13,17 @@ import androidx.compose.ui.window.WindowState
 import androidx.compose.ui.window.application
 import com.russhwolf.settings.PreferencesSettings
 import com.russhwolf.settings.Settings
+import org.jetbrains.compose.resources.painterResource
 import org.koin.core.context.startKoin
+import ssptdesktop.composeapp.generated.resources.Res
+import ssptdesktop.composeapp.generated.resources.ssptfavicon
 import java.util.prefs.Preferences
 
 fun main() = application {
     Window(
         onCloseRequest = ::exitApplication,
         title = "SSPT Desktop",
+        icon = painterResource(Res.drawable.ssptfavicon),
         alwaysOnTop = true,
         state = WindowState(
             size = DpSize(1080.dp , 700.dp)
@@ -31,7 +35,6 @@ fun main() = application {
         App()
     }
 }
-
 
 
 @Composable
@@ -48,7 +51,7 @@ fun SSPTTheme(
         )
     } else {
         lightColorScheme(
-            primary = Color(0xFF0CE83C),
+            primary = Color(0xFF1BC747),
             secondary = Color.Gray,
             tertiary = Color.Black
         )
@@ -61,11 +64,3 @@ fun SSPTTheme(
     val prefs = Preferences.userRoot().node("sspt_desktop")
     return PreferencesSettings(prefs)
 }
-
-//val configViewModel = remember { ConfigScreenViewModel(createSettings()) }
-//
-//LaunchedEffect(Unit) {
-//    val configurations = configViewModel.loadConfigurations()
-//
-//    appLocale = configurations.locale
-//    Locale.setDefault(Locale(appLocale))

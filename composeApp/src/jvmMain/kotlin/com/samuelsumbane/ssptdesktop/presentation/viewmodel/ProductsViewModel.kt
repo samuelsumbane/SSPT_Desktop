@@ -139,7 +139,7 @@ class ProductsViewModel(
                 else -> ""
             }
 
-            openFormDialog(false)
+            resetForm()
 
             showAlert(alertTitle, message) { openAlertDialog(false) }
         }
@@ -184,7 +184,6 @@ class ProductsViewModel(
         _uiState.update {
             it.copy(
                 proName = "",
-                proType = "",
                 proStock = 0,
                 proCost = 0.0,
                 proPrice = 0.0,
@@ -195,8 +194,7 @@ class ProductsViewModel(
                 proCategoryName = "",
             )
         }
-        loadProducts()
-        openFormDialog(false)
+//        openFormDialog(false)
     }
 
     fun changeProProductExpandedState(setOpen: Boolean) = _uiState.update { it.copy(dropdownProductsExpanded = setOpen) }
@@ -211,6 +209,7 @@ class ProductsViewModel(
                 )
             )
         }
+        if (!setOpen) loadProducts()
     }
 
     fun openAlertDialog(setOpen: Boolean) {
