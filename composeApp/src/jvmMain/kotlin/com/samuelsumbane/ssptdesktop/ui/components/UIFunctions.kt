@@ -14,5 +14,4 @@ fun Modifier.possiblyVerticalScroll(
  * Returns empty if String value in ("0", "0.0")
  * if not, returns the value itself
  */
-
 fun <T: Number> T.toInputValue() = if (this in listOf(0, 0.0)) "" else this.toString()

@@ -3,6 +3,8 @@ package com.samuelsumbane.ssptdesktop
 import androidx.compose.runtime.Composable
 import cafe.adriel.voyager.navigator.Navigator
 import com.samuelsumbane.ssptdesktop.ui.view.HomeScreen
+import com.samuelsumbane.ssptdesktop.ui.view.Products.ProductsScreen
+import com.samuelsumbane.ssptdesktop.ui.view.manager.usersPackage.LoginScreen
 
 //import ssptdesktop.composeapp.generated.resources.compose_multiplatform
 
@@ -15,7 +17,8 @@ fun App() {
 //        Navigator(SalesScreen())
 //        Navigator(SaleModalScreen())
 
-        Navigator(SellModuleScreen())
+//        Navigator(ProductsScreen())
+        Navigator(LoginScreen())
 //        NotConnected()
     }
 }

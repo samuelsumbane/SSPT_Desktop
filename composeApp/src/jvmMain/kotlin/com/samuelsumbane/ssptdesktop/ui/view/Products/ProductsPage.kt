@@ -81,7 +81,7 @@ fun ProductsPage() {
                                         proName = name,
                                         proStock = stock,
                                         proCost = cost,
-                                        proPrice = price,
+                                        proPrice = price.toString(),
                                         proBarcode = barcode
                                     )
                                     productsViewModel.openFormDialog(true, "Actualizar producto")
@@ -186,16 +186,16 @@ fun ProductsPage() {
                             inputValue = productsUiState.proCost.toInputValue(),
                             label = "Custo",
                             errorText = productsUiState.commonUiState.formErrors[FormInputName.ProCost],
-                            onValueChanged = { productsViewModel.fillFormFields(proCost = it.toDouble()) },
-                            keyboardType = KeyboardType.Number
+                            onValueChanged = { productsViewModel.fillFormFields(proCost = if (it.isBlank()) 0.0 else it.toDouble()) },
+                            keyboardType = KeyboardType.Decimal
                         )
 
                         InputField(
                             inputValue = productsUiState.proPrice.toInputValue(),
                             label = "Preço",
                             errorText = productsUiState.commonUiState.formErrors[FormInputName.ProPrice],
-                            onValueChanged = { productsViewModel.fillFormFields(proPrice = it.toDouble()) },
-                            keyboardType = KeyboardType.Number
+                            onValueChanged = { productsViewModel.fillFormFields(proPrice = it) },
+                            keyboardType = KeyboardType.Decimal
                         )
 
                         if (productsUiState.categories.isEmpty()) {

@@ -5,6 +5,7 @@ import com.samuelsumbane.ssptdesktop.domain.repository.BranchRepository
 import com.samuelsumbane.ssptdesktop.domain.repository.ClientRepository
 import com.samuelsumbane.ssptdesktop.domain.repository.ConfigRepository
 import com.samuelsumbane.ssptdesktop.domain.repository.DashboardRepository
+import com.samuelsumbane.ssptdesktop.domain.repository.LoginUserRepository
 import com.samuelsumbane.ssptdesktop.domain.repository.NotificationRepository
 import com.samuelsumbane.ssptdesktop.domain.repository.OrderRepository
 import com.samuelsumbane.ssptdesktop.domain.repository.ProductCategoryRepository
@@ -34,6 +35,8 @@ val appModule = module {
     single<ConfigRepository> { ConfigRepositoryImpl() }
     single<NotificationRepository> { NotificationRepositoryImpl() }
     single<SaleReportRepository> { SaleReportRepositoryImpl() }
+    single<LoginUserRepository> { LoginUserRepositoryImpl() }
+
     // ViewModel (for android)
     factory { ClientViewModel(get()) }
     factory { ProductCategoryViewModel(get()) }
@@ -50,4 +53,5 @@ val appModule = module {
     factory { SaleReportViewModel(get()) }
     factory { UserProfileViewModel(get()) }
     factory { DashboardViewModel(get(), get()) }
+    factory { LoginUserViewModel(get(), get()) }
 }

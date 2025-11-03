@@ -151,7 +151,8 @@ class ProductsViewModel(
         proStock: Int? = null,
         proMinStock: Int? = null,
         proCost: Double? = null,
-        proPrice: Double? = null,
+//        proPrice: Double? = null,
+        proPrice: String? = null,
         proBarcode: String? = null,
         proCategoryId: Int? = null,
         proCategoryName: String? = null,
@@ -167,7 +168,8 @@ class ProductsViewModel(
         proStock?.let { newValue -> _uiState.update { it.copy(proStock = newValue) } }
         proMinStock?.let { newValue -> _uiState.update { it.copy(proMinStock = newValue) } }
         proCost?.let { newValue -> _uiState.update { it.copy(proCost = newValue) } }
-        proPrice?.let { newValue -> _uiState.update { it.copy(proPrice = newValue) } }
+//        proPrice?.let { newValue -> _uiState.update { it.copy(proPrice = newValue) } }
+        proPrice?.let { newValue -> _uiState.update { it.copy(proPrice = newValue.toDouble()) } }
         proBarcode?.let { newValue -> _uiState.update { it.copy(proBarcode = newValue) } }
         proCategoryId?.let { newValue -> _uiState.update { it.copy(proCategoryId = newValue) } }
         proCategoryName?.let { newValue -> _uiState.update { it.copy(proCategoryName = newValue) } }

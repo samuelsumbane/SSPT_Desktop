@@ -43,8 +43,6 @@ import androidx.compose.ui.unit.sp
 //}
 
 
-
-
 @Composable
 fun InputField(
     inputValue: String,
@@ -67,13 +65,11 @@ fun InputField(
         else -> VisualTransformation.None
     }
 
-    Column(
-//        modifier = Modifier.background(Color.Blue)
-    ) {
+    Column {
         OutlinedTextField(
             value = inputValue,
             onValueChange = { newValue ->
-                // filtragem simples por tipo de teclado (útil no Desktop)
+                // filter works for desktops
                 val filtered = filterByKeyboardType(newValue, keyboardType)
                 onValueChanged(filtered)
             },
@@ -97,8 +93,7 @@ fun InputField(
             keyboardActions = KeyboardActions(
                 onDone = { onImeAction?.invoke() }
             ),
-            modifier = modifier.fillMaxWidth(0.9f)
-                .padding(0.dp)
+            modifier = modifier.fillMaxWidth(0.9f).padding(0.dp)
         )
 
         errorText?.let { ErrorText(errorText) }
@@ -109,6 +104,12 @@ private fun filterByKeyboardType(value: String, keyboardType: KeyboardType): Str
     return when (keyboardType) {
         KeyboardType.Number -> value.filter { it.isDigit() }
         KeyboardType.Decimal -> value.filter { it.isDigit() || it == '.' || it == ',' }
+//        KeyboardType.Decimal -> {
+//            val filtered = value.filterIndexed { index, c ->
+//                c.isDigit() || (c == '.' && !value.take(index).contains('.'))
+//            }
+//            filtered
+//        }
         KeyboardType.Phone -> value.filter { it.isDigit() || it == '+' || it == '-' || it == ' ' || it == '(' || it == ')' }
         KeyboardType.Email -> value.replace(" ", "") // só removemos espaços (não filtramos demais)
         else -> value
