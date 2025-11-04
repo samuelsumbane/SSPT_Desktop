@@ -10,5 +10,7 @@ data class NotificationUiState(
     val notificationMessage: String = "",
     val notificationType: String = "",
     val notificationCreatedAt: String = "",
-    val showModal: Boolean = false
+    val showModal: Boolean = false,
+    val setNotificationReadValue: Boolean = true,
+    val markASNotReadCheckBox: Boolean = false,
 )

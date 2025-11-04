@@ -7,11 +7,13 @@ import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -47,42 +49,17 @@ fun <T> DataTable(
     var searchValue by remember { mutableStateOf("") }
     var filteredData by remember { mutableStateOf(emptyList<List<String>>()) }
 
-//    filteredData = remember(rows, searchValue) {
-//         rows.filter { it.contains(searchValue) }
-//    }
-
-//    filteredData = remember(rows, searchValue) {
-////        val x = if (searchValue.isBlank())
-////        val x = rows.filter { it.contains("") }
-////         if (searchValue.isBlank()) rows else rows.filter { it.contains(searchValue) }
-//         if (searchValue.isBlank()) rows else rows.filter { it.contains("fsse") }
-//    }
-
-
     Column(
         modifier = modifier
             .padding(start = 5.dp, top = 50.dp, end = 10.dp)
-            .border(1.dp, Color.LightGray)
+            .border(1.dp, Color.LightGray, RoundedCornerShape(14.dp))
+            .background(datatableHeaderColor, RoundedCornerShape(14.dp))
     ) {
-//        val fil = rows.filter { it.contains("rtg")}
-//        println(fil)
-//        Row(
-//            horizontalArrangement = Arrangement.SpaceBetween
-//        ) {
-////            Text("")
-//            InputField(
-//                inputValue = searchValue,
-//                onValueChanged = { searchValue = it },
-//                modifier = Modifier.width(300.dp)
-//            )
-//        }
-
         // Header
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-//                .height(500.dp)
-                .background(datatableHeaderColor),
+                .background(Color.Transparent),
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
             headers.forEach { header ->
@@ -97,36 +74,45 @@ fun <T> DataTable(
 
         HorizontalDivider()
         var isHovered by remember { mutableStateOf(false) }
+        var hoveredIndex by remember { mutableStateOf(-1) }
 
-        // Linhas
-        LazyColumn {
-            items(rows.size) { index ->
-                val item = rows[index]
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .background(if (isHovered) colorScheme.primary else if (index % 2 == 0) datatableOddColor else datatableEvenColor)
-                        .onPointerEvent(PointerEventType.Enter) { isHovered = true }
-                        .onPointerEvent(PointerEventType.Exit) { isHovered = false },
-                    horizontalArrangement = Arrangement.SpaceBetween
-
-                ) {
+        Column(
+            modifier = Modifier
+                .background(Color.Transparent, RoundedCornerShape(14.dp))
+                .padding(bottom = 5.dp)
+        ) {
+            LazyColumn(
+            ) {
+                items(rows.size) { index ->
+                    val item = rows[index]
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(start = 5.dp, end = 5.dp),
-                        horizontalArrangement = Arrangement.SpaceBetween,
-                        verticalAlignment = Alignment.CenterVertically
+                            .padding(start = 3.dp, end = 3.dp)
+                            .background(
+                                if (isHovered && hoveredIndex == index) datatableHeaderColor else if (index % 2 == 0) datatableOddColor
+                                else datatableEvenColor
+                            )
+                            .onPointerEvent(PointerEventType.Enter) {
+                                isHovered = true
+                                hoveredIndex = index
+                            }
+                            .onPointerEvent(PointerEventType.Exit) { isHovered = false },
+                        horizontalArrangement = Arrangement.SpaceBetween
                     ) {
-                        cellContent(item)
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.SpaceBetween,
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            cellContent(item)
+                        }
                     }
                 }
-                HorizontalDivider()
             }
         }
     }
 }
-
 
 @Composable
 fun DatatableText(text: String) {

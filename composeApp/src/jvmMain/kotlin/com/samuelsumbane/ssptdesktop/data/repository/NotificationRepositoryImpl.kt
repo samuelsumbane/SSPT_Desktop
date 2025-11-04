@@ -28,7 +28,7 @@ class NotificationRepositoryImpl : NotificationRepository{
     }
 
     override suspend fun editNotification(idAndReadState: IdAndReadState): StatusAndMessage {
-        val (status, message) = kClientRepo.postRequest("$apiNotificationsPath/edit", idAndReadState)
+        val (status, message) = kClientRepo.postRequest("$apiNotificationsPath/edit", idAndReadState, "put")
         return StatusAndMessage(status, message)
     }
 

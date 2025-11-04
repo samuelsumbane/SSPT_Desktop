@@ -58,12 +58,9 @@ class HomeScreen : Screen {
 @Composable
 fun HomePage() {
     val userViewModel by remember { mutableStateOf(getKoin().get<UserViewModel>()) }
-
     val dashboardViewModel by remember { mutableStateOf(getKoin().get<DashboardViewModel>()) }
     val dashboardUiState by dashboardViewModel.uiState.collectAsState()
-
     val navigator = LocalNavigator.currentOrThrow
-
 
     CommonPageStructure(
         navigator,

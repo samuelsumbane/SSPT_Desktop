@@ -5,6 +5,7 @@ import cafe.adriel.voyager.navigator.Navigator
 import com.samuelsumbane.ssptdesktop.ui.view.HomeScreen
 import com.samuelsumbane.ssptdesktop.ui.view.Products.ProductsScreen
 import com.samuelsumbane.ssptdesktop.ui.view.manager.usersPackage.LoginScreen
+import com.samuelsumbane.ssptdesktop.ui.view.settings.NotificationsScreen
 
 //import ssptdesktop.composeapp.generated.resources.compose_multiplatform
 
@@ -18,7 +19,7 @@ fun App() {
 //        Navigator(SaleModalScreen())
 
 //        Navigator(ProductsScreen())
-        Navigator(LoginScreen())
+        Navigator(NotificationsScreen())
 //        NotConnected()
     }
 }

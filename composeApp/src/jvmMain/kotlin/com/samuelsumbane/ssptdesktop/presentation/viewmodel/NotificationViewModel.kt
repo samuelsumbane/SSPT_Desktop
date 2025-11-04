@@ -26,9 +26,7 @@ class NotificationViewModel(private val repo: NotificationRepository) : ViewMode
     }
 
     fun editNotification(idAndReadState: IdAndReadState) {
-        viewModelScope.launch {
-            val (status, message) = repo.editNotification(idAndReadState)
-        }
+        viewModelScope.launch { repo.editNotification(idAndReadState) }
     }
 
     fun removeNotification(notificationId: Int) {
@@ -44,7 +42,9 @@ class NotificationViewModel(private val repo: NotificationRepository) : ViewMode
         message: String? = null,
         type: String? = null,
         createdAt: String? = null,
-        showModal: Boolean? = null
+        showModal: Boolean? = null,
+        setNotificationReadValue: Boolean? = null,
+        markASNotReadCheckBox: Boolean? = null
     ) {
         id?.let { newValue -> _uiState.update { it.copy(notificationId = newValue) } }
         userName?.let { newValue -> _uiState.update { it.copy(notificationUserName = newValue) } }
@@ -53,7 +53,19 @@ class NotificationViewModel(private val repo: NotificationRepository) : ViewMode
         type?.let { newValue -> _uiState.update { it.copy(notificationType = newValue) } }
         createdAt?.let { newValue -> _uiState.update { it.copy(notificationCreatedAt = newValue) } }
         showModal?.let { newValue -> _uiState.update { it.copy(showModal = newValue) } }
+        setNotificationReadValue?.let { newValue -> _uiState.update { it.copy(setNotificationReadValue = newValue) } }
+        markASNotReadCheckBox?.let { newValue -> _uiState.update { it.copy(markASNotReadCheckBox = newValue) } }
     }
 
+    fun onDismissNotificationModal() {
+        editNotification(
+            IdAndReadState(
+                uiState.value.notificationId,
+                isRead = !uiState.value.setNotificationReadValue
+            )
+        )
+        loadNotifications()
+        fillNotificationForm(showModal = false)
+    }
 
 }
